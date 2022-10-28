@@ -1,5 +1,5 @@
 # Name of workflow
-name: Deploy Dev-Frontend
+name: Deploy Frontend
 
 # When workflow is triggered
 on:
