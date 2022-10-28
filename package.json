@@ -1,0 +1,14 @@
+{
+  "name": "BeerGame",
+  "version": "1.0.0",
+  "scripts": {
+    "install:frontend": "cd client && npm install",
+    "install:backend": "cd server && npm install",
+    "start:frontend": "cd client && npm start",
+    "start:server": "cd server && npm start",
+    "build:frontend": "cd client && npm build",
+    "build:backend": "cd server && npm build"
+  },
+  "dependencies": {
+  }
+}
