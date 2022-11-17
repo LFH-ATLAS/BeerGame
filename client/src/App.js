@@ -13,7 +13,9 @@ import End from "./pages/End";
 
 function App() {
   //const socket = io.connect("http://beergame.usb.systems:3001")
-  const socket = io.connect("https://api-beergame.usb-sys.de")
+  //const socket = io.connect("https://api-beergame.usb-sys.de")
+  const socket = io.connect("http://192.168.203.37:3001") // Lokale Verbindung zum Backend, muss vom Client aufgelöst werden können
+
   useEffect(() => {
       socket.on("connect", () => {
           console.log("Verbindung zum SocketIO-Server hergestellt. Client-SocketID: " + socket.id);
