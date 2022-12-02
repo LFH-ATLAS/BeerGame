@@ -6,6 +6,8 @@ import SocketSuccess from "../model/SocketSuccess.js"
 import DBGame from "../model/DBGame.js";
 
 export default function JoinGame(io, socket, intData) {
+
+
   const room = intData.gameCode
   const role = intData.selectedRole
   console.log("Raum = " + room)
