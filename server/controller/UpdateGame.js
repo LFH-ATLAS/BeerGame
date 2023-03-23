@@ -60,6 +60,8 @@ export default function UpdateGame(io, socket, intData) {
                     break
             }
         }
+        
+
         else {
             switch (role) {
                 case 1:
@@ -157,7 +159,21 @@ export default function UpdateGame(io, socket, intData) {
             console.log(data.roundData.producer)
             console.log(data)
             data.save()
+
+            
+            if(data.roundData.currentRound > data.DBGame.gameSettings.rounds){
+                console.log("Endscreen von gameCode: " + data.gameCode)
+
+                io.to(room).emit("end_screen", data)
+    
+            }
+            else{
+                console.log("Schicke Daten der nächsten Runde. gameCode: "+ data.gameCode)
             io.to(room).emit("update_player_data", data)
+            
+            }
+            
+            
         }
         else {
             data.roundData.producer = producer

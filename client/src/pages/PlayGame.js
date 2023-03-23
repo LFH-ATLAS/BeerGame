@@ -3,6 +3,7 @@ import InputField from "../components/form/InputField"
 import {useEffect, useState} from "react";
 import Button from "../components/form/Button";
 import Countdown from '../lib/Countdown';
+import { Redirect } from "react-router-dom"
 
 function PlayGame(props) {
 
@@ -22,8 +23,15 @@ function PlayGame(props) {
     const [next1WeekDelivery, setNext1WeekDelivery] = useState(0)
     const [next2WeekDelivery, setNext2WeekDelivery] = useState(0)
     const [supplyChainOrder, setSupplyChainOrder] = useState(0)
+    const [redirectComponent, setRedirectComponent] = useState(<></>)
 
     useEffect(() => {
+
+            socket.on("end_screen", (data) => {
+                setRedirectComponent(<Redirect to={`/end`} />)
+
+            })
+
         socket.on("update_player_data", (data) => {
             console.log("UpdatePlayer aufgerufen")
             console.log(data)
@@ -147,6 +155,7 @@ function PlayGame(props) {
 
         return (
             <div>
+                { redirectComponent }
                 <div className={"grid_play"}>
                     <div className={"playground"}>
                         <div className={"timer"}>
