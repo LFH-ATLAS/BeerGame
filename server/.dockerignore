@@ -1,0 +1,4 @@
+# prevent uploading temp files into GitHub
+node_modules
+npm-debug.log
+.env
