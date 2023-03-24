@@ -16,7 +16,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build"
+    "install:frontend": "npm install",
+    "build:frontend": "react-scripts build"
   },
   "eslintConfig": {
     "extends": [

@@ -5,7 +5,8 @@
     "install:frontend": "cd client && npm install",
     "install:backend": "cd server && npm install",
     "start:frontend": "cd client && npm run start",
-    "start:backend": "cd server && npm run start"
+    "start:backend": "cd server && npm run start",
+    "build:frontend": "cd client && npm run build:frontend"
   },
   "dependencies": {
   }

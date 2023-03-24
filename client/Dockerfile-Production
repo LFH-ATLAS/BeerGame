@@ -2,9 +2,9 @@ FROM node:16-alpine as build
 
 WORKDIR /usr/src/app
 COPY package*.json ./
-RUN npm install
+RUN npm run frontend:install
 COPY . ./
-RUN react-scripts build
+RUN npm run frontend:build
 
 # Stage - Production
 FROM nginx:1.22-alpine
