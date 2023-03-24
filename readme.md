@@ -24,7 +24,7 @@ Das Frontend kann nun mit folgendem Befehl gestartet werden:
 npm run start:frontend
 ```
 
-Beim Backend sind weitere Umgebungsvariablen notwendig, damit dieses gestartet werden kann. Die Datei [.env.template](./server/.env.template) bietet eine Vorlage dafür. Um diese zu nutzen muss die Datei Dupliziert werden und zu .env umbenannt werden. Sind alle Variablen richtig gesetzt kann das Backend ähnlich wie das Frontend mit folgendem Befehl gestartet werden:
+Beim Backend sind weitere Umgebungsvariablen notwendig, damit dieses gestartet werden kann. Die Datei [server.env.template](./server/server.env.template) bietet eine Vorlage dafür. Um diese zu nutzen muss die Datei Dupliziert werden und zu .env umbenannt werden. Sind alle Variablen richtig gesetzt kann das Backend ähnlich wie das Frontend mit folgendem Befehl gestartet werden:
 
 ```
 npm run start:backend
