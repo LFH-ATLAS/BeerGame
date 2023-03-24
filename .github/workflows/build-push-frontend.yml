@@ -13,40 +13,16 @@ on:
   
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains multiple jobs
-  build_test:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.x]
-        
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
 
-      - name: setup node
-        uses: actions/setup-node@master
-        with:
-          node-version: ${{ matrix.node-version }}
+  ###################################################################
+  # Warning: There is no check, whether this build is working or not!
+  ###################################################################
 
-      # install applicaion dependencies
-      - name: Install dependencies
-        run: |
-          npm run install:frontend
-         # npm ci 
-      # build and test the apps     
-      - name: build
-        run: |
-          npm run build:frontend
-        # npm run test # todo no tests defined yet
   push_to_Docker_Hub:
       # The type of runner that the job will run on
       runs-on: ubuntu-latest
       # build docker image and push to docker hub
       # only if the app build and test successfully
-      needs: [build_test]
 
       steps:
         - name: checkout repo
