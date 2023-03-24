@@ -34,12 +34,12 @@ jobs:
       # install applicaion dependencies
       - name: Install dependencies
         run: |
-          npm install
+          cd client && npm install
          # npm ci 
       # build and test the apps     
       - name: build
         run: |
-          npm run build
+          cd client && npm run build
         # npm run test # todo no tests defined yet
   push_to_Docker_Hub:
       # The type of runner that the job will run on
