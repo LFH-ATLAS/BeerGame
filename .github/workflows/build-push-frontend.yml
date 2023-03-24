@@ -43,7 +43,7 @@ jobs:
         - name: Build and push
           uses: docker/build-push-action@v2
           with:
-            context: ./
+            context: ./client/
             file: ./client/Dockerfile-Production
             push: true
             tags: ${{ secrets.DOCKERHUB_USERNAME }}/beergame-frontend:latest
