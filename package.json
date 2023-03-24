@@ -4,9 +4,9 @@
   "scripts": {
     "install:frontend": "cd client && npm install",
     "install:backend": "cd server && npm install",
-    "start:frontend": "cd client && npm run start",
+    "start:frontend": "cd client && react-scripts start",
     "start:backend": "cd server && npm run start",
-    "build:frontend": "cd client && npm build"
+    "build:frontend": "cd client && react-scripts build"
   },
   "dependencies": {
   }
