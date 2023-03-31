@@ -28,7 +28,7 @@ function PlayGame(props) {
     useEffect(() => {
 
             socket.on("end_screen", (data) => {
-                setRedirectComponent(<Redirect to={`/end`} />)
+                setRedirectComponent(<Redirect to={`/end/${data.gameCode}`} />)
 
             })
 
