@@ -4,6 +4,14 @@ import {useEffect, useState} from "react";
 import Button from "../components/form/Button";
 import Countdown from '../lib/Countdown';
 import { Redirect } from "react-router-dom"
+import { calcPerfectOrderRatePct, 
+    calcStorageCostsWeekly,
+    calcStorageCosts,
+    calcStorageCostsBackorder,
+    averageStock,
+    backorderWeeksPct } from '../lib/KPI'
+
+const kpis = [{round: 0, lagerkosten: 30, gesamtkosten: 20, perfectRate: 80, durchsLagerb: 24, weekWithLieferrueckstand: 60}]
 
 function PlayGame(props) {
 
@@ -11,6 +19,8 @@ function PlayGame(props) {
     const selectedRole = JSON.parse(localStorage.getItem("role"))
     const socket = props.socketId
     const hoursMinSecs = {hours:0, minutes: 0, seconds: 60}
+
+    const [gameKPIs, setGameKPIs] = useState(kpis)
 
     const [orderValue, setOrderValue] = useState("")
     const [inputActive, setInputActive] = useState(true)
@@ -79,12 +89,28 @@ function PlayGame(props) {
 
     function submitOrder() {
         setInputActive(false)
+
         socket.emit("game_update", {
             gameCode,
             selectedRole,
             orderValue
         })
-        setOrderValue("")
+
+
+    }
+
+    const renderGameKPIs = () => {
+        return gameKPIs.map(({round, lagerkosten, gesamtkosten, perfectRate, durchsLagerb, weekWithLieferrueckstand}) => {
+            return <tr key={round}>
+                <td>{round}</td>
+                <td>{lagerkosten} </td>
+                <td>{gesamtkosten} </td>
+                <td>{perfectRate}% </td>
+                <td>{durchsLagerb} </td>
+                <td>{weekWithLieferrueckstand}% </td>
+                 </tr>
+            
+        })
     }
 
     if(currentRoomSize < 4) {
@@ -205,33 +231,7 @@ function PlayGame(props) {
                                     <th>Durchschnittlicher Lagerbestand</th>
                                     <th>Wochen mit Lieferrückstand</th>
                                 </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>20</td>
-                                    <td>20</td>
-                                    <td>80%</td>
-                                    <td>10</td>
-                                    <td>0%</td>
-
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>20</td>
-                                    <td>40</td>
-                                    <td>50%</td>
-                                    <td>15</td>
-                                    <td>50%</td>
-
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>10</td>
-                                    <td>50</td>
-                                    <td>66%</td>
-                                    <td>13</td>
-                                    <td>33%</td>
-
-                                </tr>
+                                {renderGameKPIs()}
                             </table>
                         </div>
                     </div>
