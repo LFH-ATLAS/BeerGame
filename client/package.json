@@ -16,6 +16,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:frontend": "react-scripts start",
     "install:frontend": "npm install",
     "build:frontend": "react-scripts build"
   },
