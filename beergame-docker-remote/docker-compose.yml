@@ -3,7 +3,7 @@
 version: "3"
 services:
   frontend:
-    container_name: fontend
+    container_name: frontend
     image: beergamelfh/beergame-frontend:latest
     ports:
       - 80:80
