@@ -1,0 +1,37 @@
+# Diese Datei ermöglicht das lokale Ausführen vom Beergame Projekt über die Öffentlichen Images des aktuellen Releases. Dafür ist keine lokale Kopie des Github Repositories nötig.
+
+version: "3"
+services:
+  frontend:
+    container_name: frontend
+    image: beergamelfh/beergame-frontend:latest
+    ports:
+      - 80:80
+
+  backend:
+    container_name: backend
+    image: beergamelfh/beergame-backend:latest
+    environment:
+      - SERVER_PORT=3001
+      #Cross Origin Resource Sharing Origin
+      # allow only this domain as frontend
+      - SERVER_CORS_ORIGIN=*
+      #Connection string for connecting to local or external database. Keep it secret!
+      - MONGOOSE_CONNECTIONSTRING=mongodb://admin:example@mongo:27017
+    ports:
+      - 3001:3001
+
+  mongo:
+    container_name: mongo
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: example
+#    ports:
+#      - 27017:27017
+    volumes:
+      - mongodb-data:/data/db
+
+volumes:
+  mongodb-data:
