@@ -4,14 +4,7 @@ import {useEffect, useState} from "react";
 import Button from "../components/form/Button";
 import Countdown from '../lib/Countdown';
 import { Redirect } from "react-router-dom"
-import { calcPerfectOrderRatePct, 
-    calcStorageCostsWeekly,
-    calcStorageCosts,
-    calcStorageCostsBackorder,
-    averageStock,
-    backorderWeeksPct } from '../lib/KPI'
 
-const kpis = [{round: 0, lagerkosten: 30, gesamtkosten: 20, perfectRate: 80, durchsLagerb: 24, weekWithLieferrueckstand: 60}]
 
 function PlayGame(props) {
 
@@ -19,8 +12,8 @@ function PlayGame(props) {
     const selectedRole = JSON.parse(localStorage.getItem("role"))
     const socket = props.socketId
     const hoursMinSecs = {hours:0, minutes: 0, seconds: 60}
-
-    const [gameKPIs, setGameKPIs] = useState(kpis)
+    const [gameKPIs, setGameKPIs] = useState([])
+    const [kpiCounter, setKPICounter] = useState(1)
 
     const [orderValue, setOrderValue] = useState("")
     const [inputActive, setInputActive] = useState(true)
@@ -47,13 +40,19 @@ function PlayGame(props) {
             console.log(data)
             setCurrentRound(data.roundData.currentRound)
             console.log(data.roundData.currentRound)
-            setInputActive(true)
+            setInputActive(true) 
             if(selectedRole === 1) {
                 setStock(data.roundData.producer[data.roundData.currentRound-1].stock)
                 setDelay(data.roundData.producer[data.roundData.currentRound-1].delay)
                 setNext1WeekDelivery(data.roundData.producer[data.roundData.currentRound-1].next1Week)
                 setNext2WeekDelivery(data.roundData.producer[data.roundData.currentRound-1].next2Week)
                 setSupplyChainOrder(data.roundData.distributor[data.roundData.currentRound-1].order)
+                if(gameKPIs.length <=kpiCounter){
+                    setGameKPIs([...gameKPIs, ...[data.roundData.producer[data.roundData.currentRound-1].kpis]])
+                    setKPICounter(kpiCounter+1)
+                    console.log("concated: "+ kpiCounter)
+                }
+                        
             }
             else if(selectedRole === 2) {
                 setStock(data.roundData.distributor[data.roundData.currentRound-1].stock)
@@ -61,6 +60,13 @@ function PlayGame(props) {
                 setNext1WeekDelivery(data.roundData.distributor[data.roundData.currentRound-1].next1Week)
                 setNext2WeekDelivery(data.roundData.distributor[data.roundData.currentRound-1].next2Week)
                 setSupplyChainOrder(data.roundData.wholesaler[data.roundData.currentRound-1].order)
+                setGameKPIs([data.roundData.producer[data.roundData.currentRound-1].kpis])
+                if(gameKPIs.length <=kpiCounter){
+                    setGameKPIs([...gameKPIs, ...[data.roundData.producer[data.roundData.currentRound-1].kpis]])
+                    setKPICounter(kpiCounter+1)
+                    console.log("concated: "+ kpiCounter)
+                }
+
             }
             else if(selectedRole === 3) {
                 setStock(data.roundData.wholesaler[data.roundData.currentRound-1].stock)
@@ -68,6 +74,13 @@ function PlayGame(props) {
                 setNext1WeekDelivery(data.roundData.wholesaler[data.roundData.currentRound-1].next1Week)
                 setNext2WeekDelivery(data.roundData.wholesaler[data.roundData.currentRound-1].next2Week)
                 setSupplyChainOrder(data.roundData.retailer[data.roundData.currentRound-1].order)
+                setGameKPIs([data.roundData.producer[data.roundData.currentRound-1].kpis])
+                if(gameKPIs.length <=kpiCounter){
+                    setGameKPIs([...gameKPIs, ...[data.roundData.producer[data.roundData.currentRound-1].kpis]])
+                    setKPICounter(kpiCounter+1)
+                    console.log("concated: "+ kpiCounter)
+                }
+
             }
             else {
                 setStock(data.roundData.retailer[data.roundData.currentRound-1].stock)
@@ -75,9 +88,16 @@ function PlayGame(props) {
                 setNext1WeekDelivery(data.roundData.retailer[data.roundData.currentRound-1].next1Week)
                 setNext2WeekDelivery(data.roundData.retailer[data.roundData.currentRound-1].next2Week)
                 setSupplyChainOrder(data.roundData.retailer[data.roundData.currentRound-1].supplyChainOrder)
+                setGameKPIs([data.roundData.producer[data.roundData.currentRound-1].kpis])
+                if(gameKPIs.length <=kpiCounter){
+                    setGameKPIs([...gameKPIs, ...[data.roundData.producer[data.roundData.currentRound-1].kpis]])
+                    setKPICounter(kpiCounter + 1)
+                    console.log("concated: "+ kpiCounter)
+                }
             }
         })
         socket.on("initial_data", (data) => {
+            console.log("initial data")
             console.log(data)
             setStock(data.gameSettings.startStock)
         })
@@ -99,19 +119,6 @@ function PlayGame(props) {
 
     }
 
-    const renderGameKPIs = () => {
-        return gameKPIs.map(({round, lagerkosten, gesamtkosten, perfectRate, durchsLagerb, weekWithLieferrueckstand}) => {
-            return <tr key={round}>
-                <td>{round}</td>
-                <td>{lagerkosten} </td>
-                <td>{gesamtkosten} </td>
-                <td>{perfectRate}% </td>
-                <td>{durchsLagerb} </td>
-                <td>{weekWithLieferrueckstand}% </td>
-                 </tr>
-            
-        })
-    }
 
     if(currentRoomSize < 4) {
         return (
@@ -223,15 +230,30 @@ function PlayGame(props) {
                     <div className={"playground2"}>
                         <div className={"KPItable"}>
                             <table>
-                                <tr>
-                                    <th>Runde</th>
-                                    <th>Lagerkosten</th>
-                                    <th>Gesamtkosten</th>
-                                    <th>Perfekte Auftragsrate</th>
-                                    <th>Durchschnittlicher Lagerbestand</th>
-                                    <th>Wochen mit Lieferrückstand</th>
-                                </tr>
-                                {renderGameKPIs()}
+                                <thead>
+                                    <tr>
+                                        <th>Runde</th>
+                                        <th>Lagerkosten</th>
+                                        <th>Gesamtkosten</th>
+                                        <th>Perfekte Auftragsrate</th>
+                                        <th>Durchschnittlicher Lagerbestand</th>
+                                        <th>Wochen mit Lieferrückstand</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                     {gameKPIs.map(item => {
+                                        return (
+                                            <tr key={item.roundPlayed}>
+                                                <td>{item.roundPlayed}</td>
+                                                <td>{item.storageCostsWeekly}</td>
+                                                <td>{item.storageCosts}</td>
+                                                <td>{item.perfectOrderRatePct}%</td>
+                                                <td>{item.averageStock}</td>
+                                                <td>{item.backorderWeeksPct}%</td>
+                                            </tr>
+                                        );
+                                     })}
+                                </tbody>                 
                             </table>
                         </div>
                     </div>

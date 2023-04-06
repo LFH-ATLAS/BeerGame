@@ -28,7 +28,17 @@ export default function UpdateGame(io, socket, intData) {
                         order: parseInt(orderValue),
                         delay: 0,
                         next1Week: 0,
-                        next2Week: 0
+                        next2Week: 0,
+                        kpis: {
+                            roundPlayed: 1,
+                            storageCosts: 0,
+                            storageCostsWeekly: 0,
+                            perfectOrderRatePct: 0,
+                            storageCostsBackorder: 0,
+                            averageStock: 0,
+                            backorderWeeksPct: 0
+                        }   
+                        
                     })
                     break
                 case 2:
@@ -37,7 +47,15 @@ export default function UpdateGame(io, socket, intData) {
                         order: parseInt(orderValue),
                         delay: 0,
                         next1Week: 0,
-                        next2Week: 0
+                        next2Week: 0,
+                        kpis: {
+                            roundPlayed: 1,
+                            storageCostsWeekly: 0,
+                            perfectOrderRatePct: 0,
+                            storageCostsBackorder: 0,
+                            averageStock: 0,
+                            backorderWeeksPct: 0
+                        }   
                     })
                     break
                 case 3:
@@ -46,7 +64,15 @@ export default function UpdateGame(io, socket, intData) {
                         order: parseInt(orderValue),
                         delay: 0,
                         next1Week: 0,
-                        next2Week: 0
+                        next2Week: 0,
+                        kpis: {
+                            roundPlayed: 1,
+                            storageCostsWeekly: 0,
+                            perfectOrderRatePct: 0,
+                            storageCostsBackorder: 0,
+                            averageStock: 0,
+                            backorderWeeksPct: 0
+                        }   
                     })
                     break
                 case 4:
@@ -55,7 +81,15 @@ export default function UpdateGame(io, socket, intData) {
                         order: parseInt(orderValue),
                         delay: 0,
                         next1Week: 0,
-                        next2Week: 0
+                        next2Week: 0,
+                        kpis: {
+                            roundPlayed: 1,
+                            storageCostsWeekly: 0,
+                            perfectOrderRatePct: 0,
+                            storageCostsBackorder: 0,
+                            averageStock: 0,
+                            backorderWeeksPct: 0
+                        }                      
                     })
                     break
             }
@@ -70,7 +104,17 @@ export default function UpdateGame(io, socket, intData) {
                         order: parseInt(orderValue),
                         delay: producer[currentRound-1].delay,
                         next1Week: producer[currentRound-1].next1Week,
-                        next2Week: producer[currentRound-1].next2Week
+                        next2Week: producer[currentRound-1].next2Week,
+                        kpis:{
+                            roundPlayed: 2,
+                            storageCosts: 1,
+                            storageCosts: 1,
+                            storageCostsWeekly: 1,
+                            perfectOrderRatePct: 1,
+                            storageCostsBackorder: 1,
+                            averageStock: 1,
+                            backorderWeeksPct: 1
+                        }
                     })
                     break
                 case 2:
@@ -79,7 +123,17 @@ export default function UpdateGame(io, socket, intData) {
                         order: parseInt(orderValue),
                         delay: distributor[currentRound-1].delay,
                         next1Week: distributor[currentRound-1].next1Week,
-                        next2Week: distributor[currentRound-1].next2Week
+                        next2Week: distributor[currentRound-1].next2Week,
+                        kpis:{
+                            roundPlayed: 2,
+                            storageCosts: 1,
+                            storageCosts: 1,
+                            storageCostsWeekly: 1,
+                            perfectOrderRatePct: 1,
+                            storageCostsBackorder: 1,
+                            averageStock: 1,
+                            backorderWeeksPct: 1
+                        }
                     })
                     break
                 case 3:
@@ -88,7 +142,17 @@ export default function UpdateGame(io, socket, intData) {
                         order: parseInt(orderValue),
                         delay: wholesaler[currentRound-1].delay,
                         next1Week: wholesaler[currentRound-1].next1Week,
-                        next2Week: wholesaler[currentRound-1].next2Week
+                        next2Week: wholesaler[currentRound-1].next2Week,
+                        kpis:{
+                            roundPlayed: 2,
+                            storageCosts: 1,
+                            storageCosts: 1,
+                            storageCostsWeekly: 1,
+                            perfectOrderRatePct: 1,
+                            storageCostsBackorder: 1,
+                            averageStock: 1,
+                            backorderWeeksPct: 1
+                        }
                     })
                     break
                 case 4:
@@ -97,7 +161,18 @@ export default function UpdateGame(io, socket, intData) {
                         order: parseInt(orderValue),
                         delay: retailer[currentRound-1].delay,
                         next1Week: retailer[currentRound-1].next1Week,
-                        next2Week: retailer[currentRound-1].next2Week
+                        next2Week: retailer[currentRound-1].next2Week,
+                        kpis:{
+                            roundPlayed: 2,
+                            storageCosts: 1,
+                            storageCosts: 1,
+                            storageCostsWeekly: 1,
+                            perfectOrderRatePct: 1,
+                            storageCostsBackorder: 1,
+                            averageStock: 1,
+                            backorderWeeksPct: 1
+                        }
+
                     })
                     break
             }
