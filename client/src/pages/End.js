@@ -3,8 +3,7 @@ import React from "react";
 import "../styles/pages/End.css"
 
 import {useEffect, useState} from "react";
-import Button from "../components/form/Button";
-import { Redirect } from "react-router-dom"
+
 
 
 
@@ -12,25 +11,12 @@ function End(props) {
 
     const socket = props.socketId
 
-    const [orderValue, setOrderValue] = useState("")
-    const [inputActive, setInputActive] = useState(true)
-    const [currentRoomSize, setCurrentRoomSize] = useState(0)
-    const [currentRoomRoles, setCurrentRoomRoles] = useState([])
-
-    const [currentRound, setCurrentRound] = useState(1)
-    const [stock, setStock] = useState(0)
-    const [delay, setDelay] = useState(0)
-    const [next1WeekDelivery, setNext1WeekDelivery] = useState(0)
-    const [next2WeekDelivery, setNext2WeekDelivery] = useState(0)
-    const [supplyChainOrder, setSupplyChainOrder] = useState(0)
-    const [redirectComponent, setRedirectComponent] = useState(<></>)
-
     useEffect(() => {
 
-            socket.on("end_screen", (data) => {
+            socket.on("end_screen_data", (data) => {
 
             console.log("Endscreen aufgerufen")
-
+            console.log(data)
             
         })
 
@@ -39,43 +25,10 @@ function End(props) {
  
         return (
             <div>
-                { redirectComponent }
-                <div className={"grid_play"}>
-                    <div className={"playground"}>
-                        <div className={"timer"}>
-                            <p>{currentRound}</p>
-                        </div>
-                        <div className={"wrapper_img"}>
-                        </div>
-                        <div className={"line"} />
-                        <div className={"wrapper_1"}>
-                            <span>Lager: { stock }</span>
-                            <span>Verzug: { delay }</span>
-                        </div>
-                        <div className={"line"} />
-                        <div className={"new_order"}>
-                            <span>Neue Bestellung:</span>
-                        </div>
-                        <div className={"line"} />
-                        <>
-                            <span>Künftige Lieferungen:</span>
-                            <div className={"next_products"}>
-                                <span>Nächste Woche: {next1WeekDelivery}</span>
-                                <span>Übernächste Woche: {next2WeekDelivery}</span>
-                            </div>
-                        </>
-                        <div className={"line"} />
-                        <div className={"delivery"}>
-                            <span>Lieferanfrage: {supplyChainOrder}</span>
-                        </div>
-                    </div>
-                </div>
 
-                <div>&nbsp;</div>
-
-                <div className={"grid_play2"}>
-                    <div className={"playground2"}>
-                        <div className={"KPItable"}>
+                <div >
+                    <div >
+                        <div >
                             <table>
                                 <tr>
                                     <th>Runde</th>

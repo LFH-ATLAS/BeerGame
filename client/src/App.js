@@ -33,6 +33,9 @@ function App() {
           <Route path={"/game/play/:gameId"}>
             <PlayGame socketId={socket} />
           </Route>
+          <Route path={"/end/:gameId"}>
+            <PlayGame socketId={socket} />
+          </Route>
           <Route exact path={"/"}>
             <Home />
           </Route>
