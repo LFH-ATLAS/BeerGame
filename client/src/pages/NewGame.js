@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Redirect } from "react-router-dom"
+import { KeyboardEvent } from "react"
 
 import "../styles/pages/NewGame.css"
 import Tile from "../components/Tile"
@@ -154,6 +155,7 @@ function NewGame(props) {
                     name={"Spielcode"}
                     getValue={setGameCode}
                     description={"Zulässige Zeichen: A-Z, a-z, 0-9"}
+                    restriction={"none"}
                 />
                 <span>Wählen Sie die Anzahl der Spielrunden:</span>
                 <div className={"select_rounds"} onChange={getSelectedRounds}>
@@ -172,6 +174,7 @@ function NewGame(props) {
                     name={"Anfangsbestand"}
                     getValue={setStartStock}
                     description={"Bsp.: 15"}
+                    restriction = {"numerical"}
                     
                 /> 
                 <span>Wählen Sie die Nachfragemenge:</span>
@@ -179,18 +182,21 @@ function NewGame(props) {
                     name={"Nachfragemenge"}
                     getValue={setStartValue}
                     description={"Bsp.: 5"}
+                    restriction = {"numerical"}
                 /> 
                 <span>Wählen Sie die erhöhte Nachfrage:</span>
                 <InputField
                     name={"erhöhte Nachfragemenge"}
                     getValue={setRaisedValue}
                     description={"Bsp.: 10"}
+                    restriction = {"numerical"}
                 /> 
                 <span>Wählen Sie die Runde in der die Nachfragemenge erhöht wird:</span>
                 <InputField
                     name={"Runde der Erhöhung"}
                     getValue={setRoundOfRaise}
                     description={"je nach Anzahl der Spielrunden 17 oder 35"}
+                    restriction = {"numerical"}
                 />
                 <Button onClick={createGame}>Spiel erstellen</Button>
             </div>
