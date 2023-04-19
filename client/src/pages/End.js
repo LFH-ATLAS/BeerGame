@@ -1,78 +1,48 @@
-import React from "react";
-
+import { Socket } from "socket.io-client";
 import "../styles/pages/End.css"
 
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 
 
+import InputField from "../components/form/InputField"
+import Button from "../components/form/Button";
+import Countdown from '../lib/Countdown';
+import { Redirect } from "react-router-dom"
 
 
 function End(props) {
 
+
     const socket = props.socketId
+    var hi = "tim";
+
+    
+
 
     useEffect(() => {
+        
 
-            socket.on("end_screen_data", (data) => {
 
-            console.log("Endscreen aufgerufen")
-            console.log(data)
-            
-        })
+        
+        function test (){
+            hi = "peter";
+        }
+        
 
-    })
+    socket.on("end_screen", test)
+        return () => {
+            socket.off('end_screen', test);
+        }
+})
 
- 
-        return (
-            <div>
+    return (
+  <div>Hallo
+ {hi}
+  </div>
 
-                <div >
-                    <div >
-                        <div >
-                            <table>
-                                <tr>
-                                    <th>Runde</th>
-                                    <th>Lagerkosten</th>
-                                    <th>Gesamtkosten</th>
-                                    <th>Perfekte Auftragsrate</th>
-                                    <th>Durchschnittlicher Lagerbestand</th>
-                                    <th>Wochen mit Lieferrückstand</th>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>20</td>
-                                    <td>20</td>
-                                    <td>80%</td>
-                                    <td>10</td>
-                                    <td>0%</td>
-
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>20</td>
-                                    <td>40</td>
-                                    <td>50%</td>
-                                    <td>15</td>
-                                    <td>50%</td>
-
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>10</td>
-                                    <td>50</td>
-                                    <td>66%</td>
-                                    <td>13</td>
-                                    <td>33%</td>
-
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        )
+    )
 }
+
 
 
 

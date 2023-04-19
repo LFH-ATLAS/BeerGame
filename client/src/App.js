@@ -34,16 +34,13 @@ function App() {
             <PlayGame socketId={socket} />
           </Route>
           <Route path={"/end/:gameId"}>
-            <PlayGame socketId={socket} />
+            <End socketId={socket}/>
           </Route>
           <Route exact path={"/"}>
             <Home />
           </Route>
           <Route path={"/404"}>
             <NotFound />
-          </Route>
-          <Route path={"/end"}>
-            <End/>
           </Route>
           <Route path={"*"}>
             <Redirect to={"/404"} />
