@@ -24,10 +24,10 @@ mongoose.connect(process.env.MONGOOSE_CONNECTIONSTRING)
       socket.on("game_update", (data) => UpdateGame(io, socket, data))
       socket.on("disconnect", () => LeaveGame(io, socket))
     });
-    console.log("Server auf Port " + process.env.SERVER_PORT + " gestartet. Datenbankverbindung hergestellt.");
+    console.log("Server auf Port " + 3001 + " gestartet. Datenbankverbindung hergestellt.");
   })
   .catch((err) => {
     console.log("Server konnte nicht gestartet werden. Fehlermeldung:\n" + err.message);
 });
 
-io.listen(process.env.SERVER_PORT)
+io.listen(3001)
