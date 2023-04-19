@@ -49,17 +49,7 @@ function End(props) {
   </thead>
   <tbody>
 
-{distributorData.forEach(game => {
-    game.roundData.distributor.forEach((roundData, index) => {
-      return (
-        <tr key={index}>
-          <td>{roundData.delay}</td>
-          <td>{roundData.next1week}</td>
-        </tr>
-      )
-    })
-  })
-}
+
 </tbody>
 </table>
 
