@@ -14,7 +14,14 @@ import End from "./pages/End";
 function App() {
   //const socket = io.connect("http://beergame.usb.systems:3001")
   //const socket = io.connect("https://api-beergame.usb-sys.de")
-  const socket = io.connect("http://localhost:3001") // Lokale Verbindung zum Backend, muss vom Client aufgelöst werden können
+  var socket  // Lokale Verbindung zum Backend, muss vom Client aufgelöst werden können
+
+  // Überprüfen, ob Umgebungsvariable gesetzt ist, falls nicht werden Standardwerte verwendet
+  if(process.env.REACT_APP_BACKEND_URL != null){
+    socket = io.connect(process.env.REACT_APP_BACKEND_URL)
+  }else{
+    socket = io.connect("http://localhost:3001") //
+  }
 
   useEffect(() => {
       socket.on("connect", () => {

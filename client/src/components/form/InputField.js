@@ -1,8 +1,10 @@
 import React from "react";
+import checkIfStringIsValid from "../../lib/checkIfStringIsValid";
+import { useState } from "react";
 
 import "../../styles/components/InputField.css"
-
 class InputField extends React.Component {
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -16,15 +18,23 @@ class InputField extends React.Component {
     }
 
 
-    onChangeHandler(event) {
-        console.log(event)
-        /*
-        if(event .value !== event.target.value) {
-            this.setState({error: false})
-        }
-         */
-        this.props.getValue(event.target.value)
+    onChangeHandler(event, category) {
+        let defaultRestriciton = /[^A-Z0-9äöü]/gi;
+        let numericalRestriction = /[^0-9]/gi;
+        let temp = event.target.value;
+        if(this.props.restriction == "numerical")
+        {
+           
+            temp = temp.replace(numericalRestriction,"");
+            event.target.value = temp;
+            this.props.getValue(event.target.value)
 
+        }else{
+            temp = temp.replace(defaultRestriciton ,"");
+            event.target.value = temp;
+            this.props.getValue(event.target.value)
+
+        }
     }
 
     componentWillUnmount() {
@@ -40,9 +50,10 @@ class InputField extends React.Component {
                         type={"text"}
                         placeholder={this.props.name}
                         name={this.props.name}
-                        onChange={(event) => this.onChangeHandler(event)}
+                        onChange={(event, category) => this.onChangeHandler(event, category)}
                         disabled
                         value={this.props.setValue}
+                        restriction={this.props.restriction}
                     />
                     {this.props.description ?
                         <p>{this.props.description}</p>
@@ -61,8 +72,9 @@ class InputField extends React.Component {
                         type={"text"}
                         placeholder={this.props.name}
                         name={this.props.name}
-                        onChange={(event) => this.onChangeHandler(event)}
+                        onChange={(event, category) => this.onChangeHandler(event, category)}
                         value={this.props.setValue}
+                        restriction={this.props.restriction}
                     />
                     {this.props.description ?
                         <p>{this.props.description}</p>
