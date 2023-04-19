@@ -28,10 +28,10 @@ mongoose.connect(process.env.MONGOOSE_CONNECTIONSTRING)
       socket.on("endscreendata", (data) => Senddata(io, socket, data))
 
     });
-    console.log("Server auf Port " + process.env.SERVER_PORT + " gestartet. Datenbankverbindung hergestellt.");
+    console.log("Server auf Port " + 3001 + " gestartet. Datenbankverbindung hergestellt.");
   })
   .catch((err) => {
     console.log("Server konnte nicht gestartet werden. Fehlermeldung:\n" + err.message);
 });
 
-io.listen(process.env.SERVER_PORT)
+io.listen(3001)
