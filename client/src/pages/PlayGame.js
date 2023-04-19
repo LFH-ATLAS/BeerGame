@@ -13,7 +13,6 @@ function PlayGame(props) {
     const socket = props.socketId
     const hoursMinSecs = {hours:0, minutes: 0, seconds: 60}
     const [gameKPIs, setGameKPIs] = useState([])
-    const [kpiCounter, setKPICounter] = useState(1)
 
     const [orderValue, setOrderValue] = useState("")
     const [inputActive, setInputActive] = useState(true)
@@ -68,7 +67,7 @@ function PlayGame(props) {
             setNext1WeekDelivery(data.roundData.distributor[data.roundData.currentRound-1].next1Week)
             setNext2WeekDelivery(data.roundData.distributor[data.roundData.currentRound-1].next2Week)
             setSupplyChainOrder(data.roundData.wholesaler[data.roundData.currentRound-1].order)
-            setGameKPIs(data.roundData.producer[data.roundData.currentRound-1].kpis)
+            setGameKPIs(data.roundData.distributor[data.roundData.currentRound-1].kpis)
 
         }
         else if(selectedRole === 3) {
@@ -77,7 +76,7 @@ function PlayGame(props) {
             setNext1WeekDelivery(data.roundData.wholesaler[data.roundData.currentRound-1].next1Week)
             setNext2WeekDelivery(data.roundData.wholesaler[data.roundData.currentRound-1].next2Week)
             setSupplyChainOrder(data.roundData.retailer[data.roundData.currentRound-1].order)
-            setGameKPIs(data.roundData.producer[data.roundData.currentRound-1].kpis)
+            setGameKPIs(data.roundData.wholesaler[data.roundData.currentRound-1].kpis)
         }
         else {
             setStock(data.roundData.retailer[data.roundData.currentRound-1].stock)
@@ -85,17 +84,8 @@ function PlayGame(props) {
             setNext1WeekDelivery(data.roundData.retailer[data.roundData.currentRound-1].next1Week)
             setNext2WeekDelivery(data.roundData.retailer[data.roundData.currentRound-1].next2Week)
             setSupplyChainOrder(data.roundData.retailer[data.roundData.currentRound-1].supplyChainOrder)
-            setGameKPIs(data.roundData.producer[data.roundData.currentRound-1].kpis)
+            setGameKPIs(data.roundData.retailer[data.roundData.currentRound-1].kpis)
 
-        }
-    }
-    
-    function appendArray(data){
-        console.log("KPI Counter: " + kpiCounter)
-        if(gameKPIs.length <=kpiCounter){
-            //const tempGameKPIs = [...gameKPIs, data.roundData.producer[data.roundData.currentRound-1].kpis]
-            
-            //setKPICounter(kpiCounter + 1)
         }
     }
 

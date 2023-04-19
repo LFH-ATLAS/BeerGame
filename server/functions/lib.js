@@ -15,7 +15,7 @@ const backorderCosts = 10
 
 //Berechnung der Wochen ohne Störungen (Perfekte Auftragsrate)
 export function calcPerfectOrderRatePct(perfectOrders, allOrders) {
-    return perfectOrders / allOrders
+    return ((perfectOrders / allOrders)*100).toFixed(3)
 }
 
 //Berechnung der Lagerkosten für die einzelne Woche (kumulierte Kosten pro Woche)

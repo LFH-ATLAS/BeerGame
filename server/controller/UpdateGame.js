@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import DBGame from "../model/DBGame.js";
 import CalculateNewValues from "../functions/CalculateNewValues.js";
 
-import { calcStorageCosts, calcStorageCostsWeekly, calcAverageStock, calcBackorderWeeksPct } from "../functions/lib.js";
+import { calcStorageCosts, calcStorageCostsWeekly, calcAverageStock, calcBackorderWeeksPct, calcPerfectOrderRatePct } from "../functions/lib.js";
 
 export default function UpdateGame(io, socket, intData) {
     const room = intData.gameCode
@@ -35,6 +35,7 @@ export default function UpdateGame(io, socket, intData) {
                             roundPlayed: 0,
                             storageCosts: calcStorageCosts(0, data.gameSettings.startStock),
                             storageCostsWeekly: calcStorageCostsWeekly((data.gameSettings.startStock*5),0),
+                            perfectWeeks: 0,
                             perfectOrderRatePct: 0,
                             storageCostsBackorder: 0,
                             averageStock: data.gameSettings.startStock,
@@ -52,15 +53,18 @@ export default function UpdateGame(io, socket, intData) {
                         delay: 0,
                         next1Week: 0,
                         next2Week: 0,
-                        kpis: {
+                        kpis: [...[], {
                             roundPlayed: 0,
-                            storageCosts: 0,
-                            storageCostsWeekly: 0,
+                            storageCosts: calcStorageCosts(0, data.gameSettings.startStock),
+                            storageCostsWeekly: calcStorageCostsWeekly((data.gameSettings.startStock*5),0),
+                            perfectWeeks: 0,
                             perfectOrderRatePct: 0,
                             storageCostsBackorder: 0,
-                            averageStock: 0,
-                            backorderWeeksPct: 0
-                        }   
+                            averageStock: data.gameSettings.startStock,
+                            backorderWeeksPct: 0,
+                            sumStock: data.gameSettings.startStock,
+                            weeksWithBackorder: 0
+                        }]  
                     })
                     break
                 case 3:
@@ -70,15 +74,18 @@ export default function UpdateGame(io, socket, intData) {
                         delay: 0,
                         next1Week: 0,
                         next2Week: 0,
-                        kpis: {
+                        kpis: [...[], {
                             roundPlayed: 0,
-                            storageCosts: 0,
-                            storageCostsWeekly: 0,
+                            storageCosts: calcStorageCosts(0, data.gameSettings.startStock),
+                            storageCostsWeekly: calcStorageCostsWeekly((data.gameSettings.startStock*5),0),
+                            perfectWeeks: 0,
                             perfectOrderRatePct: 0,
                             storageCostsBackorder: 0,
-                            averageStock: 0,
-                            backorderWeeksPct: 0
-                        }   
+                            averageStock: data.gameSettings.startStock,
+                            backorderWeeksPct: 0,
+                            sumStock: data.gameSettings.startStock,
+                            weeksWithBackorder: 0
+                        }]  
                     })
                     break
                 case 4:
@@ -88,15 +95,18 @@ export default function UpdateGame(io, socket, intData) {
                         delay: 0,
                         next1Week: 0,
                         next2Week: 0,
-                        kpis: {
+                        kpis: [...[], {
                             roundPlayed: 0,
-                            storageCosts: 0,
-                            storageCostsWeekly: 0,
+                            storageCosts: calcStorageCosts(0, data.gameSettings.startStock),
+                            storageCostsWeekly: calcStorageCostsWeekly((data.gameSettings.startStock*5),0),
+                            perfectWeeks: 0,
                             perfectOrderRatePct: 0,
                             storageCostsBackorder: 0,
-                            averageStock: 0,
-                            backorderWeeksPct: 0
-                        }                      
+                            averageStock: data.gameSettings.startStock,
+                            backorderWeeksPct: 0,
+                            sumStock: data.gameSettings.startStock,
+                            weeksWithBackorder: 0
+                        }]                       
                     })
                     break
             }
@@ -108,11 +118,15 @@ export default function UpdateGame(io, socket, intData) {
                 case 1:
                     console.log(producer[currentRound-1].storageCosts)
                     console.log(producer[currentRound-1].stock)
-                    //const tempSumStock = producer[currentRound-1].kpis.sumStock + producer[currentRound-1].stock
-                    /*let tempweeksWithBackorder = producer[currentRound-1].kpis.weeksWithBackorder
+                    const tempSumStockProd = producer[currentRound-1].kpis[producer[currentRound-1].kpis.length-1].sumStock + producer[currentRound-1].stock
+                    let tempWeeksWithBackorderProd = producer[currentRound-1].kpis[producer[currentRound-1].kpis.length-1].weeksWithBackorder
                     if(producer[currentRound-1].delay > 0){
-                        tempweeksWithBackorder++
-                    }*/
+                        tempWeeksWithBackorderProd++
+                    }
+                    let tempPerfectWeeksProd = producer[currentRound-1].kpis[producer[currentRound-1].kpis.length-1].perfectWeeks
+                    if(producer[currentRound-1].delay == 0 && producer[currentRound-1].stock == 0){
+                        tempPerfectWeeksProd++;
+                    }
                     producer.push({
                         stock: producer[currentRound-1].stock,
                         order: parseInt(orderValue),
@@ -121,69 +135,106 @@ export default function UpdateGame(io, socket, intData) {
                         next2Week: producer[currentRound-1].next2Week,
                         kpis:[...producer[currentRound-1].kpis, {
                             roundPlayed: currentRound,
-                            storageCosts: 1, //calcStorageCosts(producer[currentRound-1].kpis.storageCosts,producer[currentRound-1].stock), 
-                            storageCostsWeekly: 1, //calcStorageCostsWeekly((producer[currentRound-1].stock*5), (producer[currentRound-1].delay*10)),
-                            perfectOrderRatePct: 1,
+                            storageCosts: calcStorageCosts(producer[currentRound-1].kpis[producer[currentRound-1].kpis.length-1].storageCosts,producer[currentRound-1].stock), 
+                            storageCostsWeekly: calcStorageCostsWeekly((producer[currentRound-1].stock*5), (producer[currentRound-1].delay*10)),
+                            perfectWeeks: tempPerfectWeeksProd,
+                            perfectOrderRatePct: calcPerfectOrderRatePct(tempPerfectWeeksProd,currentRound+1),
                             storageCostsBackorder: 1,
-                            averageStock: 1,//calcAverageStock(tempSumStock , currentRound),
-                            backorderWeeksPct: 1,//calcBackorderWeeksPct(tempweeksWithBackorder, currentRound+1),
-                            sumStock: 1,//tempSumStock,
-                            weeksWithBackorder: 1,//tempweeksWithBackorder
+                            averageStock: calcAverageStock(tempSumStockProd , currentRound),
+                            backorderWeeksPct: calcBackorderWeeksPct(tempWeeksWithBackorderProd, currentRound+1),
+                            sumStock: tempSumStockProd,
+                            weeksWithBackorder: tempWeeksWithBackorderProd
                         }]
                     })
                     break
                 case 2:
+                    const tempSumStockDist = distributor[currentRound-1].kpis[distributor[currentRound-1].kpis.length-1].sumStock + distributor[currentRound-1].stock
+                    let tempWeeksWithBackorderDist = distributor[currentRound-1].kpis[distributor[currentRound-1].kpis.length-1].weeksWithBackorder
+                    if(distributor[currentRound-1].delay > 0){
+                        tempWeeksWithBackorderDist++
+                    }
+                    let tempPerfectWeeksDist = distributor[currentRound-1].kpis[distributor[currentRound-1].kpis.length-1].perfectWeeks
+                    if(distributor[currentRound-1].delay == 0 && distributor[currentRound-1].stock == 0){
+                        tempPerfectWeeksDist++;
+                    }
                     distributor.push({
                         stock: distributor[currentRound-1].stock,
                         order: parseInt(orderValue),
                         delay: distributor[currentRound-1].delay,
                         next1Week: distributor[currentRound-1].next1Week,
                         next2Week: distributor[currentRound-1].next2Week,
-                        kpis:{
+                        kpis:[...distributor[currentRound-1].kpis, {
                             roundPlayed: currentRound,
-                            storageCosts: 1,
-                            storageCostsWeekly: 1,
-                            perfectOrderRatePct: 1,
+                            storageCosts: calcStorageCosts(distributor[currentRound-1].kpis[distributor[currentRound-1].kpis.length-1].storageCosts,distributor[currentRound-1].stock), 
+                            storageCostsWeekly: calcStorageCostsWeekly((distributor[currentRound-1].stock*5), (distributor[currentRound-1].delay*10)),
+                            perfectWeeks: tempPerfectWeeksDist,
+                            perfectOrderRatePct: calcPerfectOrderRatePct(tempPerfectWeeksDist,currentRound+1),
                             storageCostsBackorder: 1,
-                            averageStock: 1,
-                            backorderWeeksPct: 1
-                        }
+                            averageStock: calcAverageStock(tempSumStockDist , currentRound),
+                            backorderWeeksPct: calcBackorderWeeksPct(tempWeeksWithBackorderDist, currentRound+1),
+                            sumStock: tempSumStockDist,
+                            weeksWithBackorder: tempWeeksWithBackorderDist
+                        }]
                     })
                     break
                 case 3:
+                    const tempSumStockWhole = wholesaler[currentRound-1].kpis[wholesaler[currentRound-1].kpis.length-1].sumStock + wholesaler[currentRound-1].stock
+                    let tempWeeksWithBackorderWhole = wholesaler[currentRound-1].kpis[wholesaler[currentRound-1].kpis.length-1].weeksWithBackorder
+                    if(wholesaler[currentRound-1].delay > 0){
+                        tempWeeksWithBackorderWhole++
+                    }
+                    let tempPerfectWeeksWhole = wholesaler[currentRound-1].kpis[wholesaler[currentRound-1].kpis.length-1].perfectWeeks
+                    if(wholesaler[currentRound-1].delay == 0 && wholesaler[currentRound-1].stock == 0){
+                        tempPerfectWeeksWhole++
+                    }
                     wholesaler.push({
                         stock: wholesaler[currentRound-1].stock,
                         order: parseInt(orderValue),
                         delay: wholesaler[currentRound-1].delay,
                         next1Week: wholesaler[currentRound-1].next1Week,
                         next2Week: wholesaler[currentRound-1].next2Week,
-                        kpis:{
+                        kpis:[...wholesaler[currentRound-1].kpis, {
                             roundPlayed: currentRound,
-                            storageCosts: 1,
-                            storageCostsWeekly: 1,
-                            perfectOrderRatePct: 1,
+                            storageCosts: calcStorageCosts(wholesaler[currentRound-1].kpis[wholesaler[currentRound-1].kpis.length-1].storageCosts,wholesaler[currentRound-1].stock), 
+                            storageCostsWeekly: calcStorageCostsWeekly((wholesaler[currentRound-1].stock*5), (wholesaler[currentRound-1].delay*10)),
+                            perfectWeeks: tempPerfectWeeksWhole,
+                            perfectOrderRatePct: calcPerfectOrderRatePct(tempPerfectWeeksWhole,currentRound+1),
                             storageCostsBackorder: 1,
-                            averageStock: 1,
-                            backorderWeeksPct: 1
-                        }
+                            averageStock: calcAverageStock(tempSumStockWhole , currentRound),
+                            backorderWeeksPct: calcBackorderWeeksPct(tempWeeksWithBackorderWhole, currentRound+1),
+                            sumStock: tempSumStockWhole,
+                            weeksWithBackorder: tempWeeksWithBackorderWhole
+                        }]
                     })
                     break
                 case 4:
+                    const tempSumStockRet = retailer[currentRound-1].kpis[retailer[currentRound-1].kpis.length-1].sumStock + retailer[currentRound-1].stock
+                    let tempWeeksWithBackorderRet = retailer[currentRound-1].kpis[retailer[currentRound-1].kpis.length-1].weeksWithBackorder
+                    if(retailer[currentRound-1].delay > 0){
+                        tempWeeksWithBackorderRet++
+                    }
+                    let tempPerfectWeeksRet = retailer[currentRound-1].kpis[retailer[currentRound-1].kpis.length-1].perfectWeeks
+                    if(retailer[currentRound-1].delay == 0 && retailer[currentRound-1].stock == 0){
+                        tempPerfectWeeksRet++
+                    }
                     retailer.push({
                         stock: retailer[currentRound-1].stock,
                         order: parseInt(orderValue),
                         delay: retailer[currentRound-1].delay,
                         next1Week: retailer[currentRound-1].next1Week,
                         next2Week: retailer[currentRound-1].next2Week,
-                        kpis:{
+                        kpis:[...retailer[currentRound-1].kpis, {
                             roundPlayed: currentRound,
-                            storageCosts: 1,
-                            storageCostsWeekly: 1,
-                            perfectOrderRatePct: 1,
+                            storageCosts: calcStorageCosts(retailer[currentRound-1].kpis[retailer[currentRound-1].kpis.length-1].storageCosts,retailer[currentRound-1].stock), 
+                            storageCostsWeekly: calcStorageCostsWeekly((retailer[currentRound-1].stock*5), (retailer[currentRound-1].delay*10)),
+                            perfectWeeks: tempPerfectWeeksRet,
+                            perfectOrderRatePct: calcPerfectOrderRatePct(tempPerfectWeeksRet,currentRound+1),
                             storageCostsBackorder: 1,
-                            averageStock: 1,
-                            backorderWeeksPct: 1
-                        }
+                            averageStock: calcAverageStock(tempSumStockRet , currentRound),
+                            backorderWeeksPct: calcBackorderWeeksPct(tempWeeksWithBackorderRet, currentRound+1),
+                            sumStock: tempSumStockRet,
+                            weeksWithBackorder: tempWeeksWithBackorderRet
+                        }]
 
                     })
                     break
