@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Redirect } from "react-router-dom"
-import { KeyboardEvent } from "react"
+//import { KeyboardEvent } from "react"
 
 import "../styles/pages/NewGame.css"
 import Tile from "../components/Tile"
@@ -169,13 +169,13 @@ function NewGame(props) {
             case !checkIfStringIsValid(raisedValue, "numeric", !0):
                 errorMessage = "Die erhöhte Nachfragemenge muss ein numerischer Wert sein!";
                 break;
-            case !checkIfStringIsValid(roundOfRaise, "numeric", !0) || roundOfRaise > rounds || roundOfRaise < 1:
-                errorMessage = "Die Runde, in der die Nachfragemenge erhöht wird, muss ein numerischer Wert sein und darf nicht kleiner als 1 sowie größer als die Anzahl der Runden sein!";
-                break;
+            //case !checkIfStringIsValid(roundOfRaise, "numeric", !0) || roundOfRaise > rounds || roundOfRaise < 1:
+                //errorMessage = "Die Runde, in der die Nachfragemenge erhöht wird, muss ein numerischer Wert sein und darf nicht kleiner als 1 sowie größer als die Anzahl der Runden sein!";
+                //break;
             case !gameCode || !rounds || !startStock || !startValue || !raisedValue || !roundOfRaise:
                 errorMessage = "Bitte füllen Sie alle Felder aus!";
                 break;
-            default:
+            /*default:
                 socket.emit("game_create", {
                     gameCode,
                     gameCreated: new Date(),
@@ -193,7 +193,7 @@ function NewGame(props) {
                         wholesaler: [],
                         retailer: []
                     }
-                })      
+                }) */     
         }
     
         if (errorMessage !== null) {
