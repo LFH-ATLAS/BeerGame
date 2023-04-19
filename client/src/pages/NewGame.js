@@ -181,6 +181,8 @@ function NewGame(props) {
                     getValue={setStartStock}
                     description={"Bsp.: 15"}
                     
+            
+                    
                 /> 
                 <span>Wählen Sie die Nachfragemenge:</span>
                 <InputField

@@ -12,7 +12,7 @@ import { Redirect } from "react-router-dom"
 
 function End(props) {
 
-
+    const gameCode = JSON.parse(localStorage.getItem("room"))
     const socket = props.socketId
     var hi = "tim";
 
@@ -20,20 +20,18 @@ function End(props) {
 
 
     useEffect(() => {
-        
+        console.log(gameCode);
 
+        socket.emit("endscreendata", {
+            gameCode
+        })
 
-        
-        function test (){
-            hi = "peter";
-        }
-        
-
-    socket.on("end_screen", test)
-        return () => {
-            socket.off('end_screen', test);
-        }
-})
+        socket.on("update_end_Screen", (data) => {
+            console.log("UpdatePlayer aufgerufen")
+            console.log(data)
+        })
+    }
+)
 
     return (
   <div>Hallo
