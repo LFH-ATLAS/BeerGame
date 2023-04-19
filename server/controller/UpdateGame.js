@@ -42,8 +42,8 @@ export default function UpdateGame(io, socket, intData) {
                             backorderWeeksPct: 0,
                             sumStock: data.gameSettings.startStock,
                             weeksWithBackorder: 0
-                        }]   
-                        
+                        }]
+
                     })
                     break
                 case 2:
@@ -64,7 +64,7 @@ export default function UpdateGame(io, socket, intData) {
                             backorderWeeksPct: 0,
                             sumStock: data.gameSettings.startStock,
                             weeksWithBackorder: 0
-                        }]  
+                        }]
                     })
                     break
                 case 3:
@@ -85,7 +85,7 @@ export default function UpdateGame(io, socket, intData) {
                             backorderWeeksPct: 0,
                             sumStock: data.gameSettings.startStock,
                             weeksWithBackorder: 0
-                        }]  
+                        }]
                     })
                     break
                 case 4:
@@ -106,12 +106,12 @@ export default function UpdateGame(io, socket, intData) {
                             backorderWeeksPct: 0,
                             sumStock: data.gameSettings.startStock,
                             weeksWithBackorder: 0
-                        }]                       
+                        }]
                     })
                     break
             }
         }
-        
+
 
         else {
             switch (role) {
@@ -135,7 +135,7 @@ export default function UpdateGame(io, socket, intData) {
                         next2Week: producer[currentRound-1].next2Week,
                         kpis:[...producer[currentRound-1].kpis, {
                             roundPlayed: currentRound,
-                            storageCosts: calcStorageCosts(producer[currentRound-1].kpis[producer[currentRound-1].kpis.length-1].storageCosts,producer[currentRound-1].stock), 
+                            storageCosts: calcStorageCosts(producer[currentRound-1].kpis[producer[currentRound-1].kpis.length-1].storageCosts,producer[currentRound-1].stock),
                             storageCostsWeekly: calcStorageCostsWeekly((producer[currentRound-1].stock*5), (producer[currentRound-1].delay*10)),
                             perfectWeeks: tempPerfectWeeksProd,
                             perfectOrderRatePct: calcPerfectOrderRatePct(tempPerfectWeeksProd,currentRound+1),
@@ -165,7 +165,7 @@ export default function UpdateGame(io, socket, intData) {
                         next2Week: distributor[currentRound-1].next2Week,
                         kpis:[...distributor[currentRound-1].kpis, {
                             roundPlayed: currentRound,
-                            storageCosts: calcStorageCosts(distributor[currentRound-1].kpis[distributor[currentRound-1].kpis.length-1].storageCosts,distributor[currentRound-1].stock), 
+                            storageCosts: calcStorageCosts(distributor[currentRound-1].kpis[distributor[currentRound-1].kpis.length-1].storageCosts,distributor[currentRound-1].stock),
                             storageCostsWeekly: calcStorageCostsWeekly((distributor[currentRound-1].stock*5), (distributor[currentRound-1].delay*10)),
                             perfectWeeks: tempPerfectWeeksDist,
                             perfectOrderRatePct: calcPerfectOrderRatePct(tempPerfectWeeksDist,currentRound+1),
@@ -195,7 +195,7 @@ export default function UpdateGame(io, socket, intData) {
                         next2Week: wholesaler[currentRound-1].next2Week,
                         kpis:[...wholesaler[currentRound-1].kpis, {
                             roundPlayed: currentRound,
-                            storageCosts: calcStorageCosts(wholesaler[currentRound-1].kpis[wholesaler[currentRound-1].kpis.length-1].storageCosts,wholesaler[currentRound-1].stock), 
+                            storageCosts: calcStorageCosts(wholesaler[currentRound-1].kpis[wholesaler[currentRound-1].kpis.length-1].storageCosts,wholesaler[currentRound-1].stock),
                             storageCostsWeekly: calcStorageCostsWeekly((wholesaler[currentRound-1].stock*5), (wholesaler[currentRound-1].delay*10)),
                             perfectWeeks: tempPerfectWeeksWhole,
                             perfectOrderRatePct: calcPerfectOrderRatePct(tempPerfectWeeksWhole,currentRound+1),
@@ -225,7 +225,7 @@ export default function UpdateGame(io, socket, intData) {
                         next2Week: retailer[currentRound-1].next2Week,
                         kpis:[...retailer[currentRound-1].kpis, {
                             roundPlayed: currentRound,
-                            storageCosts: calcStorageCosts(retailer[currentRound-1].kpis[retailer[currentRound-1].kpis.length-1].storageCosts,retailer[currentRound-1].stock), 
+                            storageCosts: calcStorageCosts(retailer[currentRound-1].kpis[retailer[currentRound-1].kpis.length-1].storageCosts,retailer[currentRound-1].stock),
                             storageCostsWeekly: calcStorageCostsWeekly((retailer[currentRound-1].stock*5), (retailer[currentRound-1].delay*10)),
                             perfectWeeks: tempPerfectWeeksRet,
                             perfectOrderRatePct: calcPerfectOrderRatePct(tempPerfectWeeksRet,currentRound+1),
@@ -298,21 +298,22 @@ export default function UpdateGame(io, socket, intData) {
             console.log(data)
             data.save()
 
-            
-            if(data.roundData.currentRound > data.gameSettings.rounds){
+
+            if(data.roundData.currentRound > data.gameSettings.rounds){  
+           
                 console.log("Endscreen von gameCode: " + data.gameCode)
 
-                
+
                 io.to(room).emit("end_screen", data)
-    
+                io.to(room).emit("end_screen_data", data)
             }
             else{
                 console.log("Schicke Daten der nächsten Runde. gameCode: "+ data.gameCode)
             io.to(room).emit("update_player_data", data)
-            
+
             }
-            
-            
+
+
         }
         else {
             data.roundData.producer = producer

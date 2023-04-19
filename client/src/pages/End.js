@@ -1,7 +1,114 @@
-import React from "react";
-
+import { Socket } from "socket.io-client";
 import "../styles/pages/End.css"
 
+import React, {useEffect, useState} from "react";
+
+
+import InputField from "../components/form/InputField"
+import Button from "../components/form/Button";
+import Countdown from '../lib/Countdown';
+import { Redirect } from "react-router-dom"
+
+
+function End(props) {
+
+    const gameCode = JSON.parse(localStorage.getItem("room"))
+    const socket = props.socketId
+    
+    let distributorData
+
+    useEffect(() => {
+        console.log(gameCode);
+
+        socket.emit("endscreendata", {
+            gameCode
+        })
+
+        socket.on("update_end_Screen", (data) => {
+            console.log("UpdatePlayer aufgerufen")
+            console.log(data)
+            
+            const distributorData = data;
+
+
+        })
+
+    }
+)
+
+    return (
+  <div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Round</th>
+      <th>Field 1</th>
+      <th>Field 2</th>
+    </tr>
+  </thead>
+  <tbody>
+
+
+</tbody>
+</table>
+
+
+
+  </div>
+
+    )
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 class End extends React.Component {
     onClickHandler() {
 
@@ -205,11 +312,11 @@ class End extends React.Component {
                 <div className={"wrapper_button"}>
                     {/* <Link to={"/game/create"}>
                         <Button linkTo={"/game/create"}>Spiel starten</Button>
-                    </Link> */}
+                    </Link> }
                 </div>
             </div>
         )
     }
 }
-
+*/
 export default End

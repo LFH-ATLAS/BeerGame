@@ -29,11 +29,12 @@ function PlayGame(props) {
 
     useEffect(() => {
             socket.on("end_screen", (data) => {
-                setRedirectComponent(<Redirect to={`/end`} />)
+                setRedirectComponent(<Redirect to={`/end/${data.gameCode}`} />)
+
             })
 
             socket.on("update_player_data", updatePlayerData)
-            
+
         socket.on("initial_data", (data) => {
             console.log("initial data")
             console.log(data)
@@ -51,7 +52,7 @@ function PlayGame(props) {
 
     function updatePlayerData(data){
         setCurrentRound(data.roundData.currentRound)
-        setInputActive(true) 
+        setInputActive(true)
         if(selectedRole === 1) {
             setStock(data.roundData.producer[data.roundData.currentRound-1].stock)
             setDelay(data.roundData.producer[data.roundData.currentRound-1].delay)
@@ -59,7 +60,7 @@ function PlayGame(props) {
             setNext2WeekDelivery(data.roundData.producer[data.roundData.currentRound-1].next2Week)
             setSupplyChainOrder(data.roundData.distributor[data.roundData.currentRound-1].order)
             setGameKPIs(data.roundData.producer[data.roundData.currentRound-1].kpis)
-                    
+
         }
         else if(selectedRole === 2) {
             setStock(data.roundData.distributor[data.roundData.currentRound-1].stock)
@@ -222,7 +223,7 @@ function PlayGame(props) {
                                         <th>Wochen mit Lieferrückstand</th>
                                     </tr>
                                 </thead>
-                                <tbody> 
+                                <tbody>
                                      {gameKPIs.map(item => {
                                         return (
                                             <tr key={item.roundPlayed}>
@@ -235,7 +236,7 @@ function PlayGame(props) {
                                             </tr>
                                         );
                                      })}
-                                </tbody>                 
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -244,7 +245,7 @@ function PlayGame(props) {
             </div>
         )
     }
-    
+
 
 }
 
