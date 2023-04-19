@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import DBGame from "../model/DBGame.js";
 import CalculateNewValues from "../functions/CalculateNewValues.js";
 
+import { calcStorageCosts, calcStorageCostsWeekly, calcAverageStock, calcBackorderWeeksPct } from "../functions/lib.js";
+
 export default function UpdateGame(io, socket, intData) {
     const room = intData.gameCode
     const role = intData.selectedRole
@@ -29,15 +31,17 @@ export default function UpdateGame(io, socket, intData) {
                         delay: 0,
                         next1Week: 0,
                         next2Week: 0,
-                        kpis: {
-                            roundPlayed: 1,
-                            storageCosts: 0,
-                            storageCostsWeekly: 0,
+                        kpis: [...[], {
+                            roundPlayed: 0,
+                            storageCosts: calcStorageCosts(0, data.gameSettings.startStock),
+                            storageCostsWeekly: calcStorageCostsWeekly((data.gameSettings.startStock*5),0),
                             perfectOrderRatePct: 0,
                             storageCostsBackorder: 0,
-                            averageStock: 0,
-                            backorderWeeksPct: 0
-                        }   
+                            averageStock: data.gameSettings.startStock,
+                            backorderWeeksPct: 0,
+                            sumStock: data.gameSettings.startStock,
+                            weeksWithBackorder: 0
+                        }]   
                         
                     })
                     break
@@ -49,7 +53,8 @@ export default function UpdateGame(io, socket, intData) {
                         next1Week: 0,
                         next2Week: 0,
                         kpis: {
-                            roundPlayed: 1,
+                            roundPlayed: 0,
+                            storageCosts: 0,
                             storageCostsWeekly: 0,
                             perfectOrderRatePct: 0,
                             storageCostsBackorder: 0,
@@ -66,7 +71,8 @@ export default function UpdateGame(io, socket, intData) {
                         next1Week: 0,
                         next2Week: 0,
                         kpis: {
-                            roundPlayed: 1,
+                            roundPlayed: 0,
+                            storageCosts: 0,
                             storageCostsWeekly: 0,
                             perfectOrderRatePct: 0,
                             storageCostsBackorder: 0,
@@ -83,7 +89,8 @@ export default function UpdateGame(io, socket, intData) {
                         next1Week: 0,
                         next2Week: 0,
                         kpis: {
-                            roundPlayed: 1,
+                            roundPlayed: 0,
+                            storageCosts: 0,
                             storageCostsWeekly: 0,
                             perfectOrderRatePct: 0,
                             storageCostsBackorder: 0,
@@ -99,22 +106,30 @@ export default function UpdateGame(io, socket, intData) {
         else {
             switch (role) {
                 case 1:
+                    console.log(producer[currentRound-1].storageCosts)
+                    console.log(producer[currentRound-1].stock)
+                    //const tempSumStock = producer[currentRound-1].kpis.sumStock + producer[currentRound-1].stock
+                    /*let tempweeksWithBackorder = producer[currentRound-1].kpis.weeksWithBackorder
+                    if(producer[currentRound-1].delay > 0){
+                        tempweeksWithBackorder++
+                    }*/
                     producer.push({
                         stock: producer[currentRound-1].stock,
                         order: parseInt(orderValue),
                         delay: producer[currentRound-1].delay,
                         next1Week: producer[currentRound-1].next1Week,
                         next2Week: producer[currentRound-1].next2Week,
-                        kpis:{
-                            roundPlayed: 2,
-                            storageCosts: 1,
-                            storageCosts: 1,
-                            storageCostsWeekly: 1,
+                        kpis:[...producer[currentRound-1].kpis, {
+                            roundPlayed: currentRound,
+                            storageCosts: 1, //calcStorageCosts(producer[currentRound-1].kpis.storageCosts,producer[currentRound-1].stock), 
+                            storageCostsWeekly: 1, //calcStorageCostsWeekly((producer[currentRound-1].stock*5), (producer[currentRound-1].delay*10)),
                             perfectOrderRatePct: 1,
                             storageCostsBackorder: 1,
-                            averageStock: 1,
-                            backorderWeeksPct: 1
-                        }
+                            averageStock: 1,//calcAverageStock(tempSumStock , currentRound),
+                            backorderWeeksPct: 1,//calcBackorderWeeksPct(tempweeksWithBackorder, currentRound+1),
+                            sumStock: 1,//tempSumStock,
+                            weeksWithBackorder: 1,//tempweeksWithBackorder
+                        }]
                     })
                     break
                 case 2:
@@ -125,8 +140,7 @@ export default function UpdateGame(io, socket, intData) {
                         next1Week: distributor[currentRound-1].next1Week,
                         next2Week: distributor[currentRound-1].next2Week,
                         kpis:{
-                            roundPlayed: 2,
-                            storageCosts: 1,
+                            roundPlayed: currentRound,
                             storageCosts: 1,
                             storageCostsWeekly: 1,
                             perfectOrderRatePct: 1,
@@ -144,8 +158,7 @@ export default function UpdateGame(io, socket, intData) {
                         next1Week: wholesaler[currentRound-1].next1Week,
                         next2Week: wholesaler[currentRound-1].next2Week,
                         kpis:{
-                            roundPlayed: 2,
-                            storageCosts: 1,
+                            roundPlayed: currentRound,
                             storageCosts: 1,
                             storageCostsWeekly: 1,
                             perfectOrderRatePct: 1,
@@ -163,8 +176,7 @@ export default function UpdateGame(io, socket, intData) {
                         next1Week: retailer[currentRound-1].next1Week,
                         next2Week: retailer[currentRound-1].next2Week,
                         kpis:{
-                            roundPlayed: 2,
-                            storageCosts: 1,
+                            roundPlayed: currentRound,
                             storageCosts: 1,
                             storageCostsWeekly: 1,
                             perfectOrderRatePct: 1,
