@@ -1,6 +1,6 @@
 # Setup
 Hier liegen die docker-compose Dateien, die für das Ausführen über Docker nötig sind.
-Dafür ist eine Docker Installation erforderlich.
+Dafür sind eine Docker Installation erforderlich und eine Kopie des Github Repositories auf dem Entwicklercomputer notwendig.
 
 Zum Starten vom Development Setup muss folgendes eingegeben werden:
 ```

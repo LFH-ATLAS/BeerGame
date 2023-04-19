@@ -302,6 +302,7 @@ export default function UpdateGame(io, socket, intData) {
             if(data.roundData.currentRound > data.gameSettings.rounds){
                 console.log("Endscreen von gameCode: " + data.gameCode)
 
+                
                 io.to(room).emit("end_screen", data)
     
             }
