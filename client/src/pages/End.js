@@ -14,10 +14,8 @@ function End(props) {
 
     const gameCode = JSON.parse(localStorage.getItem("room"))
     const socket = props.socketId
-    var hi = "tim";
-
     
-
+    let distributorData
 
     useEffect(() => {
         console.log(gameCode);
@@ -29,13 +27,44 @@ function End(props) {
         socket.on("update_end_Screen", (data) => {
             console.log("UpdatePlayer aufgerufen")
             console.log(data)
+            
+            const distributorData = data;
+
+
         })
+
     }
 )
 
     return (
-  <div>Hallo
- {hi}
+  <div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Round</th>
+      <th>Field 1</th>
+      <th>Field 2</th>
+    </tr>
+  </thead>
+  <tbody>
+
+{distributorData.forEach(game => {
+    game.roundData.distributor.forEach((roundData, index) => {
+      return (
+        <tr key={index}>
+          <td>{roundData.delay}</td>
+          <td>{roundData.next1week}</td>
+        </tr>
+      )
+    })
+  })
+}
+</tbody>
+</table>
+
+
+
   </div>
 
     )
