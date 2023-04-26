@@ -28,6 +28,8 @@ function NewGame(props) {
 
     const [redirectComponent, setRedirectComponent] = useState(<></>)
 
+    const [spielcodeChangeable, setSpielcodeChangeable] = useState(false);
+
     useEffect(() => {
         socket.on("join_to_game", (data) => {
             console.log("Socket called")
@@ -91,6 +93,7 @@ function NewGame(props) {
                     gameCode,
                     selectedRole
                 })
+                setSpielcodeChangeable(true);
             }
             else {
                 console.log("Socket submit")
@@ -244,7 +247,6 @@ function NewGame(props) {
                     name={"Spielcode"}
                     getValue={setGameCode}
                     description={"Zulässige Zeichen: A-Z, a-z, 0-9"}
-                    restriction={"none"}
                 />
                 <span>Wählen Sie die Anzahl der Spielrunden:</span>
                 <div className={"select_rounds"} onChange={getSelectedRounds}>
@@ -298,12 +300,14 @@ function NewGame(props) {
             <div className={"options_wrapper"}>
                 <span>Geben Sie den Spielcode ein:</span>
                 <InputField
+                    id={"spielcodeID"}
                     name={"Spielcode"}
                     getValue={setGameCode}
                     invalid={inputError}
                     description={"Zulässige Zeichen: A-Z, a-z, 0-9"}
+                    disabled = {spielcodeChangeable}
                 />
-                {selectRoleMenu ?
+                {selectRoleMenu ? 
                     <>
                         <span>Wählen Sie eine Rolle:</span>
                         <div className={"select_role"}>
@@ -344,6 +348,7 @@ function NewGame(props) {
                                 disabled={disabledRoles[3]}
                             >Einzelhändler</Tile>
                         </div>
+                        
                     </>
                 :
                     <></>
