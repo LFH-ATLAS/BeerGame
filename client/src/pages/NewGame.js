@@ -44,6 +44,14 @@ function NewGame(props) {
         socket.on("game_choose_role", data => {
             console.log(data)
             setSelectRoleMenu(true)
+
+
+
+
+
+
+
+
             let tempArray = []
             if(data.producer === "NA")
                 tempArray.push(false)
@@ -257,6 +265,8 @@ function NewGame(props) {
                     description={"Bsp.: 15"}
                     restriction = {"numerical"}
                     
+            
+                    
                 /> 
                 <span>Wählen Sie die Nachfragemenge:</span>
                 <InputField
@@ -302,8 +312,12 @@ function NewGame(props) {
                                 imgAlt={"Neues Spiel"}
                                 idKey={1}
                                 getValue={setSelectedRole}
+
                                 currentSelected={selectedRole}
                                 disabled={disabledRoles[0]}
+                                
+
+                                
                             >Produzent</Tile>
                             <Tile
                                 imgSrc={"/icons/box.svg"}
@@ -343,9 +357,12 @@ function NewGame(props) {
                     :
                     <Button
                         onClick={onJoinGameClick}
+                        
                     >
                         Spielrolle wählen
                     </Button>
+
+
                 }
             </div>
         )

@@ -3,9 +3,9 @@ services:
   frontend:
     container_name: frontend
     image: beergame/frontend:dev
-    #environment:
+    environment:
         # default is "http://localhost:3001"
-    #  - REACT_APP_BACKEND_URL=http://localhost:3001
+      - REACT_APP_BACKEND_URL=${BE_URL:-http://localhost:3001}
     build:
       context: ../client
       dockerfile: Dockerfile
@@ -19,12 +19,10 @@ services:
       context: ../server
       dockerfile: Dockerfile
     environment:
-      - SERVER_PORT=3001
-      # Cross Origin Resource Sharing Origin
-      # allow only this domain as frontend
-      - SERVER_CORS_ORIGIN=*
+      # Cross Origin Resource Sharing Origin, allow only this domain as frontend
+      - SERVER_CORS_ORIGIN=${FE_URL:-*}
       # Connection string for connecting to local or external database. Keep it secret!
-      - MONGOOSE_CONNECTIONSTRING=mongodb://admin:example@mongo:27017
+      - MONGOOSE_CONNECTIONSTRING=${MONGO_STRING:-"mongodb://admin:example@mongo:27017"}
     ports:
       - 3001:3001
 
@@ -33,8 +31,8 @@ services:
     image: mongo
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD:-example}
 #    ports:
 #      - 27017:27017
     volumes:

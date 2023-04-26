@@ -12,6 +12,7 @@ function PlayGame(props) {
     const selectedRole = JSON.parse(localStorage.getItem("role"))
     const socket = props.socketId
     const hoursMinSecs = {hours:0, minutes: 0, seconds: 60}
+    const [gameKPIs, setGameKPIs] = useState([])
 
     const [orderValue, setOrderValue] = useState("")
     const [inputActive, setInputActive] = useState(true)
@@ -27,48 +28,15 @@ function PlayGame(props) {
     const [redirectComponent, setRedirectComponent] = useState(<></>)
 
     useEffect(() => {
-
             socket.on("end_screen", (data) => {
-                setRedirectComponent(<Redirect to={`/end`} />)
+                setRedirectComponent(<Redirect to={`/end/${data.gameCode}`} />)
 
             })
 
-        socket.on("update_player_data", (data) => {
-            console.log("UpdatePlayer aufgerufen")
-            console.log(data)
-            setCurrentRound(data.roundData.currentRound)
-            console.log(data.roundData.currentRound)
-            setInputActive(true)
-            if(selectedRole === 1) {
-                setStock(data.roundData.producer[data.roundData.currentRound-1].stock)
-                setDelay(data.roundData.producer[data.roundData.currentRound-1].delay)
-                setNext1WeekDelivery(data.roundData.producer[data.roundData.currentRound-1].next1Week)
-                setNext2WeekDelivery(data.roundData.producer[data.roundData.currentRound-1].next2Week)
-                setSupplyChainOrder(data.roundData.distributor[data.roundData.currentRound-1].order)
-            }
-            else if(selectedRole === 2) {
-                setStock(data.roundData.distributor[data.roundData.currentRound-1].stock)
-                setDelay(data.roundData.distributor[data.roundData.currentRound-1].delay)
-                setNext1WeekDelivery(data.roundData.distributor[data.roundData.currentRound-1].next1Week)
-                setNext2WeekDelivery(data.roundData.distributor[data.roundData.currentRound-1].next2Week)
-                setSupplyChainOrder(data.roundData.wholesaler[data.roundData.currentRound-1].order)
-            }
-            else if(selectedRole === 3) {
-                setStock(data.roundData.wholesaler[data.roundData.currentRound-1].stock)
-                setDelay(data.roundData.wholesaler[data.roundData.currentRound-1].delay)
-                setNext1WeekDelivery(data.roundData.wholesaler[data.roundData.currentRound-1].next1Week)
-                setNext2WeekDelivery(data.roundData.wholesaler[data.roundData.currentRound-1].next2Week)
-                setSupplyChainOrder(data.roundData.retailer[data.roundData.currentRound-1].order)
-            }
-            else {
-                setStock(data.roundData.retailer[data.roundData.currentRound-1].stock)
-                setDelay(data.roundData.retailer[data.roundData.currentRound-1].delay)
-                setNext1WeekDelivery(data.roundData.retailer[data.roundData.currentRound-1].next1Week)
-                setNext2WeekDelivery(data.roundData.retailer[data.roundData.currentRound-1].next2Week)
-                setSupplyChainOrder(data.roundData.retailer[data.roundData.currentRound-1].supplyChainOrder)
-            }
-        })
+            socket.on("update_player_data", updatePlayerData)
+
         socket.on("initial_data", (data) => {
+            console.log("initial data")
             console.log(data)
             setStock(data.gameSettings.startStock)
         })
@@ -76,16 +44,63 @@ function PlayGame(props) {
             setCurrentRoomSize(data.roomSize)
             setCurrentRoomRoles(data.selectedRoles)
         })
+        return () => {
+            socket.off('update_player_data', updatePlayerData);
+          };
     })
+
+
+    function updatePlayerData(data){
+        setCurrentRound(data.roundData.currentRound)
+        setInputActive(true)
+        if(selectedRole === 1) {
+            setStock(data.roundData.producer[data.roundData.currentRound-1].stock)
+            setDelay(data.roundData.producer[data.roundData.currentRound-1].delay)
+            setNext1WeekDelivery(data.roundData.producer[data.roundData.currentRound-1].next1Week)
+            setNext2WeekDelivery(data.roundData.producer[data.roundData.currentRound-1].next2Week)
+            setSupplyChainOrder(data.roundData.distributor[data.roundData.currentRound-1].order)
+            setGameKPIs(data.roundData.producer[data.roundData.currentRound-1].kpis)
+
+        }
+        else if(selectedRole === 2) {
+            setStock(data.roundData.distributor[data.roundData.currentRound-1].stock)
+            setDelay(data.roundData.distributor[data.roundData.currentRound-1].delay)
+            setNext1WeekDelivery(data.roundData.distributor[data.roundData.currentRound-1].next1Week)
+            setNext2WeekDelivery(data.roundData.distributor[data.roundData.currentRound-1].next2Week)
+            setSupplyChainOrder(data.roundData.wholesaler[data.roundData.currentRound-1].order)
+            setGameKPIs(data.roundData.distributor[data.roundData.currentRound-1].kpis)
+
+        }
+        else if(selectedRole === 3) {
+            setStock(data.roundData.wholesaler[data.roundData.currentRound-1].stock)
+            setDelay(data.roundData.wholesaler[data.roundData.currentRound-1].delay)
+            setNext1WeekDelivery(data.roundData.wholesaler[data.roundData.currentRound-1].next1Week)
+            setNext2WeekDelivery(data.roundData.wholesaler[data.roundData.currentRound-1].next2Week)
+            setSupplyChainOrder(data.roundData.retailer[data.roundData.currentRound-1].order)
+            setGameKPIs(data.roundData.wholesaler[data.roundData.currentRound-1].kpis)
+        }
+        else {
+            setStock(data.roundData.retailer[data.roundData.currentRound-1].stock)
+            setDelay(data.roundData.retailer[data.roundData.currentRound-1].delay)
+            setNext1WeekDelivery(data.roundData.retailer[data.roundData.currentRound-1].next1Week)
+            setNext2WeekDelivery(data.roundData.retailer[data.roundData.currentRound-1].next2Week)
+            setSupplyChainOrder(data.roundData.retailer[data.roundData.currentRound-1].supplyChainOrder)
+            setGameKPIs(data.roundData.retailer[data.roundData.currentRound-1].kpis)
+
+        }
+    }
 
     function submitOrder() {
         setInputActive(false)
+
         socket.emit("game_update", {
             gameCode,
             selectedRole,
             orderValue
         })
-        setOrderValue("")
+        setOrderValue("");
+
+
     }
 
     const [CoundtdownComplete, setCountdownComplete] = React.useState(false)
@@ -205,41 +220,30 @@ function PlayGame(props) {
                     <div className={"playground2"}>
                         <div className={"KPItable"}>
                             <table>
-                                <tr>
-                                    <th>Runde</th>
-                                    <th>Lagerkosten</th>
-                                    <th>Gesamtkosten</th>
-                                    <th>Perfekte Auftragsrate</th>
-                                    <th>Durchschnittlicher Lagerbestand</th>
-                                    <th>Wochen mit Lieferrückstand</th>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>20</td>
-                                    <td>20</td>
-                                    <td>80%</td>
-                                    <td>10</td>
-                                    <td>0%</td>
-
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>20</td>
-                                    <td>40</td>
-                                    <td>50%</td>
-                                    <td>15</td>
-                                    <td>50%</td>
-
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>10</td>
-                                    <td>50</td>
-                                    <td>66%</td>
-                                    <td>13</td>
-                                    <td>33%</td>
-
-                                </tr>
+                                <thead>
+                                    <tr>
+                                        <th>Runde</th>
+                                        <th>Kosten pro Woche</th>
+                                        <th>Lagergesamtkosten</th>
+                                        <th>Perfekte Auftragsrate</th>
+                                        <th>Durchschnittlicher Lagerbestand</th>
+                                        <th>Wochen mit Lieferrückstand</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                     {gameKPIs.map(item => {
+                                        return (
+                                            <tr key={item.roundPlayed}>
+                                                <td>{item.roundPlayed}</td>
+                                                <td>{item.storageCostsWeekly}</td>
+                                                <td>{item.storageCosts}</td>
+                                                <td>{item.perfectOrderRatePct}%</td>
+                                                <td>{item.averageStock}</td>
+                                                <td>{item.backorderWeeksPct}%</td>
+                                            </tr>
+                                        );
+                                     })}
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -248,7 +252,7 @@ function PlayGame(props) {
             </div>
         )
     }
-    
+
 
 }
 
