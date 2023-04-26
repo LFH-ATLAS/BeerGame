@@ -1,24 +1,19 @@
+# Diese Datei ermöglicht das lokale Ausführen vom Beergame Projekt über die Öffentlichen Images des aktuellen Releases. Dafür ist keine lokale Kopie des Github Repositories nötig.
+
 version: "3"
 services:
   frontend:
-    container_name: frontend-prod
-    image: beergame/frontend:latest-prod
+    container_name: frontend-dev
+    image: beergamelfh/beergame-frontend:latest-dev
     environment:
-      # Not working now, environment variables not passed to React
       # default is "http://localhost:3001"
       - REACT_APP_BACKEND_URL=${BE_URL:-http://localhost:3001}
-    build:
-      context: ../client
-      dockerfile: Dockerfile-Production
     ports:
-      - 80:80
+      - 3000:3000
 
   backend:
     container_name: backend
-    image: beergame/backend:latest
-    build:
-      context: ../server
-      dockerfile: Dockerfile
+    image: beergamelfh/beergame-backend:latest
     environment:
       # Cross Origin Resource Sharing Origin, allow only this domain as frontend
       - SERVER_CORS_ORIGIN=${FE_URL:-*}
@@ -32,12 +27,13 @@ services:
     image: mongo
     restart: always
     environment:
+      # Default credentials: admin:example
       MONGO_INITDB_ROOT_USERNAME: ${DB_USER:-admin}
       MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD:-example}
     #    ports:
     #      - 27017:27017
     volumes:
-      - mongodb-data-dev:/data/db
+      - mongodb-data:/data/db
 
 volumes:
   mongodb-data-dev:

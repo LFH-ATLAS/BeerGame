@@ -1,10 +1,10 @@
 version: "3"
 services:
   frontend:
-    container_name: frontend
-    image: beergame/frontend:dev
+    container_name: frontend-dev
+    image: beergame/frontend:latest-dev
     environment:
-        # default is "http://localhost:3001"
+      # default is "http://localhost:3001"
       - REACT_APP_BACKEND_URL=${BE_URL:-http://localhost:3001}
     build:
       context: ../client
@@ -14,7 +14,7 @@ services:
 
   backend:
     container_name: backend
-    image: beergame/backend
+    image: beergame/backend:latest
     build:
       context: ../server
       dockerfile: Dockerfile
