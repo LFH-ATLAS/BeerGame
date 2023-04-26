@@ -98,6 +98,7 @@ function PlayGame(props) {
             selectedRole,
             orderValue
         })
+        setOrderValue("");
 
 
     }
