@@ -27,7 +27,7 @@ function PlayGame(props) {
     const [supplyChainOrder, setSupplyChainOrder] = useState(0)
     const [redirectComponent, setRedirectComponent] = useState(<></>)
 
-    const [countdown, setCountdown] = useState(15); // Startwert für den Countdown
+    const [countdown, setCountdown] = useState(60); // Startwert für den Countdown
 
     useEffect(() => {
             socket.on("end_screen", (data) => {
@@ -65,18 +65,21 @@ function PlayGame(props) {
         if (countdown === 0) {
           // Wenn der Countdown bei 0 ist, mach etwas (z.B. zeige eine Nachricht)
           console.log("Countdown beendet!");
+          if(inputActive === true){
           submitOrder()
+          }
         }
     }, [countdown]);
 
 
       function startCountdown() {
-        setCountdown(15);
+        setCountdown(60);
       }
 
     function updatePlayerData(data){
 
         startCountdown()
+        console.log(data)
 
         setCurrentRound(data.roundData.currentRound)
         setInputActive(true)
@@ -128,12 +131,6 @@ function PlayGame(props) {
         setOrderValue("");
 
 
-    }
-
-    const [CoundtdownComplete, setCountdownComplete] = React.useState(false)
-    const handleCountdownComplete = () => {
-      setCountdownComplete(true)
-        submitOrder()
     }
 
     if(currentRoomSize < 4) {
@@ -204,12 +201,11 @@ function PlayGame(props) {
         return (
             <div>
                 { redirectComponent }
-                {CoundtdownComplete}
                 <div className={"grid_play"}>
                     <div className={"playground"}>
                         <div className={"timer"}>
-                        <div>{countdown}</div>
-                            <p>{currentRound}</p>
+                        <div>Timer: {countdown}</div>
+                            <p>Runde: {currentRound}</p>
                         </div>
                         <div className={"wrapper_img"}>
                             <img src={roleIcon} alt={"Icon"} />

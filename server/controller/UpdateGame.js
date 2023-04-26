@@ -8,7 +8,12 @@ import { calcStorageCosts, calcStorageCostsWeekly, calcAverageStock, calcBackord
 export default function UpdateGame(io, socket, intData) {
     const room = intData.gameCode
     const role = intData.selectedRole
+    console.log(intData.orderValue)
+    if(intData.orderValue === ''){
+        intData.orderValue = 5;
+    }
     const orderValue = intData.orderValue
+    console.log("Dddd" + orderValue)
     const GameData = mongoose.model("DBGame", DBGame)
     //GameData.findOne({ gameCode: room }, (err, data) => {
     GameData.findOne({ gameCode: room }, (err, data) => {
