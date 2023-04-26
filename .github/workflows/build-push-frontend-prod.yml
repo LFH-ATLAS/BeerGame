@@ -1,5 +1,5 @@
 # This is a basic workflow to help you get started with Actions
-name: CI-CD - Backend
+name: CI-CD - Frontend - Prod
 
 # Controls when the action will run. 
 on:
@@ -43,8 +43,7 @@ jobs:
         - name: Build and push
           uses: docker/build-push-action@master
           with:
-            context: ./server/
-            file: ./server/Dockerfile
+            context: ./client/
+            file: ./client/Dockerfile-Production
             push: true
-            tags: ${{ secrets.DOCKERHUB_USERNAME }}/beergame-backend:latest, ${{ secrets.DOCKERHUB_USERNAME }}/beergame-backend:1.${{ github.run_number }}
-          
+            tags: ${{ secrets.DOCKERHUB_USERNAME }}/beergame-frontend:latest,  ${{ secrets.DOCKERHUB_USERNAME }}/beergame-frontend:1.${{ github.run_number }}
