@@ -299,7 +299,7 @@ export default function UpdateGame(io, socket, intData) {
             data.save()
 
 
-            if(data.roundData.currentRound > 2){  
+            if(data.roundData.currentRound > data.gameSettings.rounds){  
            
                 console.log("Endscreen von gameCode: " + data.gameCode)
 
