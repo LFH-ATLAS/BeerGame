@@ -22,15 +22,16 @@ function PlayGame(props) {
     const [currentRound, setCurrentRound] = useState(1)
     const [stock, setStock] = useState(0)
     const [delay, setDelay] = useState(0)
-    const [next1WeekDelivery, setNext1WeekDelivery] = useState(0)
+    const [next1WeekDelivery, setNext1WeekDelivery] = useState(1)
     const [next2WeekDelivery, setNext2WeekDelivery] = useState(0)
     const [supplyChainOrder, setSupplyChainOrder] = useState(0)
     const [redirectComponent, setRedirectComponent] = useState(<></>)
 
+    const [countdown, setCountdown] = useState(15); // Startwert für den Countdown
+
     useEffect(() => {
             socket.on("end_screen", (data) => {
                 setRedirectComponent(<Redirect to={`/end/${data.gameCode}`} />)
-
             })
 
             socket.on("update_player_data", updatePlayerData)
@@ -38,19 +39,45 @@ function PlayGame(props) {
         socket.on("initial_data", (data) => {
             console.log("initial data")
             console.log(data)
+            startCountdown()
             setStock(data.gameSettings.startStock)
         })
         socket.on("update_room_size", (data) => {
             setCurrentRoomSize(data.roomSize)
             setCurrentRoomRoles(data.selectedRoles)
+
         })
         return () => {
             socket.off('update_player_data', updatePlayerData);
           };
     })
 
+    useEffect(() => {
+        const timer = setInterval(() => {
+          setCountdown((prevCountdown) => prevCountdown - 1);
+        }, 1000); // Herunterzählen alle 1000 Millisekunden
+    
+        // Aufräumen, wenn die Komponente unmountet wird
+        return () => clearInterval(timer);
+      }, []);
+
+    useEffect(() => {
+        if (countdown <= 0) {
+          // Wenn der Countdown bei 0 ist, mach etwas (z.B. zeige eine Nachricht)
+          console.log("Countdown beendet!");
+          submitOrder()
+        }
+    }, [countdown]);
+
+
+      function startCountdown() {
+        setCountdown(15);
+      }
 
     function updatePlayerData(data){
+
+        startCountdown()
+
         setCurrentRound(data.roundData.currentRound)
         setInputActive(true)
         if(selectedRole === 1) {
@@ -177,12 +204,11 @@ function PlayGame(props) {
         return (
             <div>
                 { redirectComponent }
-                {!CoundtdownComplete && ( <Countdown hoursMinSecs={hoursMinSecs} onReset={handleCountdownComplete}/>) }
                 {CoundtdownComplete}
                 <div className={"grid_play"}>
                     <div className={"playground"}>
                         <div className={"timer"}>
-                            <Countdown hoursMinSecs={hoursMinSecs} onCountdownComplete={handleCountdownComplete} />
+                        <div>{countdown}</div>
                             <p>{currentRound}</p>
                         </div>
                         <div className={"wrapper_img"}>
