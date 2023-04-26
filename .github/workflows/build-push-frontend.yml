@@ -1,5 +1,5 @@
 # This is a basic workflow to help you get started with Actions
-name: CI-CD - Frontend
+name: CI-CD - Frontend - Prod
 
 # Controls when the action will run. 
 on:
@@ -46,13 +46,4 @@ jobs:
             context: ./client/
             file: ./client/Dockerfile-Production
             push: true
-            tags: ${{ secrets.DOCKERHUB_USERNAME }}/beergame-frontend:latest
-          
-        - name: Run the image in a container
-          uses: addnab/docker-run-action@v3
-          with:
-            image: ${{ secrets.DOCKERHUB_USERNAME }}/beergame-frontend:latest
-            run: |
-              echo "runing the docker image"
-              echo "Testing the nodejs  app endpoints"
-              echo ${{ steps.docker_build.outputs.digest }}
+            tags: ${{ secrets.DOCKERHUB_USERNAME }}/beergame-frontend:latest,  ${{ secrets.DOCKERHUB_USERNAME }}/beergame-frontend:1.${{ github.run_number }}
