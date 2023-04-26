@@ -130,6 +130,7 @@ function PlayGame(props) {
                         getValue={setOrderValue}
                         setValue={orderValue}
                         description={"Zulässige Zeichen: 0-9"}
+                        restriction = {"numerical"}
                     />
                     <Button onClick={submitOrder}>Bestellen</Button>
                 </>
@@ -144,6 +145,7 @@ function PlayGame(props) {
                         setValue={orderValue}
                         description={"Zulässige Zeichen: 0-9"}
                         disabled={true}
+                        restriction = {"numerical"}
                     />
                     <Button onClick={submitOrder}>Bestellen</Button>
                 </>
