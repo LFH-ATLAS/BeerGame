@@ -36,21 +36,31 @@ function PlayGame(props) {
 
             socket.on("update_player_data", updatePlayerData)
 
-        socket.on("initial_data", (data) => {
-            console.log("initial data")
-            console.log(data)
-            startCountdown()
-            setStock(data.gameSettings.startStock)
-        })
-        socket.on("update_room_size", (data) => {
-            setCurrentRoomSize(data.roomSize)
-            setCurrentRoomRoles(data.selectedRoles)
+            socket.on("initial_data", initialData)
 
-        })
+        socket.on("update_room_size", updateRoomSize)
+
         return () => {
             socket.off('update_player_data', updatePlayerData);
+            socket.off('initial_data', initialData);
+            socket.off('update_room_size', updateRoomSize);
           };
     })
+
+
+    function initialData(data){
+        console.log("initial data")
+        console.log(data)
+        startCountdown()
+        setStock(data.gameSettings.startStock)
+    }
+
+    function updateRoomSize(data){
+        setCurrentRoomSize(data.roomSize)
+        setCurrentRoomRoles(data.selectedRoles)
+    }
+
+
 
     useEffect(() => {
         const timer = setInterval(() => {
