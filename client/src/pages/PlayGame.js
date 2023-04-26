@@ -28,26 +28,33 @@ function PlayGame(props) {
     const [redirectComponent, setRedirectComponent] = useState(<></>)
 
     useEffect(() => {
-            socket.on("end_screen", (data) => {
-                setRedirectComponent(<Redirect to={`/end/${data.gameCode}`} />)
-
-            })
-
-            socket.on("update_player_data", updatePlayerData)
-
-        socket.on("initial_data", (data) => {
-            console.log("initial data")
-            console.log(data)
-            setStock(data.gameSettings.startStock)
+        socket.on("end_screen", (data) => {
+            setRedirectComponent(<Redirect to={`/end/${data.gameCode}`} />)
         })
-        socket.on("update_room_size", (data) => {
-            setCurrentRoomSize(data.roomSize)
-            setCurrentRoomRoles(data.selectedRoles)
-        })
+
+        socket.on("update_player_data", updatePlayerData)
+
+        socket.on("initial_data", initialData)
+
+        socket.on("update_room_size", updateRoomSize)
+
         return () => {
             socket.off('update_player_data', updatePlayerData);
+            socket.off('initial_data', initialData);
+            socket.off('update_room_size', updateRoomSize);
           };
     })
+
+    function initialData(data){
+        console.log("initial data")
+        console.log(data)
+        setStock(data.gameSettings.startStock)
+    }
+
+    function updateRoomSize(data){
+        setCurrentRoomSize(data.roomSize)
+        setCurrentRoomRoles(data.selectedRoles)
+    }
 
 
     function updatePlayerData(data){
