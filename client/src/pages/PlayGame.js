@@ -60,8 +60,6 @@ function PlayGame(props) {
         setCurrentRoomRoles(data.selectedRoles)
     }
 
-
-
     useEffect(() => {
         const timer = setInterval(() => {
           setCountdown((prevCountdown) => prevCountdown - 1);
