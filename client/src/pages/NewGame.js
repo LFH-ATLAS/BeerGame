@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Redirect } from "react-router-dom"
-import { KeyboardEvent } from "react"
+//import { KeyboardEvent } from "react"
 
 import "../styles/pages/NewGame.css"
 import Tile from "../components/Tile"
@@ -46,6 +46,14 @@ function NewGame(props) {
         socket.on("game_choose_role", data => {
             console.log(data)
             setSelectRoleMenu(true)
+
+
+
+
+
+
+
+
             let tempArray = []
             if(data.producer === "NA")
                 tempArray.push(false)
@@ -101,7 +109,7 @@ function NewGame(props) {
         }
         //console.log(gameCode)
     }
-
+/*
     function createGame() {
         if(!checkIfStringIsValid(gameCode)) {
             alert("Spielcode nicht korrekt!")
@@ -120,10 +128,89 @@ function NewGame(props) {
         else if(!checkIfStringIsValid(raisedValue, "numeric")) {
             alert("Die erhöhte Nachfragemenge muss ein numerischer Wert sein!")
         }
-        /*else if(!checkIfStringIsValid(roundOfRaise, "numeric") || roundOfRaise > rounds || roundOfRaise < 1) {
+        else if(!checkIfStringIsValid(roundOfRaise, "numeric") || roundOfRaise > rounds || roundOfRaise < 1) {
             alert("Die Runde, in der die Nachfragemenge erhöht wird, muss ein numerischer Wert sein und darf nicht kleiner als 1 sowie größer als die Anzahl der Runden sein!")
-        }*/
+        }
         else {
+            // Überprüfen, ob alle erforderlichen Felder ausgefüllt sind
+            /*if(!checkIfStringIsValid(startStock, "numeric") || 
+                !checkIfStringIsValid(startValue, "numeric") ||
+                !checkIfStringIsValid(raisedValue, "numeric")) {
+                alert("Bitte füllen Sie alle erforderlichen Felder aus und stellen Sie sicher, dass sie gültige numerische Werte enthalten!");
+                setInputError(true);
+            } else {
+                socket.emit("game_create", {
+                    gameCode,
+                    gameCreated: new Date(),
+                    gameSettings: {
+                        rounds,
+                        startStock,
+                        startValue,
+                        raisedValue,
+                        roundOfRaise
+                    },
+                    roundData: {
+                        currentRound: 0,
+                        producer: [],
+                        distributor: [],
+                        wholesaler: [],
+                        retailer: []
+                    }
+                })
+           // }
+        }
+    }*/
+
+    function createGame() {
+        let errorMessage = null;
+    
+        switch (true) {
+            case !checkIfStringIsValid(gameCode):
+                errorMessage = "Spielcode nicht korrekt!";
+                break;
+            case !rounds:
+                errorMessage = "Wählen Sie die Anzahl der Runden aus!";
+                break;
+            case !checkIfStringIsValid(startStock, "numeric", !0):
+                errorMessage = "Der Anfangsbestand muss ein numerischer Wert sein!";
+                break;
+            case !checkIfStringIsValid(startValue, "numeric", !0):
+                errorMessage = "Die Nachfragemenge muss ein numerischer Wert sein!";
+                break;
+            case !checkIfStringIsValid(raisedValue, "numeric", !0):
+                errorMessage = "Die erhöhte Nachfragemenge muss ein numerischer Wert sein!";
+                break;
+            //case !checkIfStringIsValid(roundOfRaise, "numeric", !0) || roundOfRaise > rounds || roundOfRaise < 1:
+                //errorMessage = "Die Runde, in der die Nachfragemenge erhöht wird, muss ein numerischer Wert sein und darf nicht kleiner als 1 sowie größer als die Anzahl der Runden sein!";
+                //break;
+            case !gameCode || !rounds || !startStock || !startValue || !raisedValue || !roundOfRaise:
+                errorMessage = "Bitte füllen Sie alle Felder aus!";
+                break;
+            /*default:
+                socket.emit("game_create", {
+                    gameCode,
+                    gameCreated: new Date(),
+                    gameSettings: {
+                        rounds,
+                        startStock,
+                        startValue,
+                        raisedValue,
+                        roundOfRaise
+                    },
+                    roundData: {
+                        currentRound: 0,
+                        producer: [],
+                        distributor: [],
+                        wholesaler: [],
+                        retailer: []
+                    }
+                }) */     
+        }
+    
+        if (errorMessage !== null) {
+            alert(errorMessage);
+            setInputError(true);
+        } else {
             socket.emit("game_create", {
                 gameCode,
                 gameCreated: new Date(),
@@ -144,6 +231,8 @@ function NewGame(props) {
             })
         }
     }
+    
+    
 
     function getSelectedRounds(e) {
         setRounds(e.target.value)
@@ -177,6 +266,8 @@ function NewGame(props) {
                     getValue={setStartStock}
                     description={"Bsp.: 15"}
                     restriction = {"numerical"}
+                    
+            
                     
                 /> 
                 <span>Wählen Sie die Nachfragemenge:</span>
@@ -225,8 +316,12 @@ function NewGame(props) {
                                 imgAlt={"Neues Spiel"}
                                 idKey={1}
                                 getValue={setSelectedRole}
+
                                 currentSelected={selectedRole}
                                 disabled={disabledRoles[0]}
+                                
+
+                                
                             >Produzent</Tile>
                             <Tile
                                 imgSrc={"/icons/box.svg"}
@@ -267,9 +362,12 @@ function NewGame(props) {
                     :
                     <Button
                         onClick={onJoinGameClick}
+                        
                     >
                         Spielrolle wählen
                     </Button>
+
+
                 }
             </div>
         )

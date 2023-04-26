@@ -9,6 +9,8 @@ import JoinGame from "./controller/JoinGame.js";
 import CreateGame from "./controller/CreateGame.js";
 import UpdateGame from "./controller/UpdateGame.js";
 import LeaveGame from "./controller/LeaveGame.js";
+import Senddata from "./controller/EndGame.js";
+
 
 const io = new Server({
   cors: {
@@ -23,11 +25,13 @@ mongoose.connect(process.env.MONGOOSE_CONNECTIONSTRING)
       socket.on("game_create", (data) => CreateGame(io, socket, data))
       socket.on("game_update", (data) => UpdateGame(io, socket, data))
       socket.on("disconnect", () => LeaveGame(io, socket))
+      socket.on("endscreendata", (data) => Senddata(io, socket, data))
+
     });
-    console.log("Server auf Port " + process.env.SERVER_PORT + " gestartet. Datenbankverbindung hergestellt.");
+    console.log("Server auf Port " + 3001 + " gestartet. Datenbankverbindung hergestellt.");
   })
   .catch((err) => {
     console.log("Server konnte nicht gestartet werden. Fehlermeldung:\n" + err.message);
 });
 
-io.listen(process.env.SERVER_PORT)
+io.listen(3001)
