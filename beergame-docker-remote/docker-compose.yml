@@ -1,20 +1,16 @@
+# Diese Datei ermöglicht das lokale Ausführen vom Beergame Projekt über die Öffentlichen Images des aktuellen Releases. Dafür ist keine lokale Kopie des Github Repositories nötig.
+
 version: "3"
 services:
   frontend:
-    container_name: fontend
-    image: beergame/frontend:prod
-    build:
-      context: ../client
-      dockerfile: Dockerfile-Production
+    container_name: frontend
+    image: beergamelfh/beergame-frontend:latest
     ports:
       - 80:80
 
   backend:
     container_name: backend
-    image: beergame/backend
-    build:
-      context: ../server
-      dockerfile: Dockerfile
+    image: beergamelfh/beergame-backend:latest
     environment:
       - SERVER_PORT=3001
       #Cross Origin Resource Sharing Origin
