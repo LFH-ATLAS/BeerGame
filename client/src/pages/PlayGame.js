@@ -19,7 +19,7 @@ function PlayGame(props) {
     const [currentRoomSize, setCurrentRoomSize] = useState(0)
     const [currentRoomRoles, setCurrentRoomRoles] = useState([])
 
-    const [currentRound, setCurrentRound] = useState(1)
+    const [currentRound, setCurrentRound] = useState(0)
     const [stock, setStock] = useState(0)
     const [delay, setDelay] = useState(0)
     const [next1WeekDelivery, setNext1WeekDelivery] = useState(1)
@@ -62,7 +62,7 @@ function PlayGame(props) {
       }, []);
 
     useEffect(() => {
-        if (countdown <= 0) {
+        if (countdown === 0) {
           // Wenn der Countdown bei 0 ist, mach etwas (z.B. zeige eine Nachricht)
           console.log("Countdown beendet!");
           submitOrder()
