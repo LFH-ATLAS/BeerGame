@@ -46,13 +46,5 @@ jobs:
             context: ./server/
             file: ./server/Dockerfile
             push: true
-            tags: ${{ secrets.DOCKERHUB_USERNAME }}/beergame-backend:latest
+            tags: ${{ secrets.DOCKERHUB_USERNAME }}/beergame-backend:${{github.ref_name}}
           
-        - name: Run the image in a container
-          uses: addnab/docker-run-action@v3
-          with:
-            image: ${{ secrets.DOCKERHUB_USERNAME }}/beergame-backend:latest
-            run: |
-              echo "runing the docker image"
-              echo "Testing the nodejs  app endpoints"
-              echo ${{ steps.docker_build.outputs.digest }}
