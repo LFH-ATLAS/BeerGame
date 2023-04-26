@@ -2,6 +2,7 @@ div.tile {
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
+  min-width: 140px;
   background-color: #ecf0f1;
   border: 1px solid #bdc3c7;
   padding: 15px;
@@ -22,6 +23,7 @@ div.tile {
       -ms-user-select: none;
           user-select: none;
   cursor: pointer;
+
 }
 
 div.tile.selected {
@@ -50,5 +52,9 @@ div.tile img.selected {
 div.tile span {
   font-size: 1.25rem;
   font-weight: 400 !important;
+}
+
+div.tile_text {
+  max-width: fit-content;
 }
 /*# sourceMappingURL=Tile.css.map */
