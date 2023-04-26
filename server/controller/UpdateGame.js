@@ -10,17 +10,16 @@ export default function UpdateGame(io, socket, intData) {
     const role = intData.selectedRole
     console.log(intData.orderValue)
     if(intData.orderValue === ''){
-        intData.orderValue = 5;
+        intData.orderValue = 0;
     }
     const orderValue = intData.orderValue
-    console.log("Dddd" + orderValue)
-    const GameData = mongoose.model("DBGame", DBGame)
+        const GameData = mongoose.model("DBGame", DBGame)
     //GameData.findOne({ gameCode: room }, (err, data) => {
     GameData.findOne({ gameCode: room }, (err, data) => {
         if(err) return console.log("Fehler: " + err)
         //console.log(data)
         if(data === null) return console.log("Kein Datensatz gefunden")
-
+        console.log("Dddd" + orderValue)
         let producer = data.roundData.producer
         let distributor = data.roundData.distributor
         let wholesaler = data.roundData.wholesaler
