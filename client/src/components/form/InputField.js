@@ -19,7 +19,7 @@ class InputField extends React.Component {
 
 
     onChangeHandler(event, category) {
-        let defaultRestriciton = /[^A-Z0-9]/gi;
+        let defaultRestriciton = /[^A-Z0-9äöü]/gi;
         let numericalRestriction = /[^0-9]/gi;
         let temp = event.target.value;
         if(this.props.restriction == "numerical")

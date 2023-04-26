@@ -50,7 +50,7 @@ function SetData(data){
     return (
   <div>
 
-<h3 class="mt-5 text-center">Produzent:</h3>
+<h3>Produzent:</h3>
 <div className={"grid_play2"}>
                     <div className={"playground2"}>
                         <div className={"KPItable"}>
@@ -87,7 +87,7 @@ function SetData(data){
     </div>
 
 
-    <h3 class="mt-5 text-center">Verteiler:</h3>
+    <h3>Verteiler:</h3>
     <div className={"grid_play2"}>
                     <div className={"playground2"}>
                         <div className={"KPItable"}>
@@ -124,7 +124,7 @@ function SetData(data){
     </div>
 
 
-    <h3 class="mt-5 text-center">Großhändler:</h3>
+    <h3>Großhändler:</h3>
     <div className={"grid_play2"}>
                     <div className={"playground2"}>
                         <div className={"KPItable"}>
@@ -159,7 +159,7 @@ function SetData(data){
     </div>
 
 
-    <h3 class="mt-5 text-center">Einzelhändler:</h3>
+    <h3>Einzelhändler:</h3>
     <div className={"grid_play2"}>
                     <div className={"playground2"}>
                         <div className={"KPItable"}>
