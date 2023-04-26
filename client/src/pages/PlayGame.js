@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import Button from "../components/form/Button";
 import Countdown from '../lib/Countdown';
 import { Redirect } from "react-router-dom"
+import React from "react";
 
 function PlayGame(props) {
 
@@ -87,6 +88,12 @@ function PlayGame(props) {
         setOrderValue("")
     }
 
+    const [CoundtdownComplete, setCountdownComplete] = React.useState(false)
+    const handleCountdownComplete = () => {
+      setCountdownComplete(true)
+        submitOrder()
+    }
+
     if(currentRoomSize < 4) {
         return (
             <div>
@@ -152,14 +159,15 @@ function PlayGame(props) {
             roleName = "Einzelhändler"
         }
 
-
         return (
             <div>
                 { redirectComponent }
+                {!CoundtdownComplete && ( <Countdown hoursMinSecs={hoursMinSecs} onReset={handleCountdownComplete}/>) }
+                {CoundtdownComplete}
                 <div className={"grid_play"}>
                     <div className={"playground"}>
                         <div className={"timer"}>
-                            <Countdown hoursMinSecs={hoursMinSecs}/>
+                            <Countdown hoursMinSecs={hoursMinSecs} onCountdownComplete={handleCountdownComplete} />
                             <p>{currentRound}</p>
                         </div>
                         <div className={"wrapper_img"}>
