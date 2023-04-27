@@ -19,7 +19,7 @@ class InputField extends React.Component {
 
 
     onChangeHandler(event, category) {
-        let defaultRestriciton = /[^A-Z0-9]/gi;
+        let defaultRestriciton = /[^A-Z0-9äöü]/gi;
         let numericalRestriction = /[^0-9]/gi;
         let temp = event.target.value;
         if(this.props.restriction == "numerical")
@@ -47,11 +47,12 @@ class InputField extends React.Component {
                 <div className={"input_wrapper"}>
                     <input
                         className={this.state.error ? "invalid" : ""}
+                        id={this.props.id}
                         type={"text"}
                         placeholder={this.props.name}
                         name={this.props.name}
                         onChange={(event, category) => this.onChangeHandler(event, category)}
-                        disabled
+                        disabled = {this.props.disabled}
                         value={this.props.setValue}
                         restriction={this.props.restriction}
                     />
