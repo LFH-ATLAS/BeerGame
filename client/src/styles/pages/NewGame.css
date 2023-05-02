@@ -46,7 +46,7 @@ div.game_select div.select_rounds input[type=radio] {
 div.game_select div.options_wrapper {
   width: fit-content;
   min-width: 75%;
-  margin-left: 12.5%;
+  margin-left: 12.5%; 
   margin-right: 12.5%;
   background-color: #ecf0f1;
   border: 1px solid #bdc3c7;
@@ -93,7 +93,9 @@ div.game_select fieldset {
 }
 
 div.select_role{
-  min-width: 75%;
+  overflow: auto  ;
+  /*min-width: min-content!important;*/
+  width: 100%;
 }
 
 /*# sourceMappingURL=NewGame.css.map */
