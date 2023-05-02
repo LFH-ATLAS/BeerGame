@@ -47,6 +47,17 @@ function PlayGame(props) {
           };
     })
 
+    function initialData(data){
+        console.log("initial data")
+        console.log(data)
+        setStock(data.gameSettings.startStock)
+    }
+    
+    function updateRoomSize(data){
+        setCurrentRoomSize(data.roomSize)
+        setCurrentRoomRoles(data.selectedRoles)
+    }
+
     useEffect(() => {
         const timer = setInterval(() => {
           setCountdown((prevCountdown) => prevCountdown - 1);
