@@ -47,13 +47,6 @@ function NewGame(props) {
             console.log(data)
             setSelectRoleMenu(true)
 
-
-
-
-
-
-
-
             let tempArray = []
             if(data.producer === "NA")
                 tempArray.push(false)
@@ -107,59 +100,8 @@ function NewGame(props) {
             alert("Nicht korrekt ")
             setInputError(true)
         }
-        //console.log(gameCode)
     }
-/*
-    function createGame() {
-        if(!checkIfStringIsValid(gameCode)) {
-            alert("Spielcode nicht korrekt!")
-            setInputError(true)
-        }
-        else if(!rounds) {
-            alert("Wählen Sie die Anzahl der Runden aus!")
-            setInputError(true)
-        }
-        else if(!checkIfStringIsValid(startStock, "numeric")) {
-            alert("Der Anfangsbestand muss ein numerischer Wert sein!")
-        }
-        else if(!checkIfStringIsValid(startValue, "numeric")) {
-            alert("Die Nachfragemenge muss ein numerischer Wert sein!")
-        }
-        else if(!checkIfStringIsValid(raisedValue, "numeric")) {
-            alert("Die erhöhte Nachfragemenge muss ein numerischer Wert sein!")
-        }
-        else if(!checkIfStringIsValid(roundOfRaise, "numeric") || roundOfRaise > rounds || roundOfRaise < 1) {
-            alert("Die Runde, in der die Nachfragemenge erhöht wird, muss ein numerischer Wert sein und darf nicht kleiner als 1 sowie größer als die Anzahl der Runden sein!")
-        }
-        else {
-            // Überprüfen, ob alle erforderlichen Felder ausgefüllt sind
-            /*if(!checkIfStringIsValid(startStock, "numeric") || 
-                !checkIfStringIsValid(startValue, "numeric") ||
-                !checkIfStringIsValid(raisedValue, "numeric")) {
-                alert("Bitte füllen Sie alle erforderlichen Felder aus und stellen Sie sicher, dass sie gültige numerische Werte enthalten!");
-                setInputError(true);
-            } else {
-                socket.emit("game_create", {
-                    gameCode,
-                    gameCreated: new Date(),
-                    gameSettings: {
-                        rounds,
-                        startStock,
-                        startValue,
-                        raisedValue,
-                        roundOfRaise
-                    },
-                    roundData: {
-                        currentRound: 0,
-                        producer: [],
-                        distributor: [],
-                        wholesaler: [],
-                        retailer: []
-                    }
-                })
-           // }
-        }
-    }*/
+
 
     function createGame() {
         let errorMessage = null;
@@ -180,31 +122,9 @@ function NewGame(props) {
             case !checkIfStringIsValid(raisedValue, "numeric", !0):
                 errorMessage = "Die erhöhte Nachfragemenge muss ein numerischer Wert sein!";
                 break;
-            //case !checkIfStringIsValid(roundOfRaise, "numeric", !0) || roundOfRaise > rounds || roundOfRaise < 1:
-                //errorMessage = "Die Runde, in der die Nachfragemenge erhöht wird, muss ein numerischer Wert sein und darf nicht kleiner als 1 sowie größer als die Anzahl der Runden sein!";
-                //break;
             case !gameCode || !rounds || !startStock || !startValue || !raisedValue || !roundOfRaise:
                 errorMessage = "Bitte füllen Sie alle Felder aus!";
-                break;
-            /*default:
-                socket.emit("game_create", {
-                    gameCode,
-                    gameCreated: new Date(),
-                    gameSettings: {
-                        rounds,
-                        startStock,
-                        startValue,
-                        raisedValue,
-                        roundOfRaise
-                    },
-                    roundData: {
-                        currentRound: 0,
-                        producer: [],
-                        distributor: [],
-                        wholesaler: [],
-                        retailer: []
-                    }
-                }) */     
+                break;   
         }
     
         if (errorMessage !== null) {
@@ -388,16 +308,17 @@ function NewGame(props) {
                     currentSelected={selectedGameMode}
                 >
                     Neues Spiel erstellen
-                </Tile>
-                <Tile
-                    imgSrc={"/icons/people.svg"}
-                    imgAlt={"Spiel beitreten"}
-                    idKey={2}
-                    getValue={setSelectedGameMode}
-                    currentSelected={selectedGameMode}
-                >
+                </Tile>          
+                    <Tile
+                        imgSrc={"/icons/people.svg"}
+                        imgAlt={"Spiel beitreten"}
+                        idKey={2}
+                        getValue={setSelectedGameMode}
+                        currentSelected={selectedGameMode}  
+                    >
                     Bestehendem Spiel beitreten
-                </Tile>
+                    </Tile>
+
             </div>
             { options }
         </div>
