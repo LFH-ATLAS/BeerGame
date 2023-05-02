@@ -13,13 +13,13 @@ export default function UpdateGame(io, socket, intData) {
         intData.orderValue = 0;
     }
     const orderValue = intData.orderValue
-        const GameData = mongoose.model("DBGame", DBGame)
+    const GameData = mongoose.model("DBGame", DBGame)
     //GameData.findOne({ gameCode: room }, (err, data) => {
     GameData.findOne({ gameCode: room }, (err, data) => {
         if(err) return console.log("Fehler: " + err)
         //console.log(data)
         if(data === null) return console.log("Kein Datensatz gefunden")
-        console.log("Dddd" + orderValue)
+        console.log(role + "Order Amount: " + orderValue)
         let producer = data.roundData.producer
         let distributor = data.roundData.distributor
         let wholesaler = data.roundData.wholesaler
