@@ -8,6 +8,10 @@ import { calcStorageCosts, calcStorageCostsWeekly, calcAverageStock, calcBackord
 export default function UpdateGame(io, socket, intData) {
     const room = intData.gameCode
     const role = intData.selectedRole
+    console.log(intData.orderValue)
+    if(intData.orderValue === ''){
+        intData.orderValue = 0;
+    }
     const orderValue = intData.orderValue
     const GameData = mongoose.model("DBGame", DBGame)
     //GameData.findOne({ gameCode: room }, (err, data) => {
@@ -15,7 +19,7 @@ export default function UpdateGame(io, socket, intData) {
         if(err) return console.log("Fehler: " + err)
         //console.log(data)
         if(data === null) return console.log("Kein Datensatz gefunden")
-
+        console.log(role + "Order Amount: " + orderValue)
         let producer = data.roundData.producer
         let distributor = data.roundData.distributor
         let wholesaler = data.roundData.wholesaler

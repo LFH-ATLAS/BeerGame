@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import Button from "../components/form/Button";
 import Countdown from '../lib/Countdown';
 import { Redirect } from "react-router-dom"
-
+import React from "react";
 
 function PlayGame(props) {
 
@@ -19,13 +19,15 @@ function PlayGame(props) {
     const [currentRoomSize, setCurrentRoomSize] = useState(0)
     const [currentRoomRoles, setCurrentRoomRoles] = useState([])
 
-    const [currentRound, setCurrentRound] = useState(1)
+    const [currentRound, setCurrentRound] = useState(0)
     const [stock, setStock] = useState(0)
     const [delay, setDelay] = useState(0)
     const [next1WeekDelivery, setNext1WeekDelivery] = useState(0)
     const [next2WeekDelivery, setNext2WeekDelivery] = useState(0)
     const [supplyChainOrder, setSupplyChainOrder] = useState(0)
     const [redirectComponent, setRedirectComponent] = useState(<></>)
+
+    const [countdown, setCountdown] = useState(60); // Startwert für den Countdown
 
     useEffect(() => {
         socket.on("end_screen", (data) => {
@@ -56,8 +58,35 @@ function PlayGame(props) {
         setCurrentRoomRoles(data.selectedRoles)
     }
 
+    useEffect(() => {
+        const timer = setInterval(() => {
+          setCountdown((prevCountdown) => prevCountdown - 1);
+        }, 1000); // Herunterzählen alle 1000 Millisekunden
+
+        // Aufräumen, wenn die Komponente unmountet wird
+        return () => clearInterval(timer);
+      }, []);
+
+    useEffect(() => {
+        if (countdown === 0) {
+          // Wenn der Countdown bei 0 ist, mach etwas (z.B. zeige eine Nachricht)
+          console.log("Countdown beendet!");
+          if(inputActive === true){
+          submitOrder()
+          }
+        }
+    }, [countdown]);
+
+
+      function startCountdown() {
+        setCountdown(60);
+      }
 
     function updatePlayerData(data){
+
+        startCountdown()
+        console.log(data)
+
         setCurrentRound(data.roundData.currentRound)
         setInputActive(true)
         if(selectedRole === 1) {
@@ -109,7 +138,6 @@ function PlayGame(props) {
 
 
     }
-
 
     if(currentRoomSize < 4) {
         return (
@@ -178,15 +206,14 @@ function PlayGame(props) {
             roleName = "Einzelhändler"
         }
 
-
         return (
             <div>
                 { redirectComponent }
                 <div className={"grid_play"}>
                     <div className={"playground"}>
                         <div className={"timer"}>
-                            <Countdown hoursMinSecs={hoursMinSecs}/>
-                            <p>{currentRound}</p>
+                        <div>Timer: {countdown}</div>
+                            <p>Runde: {currentRound}</p>
                         </div>
                         <div className={"wrapper_img"}>
                             <img src={roleIcon} alt={"Icon"} />
