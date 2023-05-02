@@ -22,7 +22,7 @@ function PlayGame(props) {
     const [currentRound, setCurrentRound] = useState(0)
     const [stock, setStock] = useState(0)
     const [delay, setDelay] = useState(0)
-    const [next1WeekDelivery, setNext1WeekDelivery] = useState(1)
+    const [next1WeekDelivery, setNext1WeekDelivery] = useState(0)
     const [next2WeekDelivery, setNext2WeekDelivery] = useState(0)
     const [supplyChainOrder, setSupplyChainOrder] = useState(0)
     const [redirectComponent, setRedirectComponent] = useState(<></>)
@@ -52,7 +52,7 @@ function PlayGame(props) {
         console.log(data)
         setStock(data.gameSettings.startStock)
     }
-    
+
     function updateRoomSize(data){
         setCurrentRoomSize(data.roomSize)
         setCurrentRoomRoles(data.selectedRoles)
