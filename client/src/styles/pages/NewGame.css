@@ -3,6 +3,18 @@ div.game_select {
   height: 100%;
 }
 
+.span_X{
+  float: right;
+  padding-left: 5px;
+  padding-right: 5px;
+  justify-content: center;
+}
+.span_X:hover{
+  cursor: pointer;
+  background-color: #bdc3c7;
+}
+
+
 div.game_select div.tile_wrapper  {
   width: 100%;
   display: -webkit-box;
@@ -97,5 +109,13 @@ div.select_role{
   /*min-width: min-content!important;*/
   width: 100%;
 }
+
+div.Leave_Button{
+  min-width: fit-content;
+  float: right;
+  height: 5px;
+  padding: 5px;
+}
+
 
 /*# sourceMappingURL=NewGame.css.map */

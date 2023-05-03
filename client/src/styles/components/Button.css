@@ -2,7 +2,7 @@ button {
   background-color: black;
   outline: none;
   border: none;
-  height: 35px;
+  height: fit-content;
   padding-left: 15px;
   padding-right: 15px;
   border-radius: 3px;

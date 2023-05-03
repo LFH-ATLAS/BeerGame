@@ -81,7 +81,7 @@ function NewGame(props) {
     function onJoinGameClick() {
         if(checkIfStringIsValid(gameCode)) {
             if(selectedRole === 0) {
-                console.log("Socket submit")
+                console.log("Socket submit1")
                 socket.emit("join_game", {
                     gameCode,
                     selectedRole
@@ -89,7 +89,7 @@ function NewGame(props) {
                 setSpielcodeChangeable(true);
             }
             else {
-                console.log("Socket submit")
+                console.log("Socket submit2")
                 socket.emit("join_game", {
                     gameCode,
                     selectedRole
@@ -151,8 +151,13 @@ function NewGame(props) {
             })
         }
     }
-    
-    
+
+    function deleteGameCode(){
+        console.log("X Clicked")
+        setSelectedGameMode(0)
+        setSpielcodeChangeable(false)
+        setSelectRoleMenu(false)
+    }    
 
     function getSelectedRounds(e) {
         setRounds(e.target.value)
@@ -162,7 +167,10 @@ function NewGame(props) {
     if(selectedGameMode === 1) {
         options = (
             <div className={"options_wrapper"}>
+                <div>
                 <span>Geben Sie den Spielcode ein:</span>
+                <span className={"span_X"} onClick={deleteGameCode}>X</span>
+                </div>
                 <InputField
                     name={"Spielcode"}
                     getValue={setGameCode}
@@ -218,7 +226,10 @@ function NewGame(props) {
     else if(selectedGameMode === 2){
         options = (
             <div className={"options_wrapper"}>
+                <div>
                 <span>Geben Sie den Spielcode ein:</span>
+                <span className={"span_X"} onClick={deleteGameCode}>X</span>
+                </div>
                 <InputField
                     id={"spielcodeID"}
                     name={"Spielcode"}
@@ -236,7 +247,6 @@ function NewGame(props) {
                                 imgAlt={"Neues Spiel"}
                                 idKey={1}
                                 getValue={setSelectedRole}
-
                                 currentSelected={selectedRole}
                                 disabled={disabledRoles[0]}
                                 
@@ -281,8 +291,7 @@ function NewGame(props) {
                     </Button>
                     :
                     <Button
-                        onClick={onJoinGameClick}
-                        
+                        onClick={onJoinGameClick}                        
                     >
                         Spielrolle wählen
                     </Button>
