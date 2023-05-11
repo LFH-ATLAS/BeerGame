@@ -10,6 +10,8 @@ import CreateGame from "./controller/CreateGame.js";
 import UpdateGame from "./controller/UpdateGame.js";
 import LeaveGame from "./controller/LeaveGame.js";
 import Senddata from "./controller/EndGame.js";
+import PauseGame from "./controller/PauseGame.js";
+import ResumeGame from "./controller/ResumeGame.js";
 
 
 const io = new Server({
@@ -26,6 +28,8 @@ mongoose.connect(process.env.MONGOOSE_CONNECTIONSTRING)
       socket.on("game_update", (data) => UpdateGame(io, socket, data))
       socket.on("disconnect", () => LeaveGame(io, socket))
       socket.on("endscreendata", (data) => Senddata(io, socket, data))
+      socket.on("pause_countdown", (data) => PauseGame(io, socket, data))
+      socket.on("resume_countdown", (data) => ResumeGame(io, socket, data))
 
     });
     console.log("Server auf Port " + 3001 + " gestartet. Datenbankverbindung hergestellt.");

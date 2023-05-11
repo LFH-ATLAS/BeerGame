@@ -1,14 +1,5 @@
-import { Socket } from "socket.io-client";
 import "../styles/pages/End.css"
-
 import React, {useEffect, useState} from "react";
-
-
-import InputField from "../components/form/InputField"
-import Button from "../components/form/Button";
-import Countdown from '../lib/Countdown';
-import { Redirect } from "react-router-dom"
-
 
 function End(props) {
 
@@ -19,8 +10,6 @@ function End(props) {
     const [gameKPIsdistributor, setGameKPIsdistributor] = useState([])
     const [gameKPIswholesaler, setGameKPIswholesaler] = useState([])
     const [gameKPIsretailer, setGameKPIsretailer] = useState([])
-    
-    const aufgerufen = false;
 
     useEffect(() => {
         console.log(gameCode);
@@ -50,7 +39,7 @@ function SetData(data){
     return (
   <div>
 
-<h3>Produzent:</h3>
+<h3 class="mt-5 text-center">Produzent:</h3>
 <div className={"grid_play2"}>
                     <div className={"playground2"}>
                         <div className={"KPItable"}>
@@ -87,7 +76,7 @@ function SetData(data){
     </div>
 
 
-    <h3>Verteiler:</h3>
+    <h3 class="mt-5 text-center">Verteiler:</h3>
     <div className={"grid_play2"}>
                     <div className={"playground2"}>
                         <div className={"KPItable"}>
@@ -124,7 +113,7 @@ function SetData(data){
     </div>
 
 
-    <h3>Großhändler:</h3>
+    <h3 class="mt-5 text-center">Großhändler:</h3>
     <div className={"grid_play2"}>
                     <div className={"playground2"}>
                         <div className={"KPItable"}>
@@ -159,7 +148,7 @@ function SetData(data){
     </div>
 
 
-    <h3>Einzelhändler:</h3>
+    <h3 class="mt-5 text-center">Einzelhändler:</h3>
     <div className={"grid_play2"}>
                     <div className={"playground2"}>
                         <div className={"KPItable"}>

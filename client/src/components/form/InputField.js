@@ -1,6 +1,5 @@
 import React from "react";
-import checkIfStringIsValid from "../../lib/checkIfStringIsValid";
-import { useState } from "react";
+
 
 import "../../styles/components/InputField.css"
 class InputField extends React.Component {
@@ -19,10 +18,10 @@ class InputField extends React.Component {
 
 
     onChangeHandler(event, category) {
-        let defaultRestriciton = /[^A-Z0-9äöü]/gi;
+        let defaultRestriciton = /[^A-Z0-9]/gi;
         let numericalRestriction = /[^0-9]/gi;
         let temp = event.target.value;
-        if(this.props.restriction == "numerical")
+        if(this.props.restriction === "numerical")
         {
            
             temp = temp.replace(numericalRestriction,"");
