@@ -101,6 +101,13 @@ function NewGame(props) {
             setInputError(true)
         }
     }
+    function checkSelected(key) {
+        if (key === selectedRole){
+            setSelectedRole(0)
+        }else{
+            setSelectedRole(key)
+        }
+    }
 
 
     function createGame() {
@@ -248,18 +255,15 @@ function NewGame(props) {
                                 imgSrc={"/icons/factory.svg"}
                                 imgAlt={"Neues Spiel"}
                                 idKey={1}
-                                getValue={setSelectedRole}
+                                getValue={checkSelected}
                                 currentSelected={selectedRole}
-                                disabled={disabledRoles[0]}
-                                
-
-                                
+                                disabled={disabledRoles[0]}                                
                             >Produzent</Tile>
                             <Tile
                                 imgSrc={"/icons/box.svg"}
                                 imgAlt={"Neues Spiel"}
                                 idKey={2}
-                                getValue={setSelectedRole}
+                                getValue={checkSelected}
                                 currentSelected={selectedRole}
                                 disabled={disabledRoles[1]}
                             >Verteiler</Tile>
@@ -267,7 +271,7 @@ function NewGame(props) {
                                 imgSrc={"/icons/wholesale.svg"}
                                 imgAlt={"Neues Spiel"}
                                 idKey={3}
-                                getValue={setSelectedRole}
+                                getValue={checkSelected}
                                 currentSelected={selectedRole}
                                 disabled={disabledRoles[2]}
                             >Großhändler</Tile>
@@ -275,7 +279,7 @@ function NewGame(props) {
                                 imgSrc={"/icons/shop.svg"}
                                 imgAlt={"Neues Spiel"}
                                 idKey={4}
-                                getValue={setSelectedRole}
+                                getValue={checkSelected}
                                 currentSelected={selectedRole}
                                 disabled={disabledRoles[3]}
                             >Einzelhändler</Tile>
