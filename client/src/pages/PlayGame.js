@@ -180,7 +180,7 @@ function PlayGame(props) {
                         disabled={true}
                         restriction = {"numerical"}
                     />
-                    <Button onClick={submitOrder}>Bestellen</Button>
+                    <Button onClick={submitOrder} disabled={true}>Bestellen</Button>
                 </>
             )
         }
