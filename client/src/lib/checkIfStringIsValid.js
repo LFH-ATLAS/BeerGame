@@ -12,6 +12,12 @@ export default function checkIfStringIsValid(userInput, mode = "default") {
     if(userInput.length === 0) {
         return stringIsValid = false
     }
+    if(mode === "26"){
+        return 5 <= userInput && userInput <=17
+    }
+    else if(mode === "52"){
+        return 5 <= userInput && userInput <= 35
+    }
     for(let i=0; i<userInput.length; i++) {
         console.log(userInput[i])
         console.log(validChars.indexOf(userInput[i]))

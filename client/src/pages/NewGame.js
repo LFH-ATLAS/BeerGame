@@ -122,6 +122,9 @@ function NewGame(props) {
             case !checkIfStringIsValid(raisedValue, "numeric", !0):
                 errorMessage = "Die erhöhte Nachfragemenge muss ein numerischer Wert sein!";
                 break;
+            case !checkIfStringIsValid(Number(roundOfRaise), rounds, !0):
+                errorMessage = "Die Runde der erhöhten Nachfrage muss innerhalb der Vorgaben gewählt werden";
+                break;
             case !gameCode || !rounds || !startStock || !startValue || !raisedValue || !roundOfRaise:
                 errorMessage = "Bitte füllen Sie alle Felder aus!";
                 break;   
@@ -153,7 +156,6 @@ function NewGame(props) {
     }
 
     function deleteGameCode(){
-        console.log("X Clicked")
         setSelectedGameMode(0)
         setSpielcodeChangeable(false)
         setSelectRoleMenu(false)
@@ -216,7 +218,7 @@ function NewGame(props) {
                 <InputField
                     name={"Runde der Erhöhung"}
                     getValue={setRoundOfRaise}
-                    description={"je nach Anzahl der Spielrunden 17 oder 35"}
+                    description={"Zwischen 5 und 17 oder 35 je nach gewählter Rundenanzahl"}
                     restriction = {"numerical"}
                 />
                 <Button onClick={createGame}>Spiel erstellen</Button>
