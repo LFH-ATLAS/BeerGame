@@ -253,7 +253,6 @@ function NewGame(props) {
                                 imgSrc={"/icons/factory.svg"}
                                 imgAlt={"Neues Spiel"}
                                 idKey={1}
-                                //getValue={setSelectedRole}
                                 getValue={checkSelected}
                                 currentSelected={selectedRole}
                                 disabled={disabledRoles[0]}                                
@@ -262,7 +261,6 @@ function NewGame(props) {
                                 imgSrc={"/icons/box.svg"}
                                 imgAlt={"Neues Spiel"}
                                 idKey={2}
-                                //getValue={setSelectedRole}
                                 getValue={checkSelected}
                                 currentSelected={selectedRole}
                                 disabled={disabledRoles[1]}
@@ -271,7 +269,6 @@ function NewGame(props) {
                                 imgSrc={"/icons/wholesale.svg"}
                                 imgAlt={"Neues Spiel"}
                                 idKey={3}
-                                //getValue={setSelectedRole}
                                 getValue={checkSelected}
                                 currentSelected={selectedRole}
                                 disabled={disabledRoles[2]}
@@ -280,7 +277,6 @@ function NewGame(props) {
                                 imgSrc={"/icons/shop.svg"}
                                 imgAlt={"Neues Spiel"}
                                 idKey={4}
-                                //getValue={setSelectedRole}
                                 getValue={checkSelected}
                                 currentSelected={selectedRole}
                                 disabled={disabledRoles[3]}
