@@ -8,7 +8,6 @@ import { calcStorageCosts, calcStorageCostsWeekly, calcAverageStock, calcBackord
 export default function UpdateGame(io, socket, intData) {
     const room = intData.gameCode
     const role = intData.selectedRole
-    console.log(intData.orderValue)
     if(intData.orderValue === ''){
         intData.orderValue = 0;
     }
@@ -19,7 +18,7 @@ export default function UpdateGame(io, socket, intData) {
         if(err) return console.log("Fehler: " + err)
         //console.log(data)
         if(data === null) return console.log("Kein Datensatz gefunden")
-        console.log(role + "Order Amount: " + orderValue)
+        console.log("Role " + role + "Order Amount: " + orderValue)
         let producer = data.roundData.producer
         let distributor = data.roundData.distributor
         let wholesaler = data.roundData.wholesaler
@@ -259,15 +258,9 @@ export default function UpdateGame(io, socket, intData) {
 
             let values = [], delivery = 0
 
-            console.log("PRODUCER:")
-            console.log(producer)
             values = CalculateNewValues(1, producer, distributor[currentRound].order, 0, currentRound)
             producer = values[0]
             delivery = values[1]
-
-          console.log("PRODUCER AFTER:")
-          console.log(producer)
-          console.log(delivery)
 
             values = CalculateNewValues(2, distributor, wholesaler[currentRound].order, delivery, currentRound)
             distributor = values[0]
@@ -288,18 +281,12 @@ export default function UpdateGame(io, socket, intData) {
             delivery = values[1]
           }
 
-
-            console.log("Delivery: " + delivery)
-
             data.roundData.currentRound++
             data.roundData.producer = producer
             data.roundData.distributor = distributor
             data.roundData.wholesaler = wholesaler
             data.roundData.retailer = retailer
             data.markModified("roundData")
-            console.log("PRODUCER WERTER VOR DBSAVE")
-            console.log(data.roundData.producer)
-            console.log(data)
             data.save()
 
 

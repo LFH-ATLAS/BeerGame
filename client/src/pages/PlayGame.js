@@ -2,7 +2,6 @@ import "../styles/pages/PlayGame.css"
 import InputField from "../components/form/InputField"
 import {useEffect, useState} from "react";
 import Button from "../components/form/Button";
-import Countdown from '../lib/Countdown';
 import { Redirect } from "react-router-dom"
 import React from "react";
 
@@ -11,7 +10,6 @@ function PlayGame(props) {
     const gameCode = JSON.parse(localStorage.getItem("room"))
     const selectedRole = JSON.parse(localStorage.getItem("role"))
     const socket = props.socketId
-    const hoursMinSecs = {hours:0, minutes: 0, seconds: 60}
     const [gameKPIs, setGameKPIs] = useState([])
 
     const [orderValue, setOrderValue] = useState("")
@@ -274,7 +272,7 @@ function PlayGame(props) {
                         disabled={true}
                         restriction = {"numerical"}
                     />
-                    <Button onClick={submitOrder}>Bestellen</Button>
+                    <Button onClick={submitOrder} disabled={true}>Bestellen</Button>
                 </>
             )
         }
