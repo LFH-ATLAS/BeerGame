@@ -170,6 +170,7 @@ function PlayGame(props) {
 
 
     function updatePlayerData(data){
+        setOrderValue("");
         startCountdown()
         console.log(data)
         setCurrentRound(data.roundData.currentRound)
@@ -219,7 +220,7 @@ function PlayGame(props) {
             selectedRole,
             orderValue
         })
-        setOrderValue("");
+
         setIsCountdownRunning(false);
         setGrundTimerStop("Warte auf nächste Runde")
 
@@ -257,7 +258,7 @@ function PlayGame(props) {
                         description={"Zulässige Zeichen: 0-9"}
                         restriction = {"numerical"}
                     />
-                    <Button onClick={submitOrder}>Bestellen</Button>
+                    <Button onClick={submitOrder}>Bestellen</Button>                    
                 </>
             )
         }
