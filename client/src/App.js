@@ -14,13 +14,16 @@ import End from "./pages/End";
 function App() {
   //const socket = io.connect("http://beergame.usb.systems:3001")
   //const socket = io.connect("https://api-beergame.usb-sys.de")
-  var socket  // Lokale Verbindung zum Backend, muss vom Client aufgelöst werden können
+  var socket  // Lokale Verbindung zum Backend muss vom Client aufgelöst werden können
 
-  // Überprüfen, ob Umgebungsvariable gesetzt ist, falls nicht werden Standardwerte verwendet
-  if(process.env.REACT_APP_BACKEND_URL != null){
-    socket = io.connect(process.env.REACT_APP_BACKEND_URL)
+  // Wenn die Umgebungsvariable BACKEND_URL gesetzt ist, wird diese verwendet, ansonsten wird die Standard-URL verwendet
+  if(window._env_.BACKEND_URL != null){
+    socket = io.connect(window._env_.BACKEND_URL)
+    console.log("Custom: Backend-URL: " + window._env_.BACKEND_URL)
   }else{
-    socket = io.connect("http://localhost:3001") //
+    // Eigentlich redundant, da die Standard-URL auch im default.env festgelegt ist
+    socket = io.connect("http://localhost:3001")
+    console.log("Default: Backend-URL: http://localhost:3001")
   }
 
   useEffect(() => {
