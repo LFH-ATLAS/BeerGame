@@ -96,7 +96,7 @@ function PlayGame(props) {
 
     function startCountdown() {
         // Zum testen in der Hochschule
-        if(selectedRole === 1) {
+        /*if(selectedRole === 1) {
 
             setCountdown(60)
         }
@@ -109,9 +109,9 @@ function PlayGame(props) {
         }
         else {
             setCountdown(63)
-        }
+        }*/
         // Für Zuhause
-        //setCountdown(60);
+        setCountdown(60);
 
         setIsCountdownRunning(true);
        
