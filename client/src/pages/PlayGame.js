@@ -26,8 +26,10 @@ function PlayGame(props) {
     const [next2WeekDelivery, setNext2WeekDelivery] = useState(0)
     const [supplyChainOrder, setSupplyChainOrder] = useState(0)
     const [redirectComponent, setRedirectComponent] = useState(<></>)
-
+    
+    const [spielvonmirpausiert, setPausierer] = useState(false)
     const [countdown, setCountdown] = useState(60); // Startwert für den Countdown
+    const [isCountdownRunning, setIsCountdownRunning] = useState(false);    
 
     useEffect(() => {
         socket.on("end_screen", (data) => {
@@ -36,12 +38,18 @@ function PlayGame(props) {
 
         socket.on("update_player_data", updatePlayerData)
 
+        socket.on("pause_all_countdowns", alertstopcountdown)
+
+        socket.on("resume_all_games", resumeallcountdowns)
+
         socket.on("initial_data", initialData)
 
         socket.on("update_room_size", updateRoomSize)
 
         return () => {
+            socket.off("resume_all_games", resumeallcountdowns);
             socket.off('update_player_data', updatePlayerData);
+            socket.off('pause_all_countdowns', alertstopcountdown);
             socket.off('initial_data', initialData);
             socket.off('update_room_size', updateRoomSize);
           };
@@ -51,25 +59,34 @@ function PlayGame(props) {
         console.log("initial data")
         console.log(data)
         setStock(data.gameSettings.startStock)
+
     }
 
     function updateRoomSize(data){
+        
         setCurrentRoomSize(data.roomSize)
         setCurrentRoomRoles(data.selectedRoles)
+        if(4 === data.roomSize) {
+            startCountdown()
+        }
     }
 
     useEffect(() => {
-        const timer = setInterval(() => {
-          setCountdown((prevCountdown) => prevCountdown - 1);
-        }, 1000); // Herunterzählen alle 1000 Millisekunden
-
+        let timer;
+        if (isCountdownRunning) {
+          timer = setInterval(() => {
+            setCountdown((prevCountdown) => prevCountdown - 1);
+          }, 1000);
+        } // Herunterzählen alle 1000 Millisekunden
+    
         // Aufräumen, wenn die Komponente unmountet wird
         return () => clearInterval(timer);
-      }, []);
+      }, [isCountdownRunning]);
 
     useEffect(() => {
         if (countdown === 0) {
           // Wenn der Countdown bei 0 ist, mach etwas (z.B. zeige eine Nachricht)
+          setIsCountdownRunning(false);
           console.log("Countdown beendet!");
           if(inputActive === true){
           submitOrder()
@@ -77,16 +94,86 @@ function PlayGame(props) {
         }
     }, [countdown]);
 
+    function startCountdown() {
+        // Zum testen in der Hochschule
+        if(selectedRole === 1) {
 
-      function startCountdown() {
-        setCountdown(60);
+            setCountdown(60)
+        }
+        else if(selectedRole === 2) {
+
+            setCountdown(61)
+        }
+        else if(selectedRole === 3) {
+            setCountdown(62)
+        }
+        else {
+            setCountdown(63)
+        }
+        // Für Zuhause
+        //setCountdown(60);
+
+        setIsCountdownRunning(true);
+       
       }
 
-    function updatePlayerData(data){
+      function resumeallcountdowns(data) {
 
+        setInputActive(true)
+        setIsCountdownRunning(true);
+        
+      }
+
+      function alertstopcountdown(data) {
+
+        setInputActive(false)
+        setIsCountdownRunning(false);
+
+        var name;
+        switch (data) {
+            case 1:
+              name = "Produzent"
+              break
+            case 2:
+                name = "Verteiler"
+              break
+            case 3:
+                name = "Großhändler"
+              break
+            case 4:
+                name = "einzelhändler"
+          }
+
+        alert("Countdown wurde von " + name + " pausiert")
+      }
+
+      function stopCountdown() {
+        if(isCountdownRunning){
+            socket.emit("pause_countdown", {
+            gameCode,
+            selectedRole
+            
+            })
+            setIsCountdownRunning(false);
+            setPausierer(true)
+        }
+        else{
+            alert("Spiel ist bereits pausiert")
+        }
+      }
+
+      function resumegame(){
+        socket.emit("resume_countdown", {
+            gameCode,
+            selectedRole            
+        })
+        setPausierer(false)
+      }
+
+
+    function updatePlayerData(data){
         startCountdown()
         console.log(data)
-
         setCurrentRound(data.roundData.currentRound)
         setInputActive(true)
         if(selectedRole === 1) {
@@ -135,7 +222,7 @@ function PlayGame(props) {
             orderValue
         })
         setOrderValue("");
-
+        setIsCountdownRunning(false);
 
     }
 
@@ -156,7 +243,11 @@ function PlayGame(props) {
         )
     }
     else {
+
+        <button onClick={stopCountdown}>Countdown Toggeln</button>
+
         let inputAndButton = <></>
+
         if(inputActive) {
             inputAndButton = (
                 <>
@@ -186,7 +277,8 @@ function PlayGame(props) {
                 </>
             )
         }
-
+        
+        
         let roleIcon = <></>
         let roleName = ""
         if(selectedRole === 1) {
@@ -211,8 +303,17 @@ function PlayGame(props) {
                 { redirectComponent }
                 <div className={"grid_play"}>
                     <div className={"playground"}>
+                    {spielvonmirpausiert ? (
+                        <button onClick={resumegame}>Fortsetzen</button>
+                            ) : (
+                         <button onClick={stopCountdown}>Pause</button>
+                        )}
                         <div className={"timer"}>
-                        <div>Timer: {countdown}</div>
+                        {isCountdownRunning ? (
+                         <div>Timer: {countdown}</div>
+                             ) : (
+                          <div>Timer Pausiert</div>
+                        )}
                             <p>Runde: {currentRound}</p>
                         </div>
                         <div className={"wrapper_img"}>
