@@ -4,9 +4,11 @@ import "../styles/components/Tile.css"
 
 class Tile extends React.Component {
 
+
     onClickHandler() {
-        if(this.props.disabled) return
-        this.props.getValue(this.props.idKey)
+        if(this.props.disabled) return 
+            this.props.getValue(this.props.idKey)
+        
     }
 
     render() {

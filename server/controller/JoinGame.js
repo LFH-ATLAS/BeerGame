@@ -27,21 +27,46 @@ export default function JoinGame(io, socket, intData) {
     }
     else {
       if(io.sockets.adapter.rooms.get(room) === undefined) {
-        socket.join(room)
-        socket.emit("join_to_game", new SocketSuccess(200, "Das Spiel wurde erfolgreich betreten", {room, role}))
+        
+        
         switch (role) {
           case 1:
-            data.playerData.producer = socket.id
+            if(data.playerData.producer != "NA"){
+              socket.emit("join_to_game", new SocketError("Diese Rolle ist bereits vergeben"))
+            }else {
+              data.playerData.producer = socket.id
+              socket.join(room)
+              socket.emit("join_to_game", new SocketSuccess(200, "Das Spiel wurde erfolgreich betreten", {room, role}))
+            }
             break
           case 2:
-            data.playerData.distributor = socket.id
+            if(data.playerData.distributor != "NA"){
+              socket.emit("join_to_game", new SocketError("Diese Rolle ist bereits vergeben"))
+            }else{
+              data.playerData.distributor = socket.id
+              socket.join(room)
+              socket.emit("join_to_game", new SocketSuccess(200, "Das Spiel wurde erfolgreich betreten", {room, role}))
+            }
             break
           case 3:
-            data.playerData.wholesaler = socket.id
+            if(data.playerData.wholesaler != "NA"){
+              socket.emit("join_to_game", new SocketError("Diese Rolle ist bereits vergeben"))
+            }else{
+              data.playerData.wholesaler = socket.id
+              socket.join(room)
+              socket.emit("join_to_game", new SocketSuccess(200, "Das Spiel wurde erfolgreich betreten", {room, role}))
+            }
             break
           case 4:
-            data.playerData.retailer = socket.id
+            if(data.playerData.retailer != "NA"){
+              socket.emit("join_to_game", new SocketError("Diese Rolle ist bereits vergeben"))
+            }else{
+              data.playerData.retailer = socket.id
+              socket.join(room)
+              socket.emit("join_to_game", new SocketSuccess(200, "Das Spiel wurde erfolgreich betreten", {room, role}))
+            }
         }
+       
         data.save()
         let selectedRoles = []
         if(data.playerData.producer !== "NA") selectedRoles.push("Produzent")
@@ -57,21 +82,43 @@ export default function JoinGame(io, socket, intData) {
         if(io.sockets.adapter.rooms.get(room).size >= 4)
           return socket.emit("join_to_game", new SocketError("Spieler ist bereits in einem Spiel angemeldet oder das Spiel ist bereits voll!"))
         else {
-          socket.join(room)
-          socket.emit("join_to_game", new SocketSuccess(200, "Das Spiel wurde erfolgreich betreten", {room, role}))
+          
           switch (role) {
             case 1:
-              data.playerData.producer = socket.id
+              if(data.playerData.producer != "NA"){
+                socket.emit("join_to_game", new SocketError("Diese Rolle ist bereits vergeben"))
+              }else {
+                data.playerData.producer = socket.id
+                socket.join(room)
+                socket.emit("join_to_game", new SocketSuccess(200, "Das Spiel wurde erfolgreich betreten", {room, role}))
+              }
               break
             case 2:
-              data.playerData.distributor = socket.id
+              if(data.playerData.distributor != "NA"){
+                socket.emit("join_to_game", new SocketError("Diese Rolle ist bereits vergeben"))
+              }else{
+                data.playerData.distributor = socket.id
+                socket.join(room)
+                socket.emit("join_to_game", new SocketSuccess(200, "Das Spiel wurde erfolgreich betreten", {room, role}))
+              }
               break
             case 3:
-              data.playerData.wholesaler = socket.id
+              if(data.playerData.wholesaler != "NA"){
+                socket.emit("join_to_game", new SocketError("Diese Rolle ist bereits vergeben"))
+              }else{
+                data.playerData.wholesaler = socket.id
+                socket.join(room)
+                socket.emit("join_to_game", new SocketSuccess(200, "Das Spiel wurde erfolgreich betreten", {room, role}))
+              }
               break
             case 4:
-              data.playerData.retailer = socket.id
-              break
+              if(data.playerData.retailer != "NA"){
+                socket.emit("join_to_game", new SocketError("Diese Rolle ist bereits vergeben"))
+              }else{
+                data.playerData.retailer = socket.id
+                socket.join(room)
+                socket.emit("join_to_game", new SocketSuccess(200, "Das Spiel wurde erfolgreich betreten", {room, role}))
+              }
           }
           data.save()
           let selectedRoles = []
