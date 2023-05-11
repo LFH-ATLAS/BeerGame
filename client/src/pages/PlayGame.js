@@ -130,7 +130,7 @@ function PlayGame(props) {
         var name;
         switch (data) {
             case 1:
-              name = "Produzent"
+              name = "Hersteller"
               break
             case 2:
                 name = "Verteiler"
