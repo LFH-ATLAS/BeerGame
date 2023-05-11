@@ -30,7 +30,7 @@ function PlayGame(props) {
     const [spielvonmirpausiert, setPausierer] = useState(false)
     const [countdown, setCountdown] = useState(60); // Startwert für den Countdown
     const [isCountdownRunning, setIsCountdownRunning] = useState(false);    
-
+    const [timerpausiertgrund, setGrundTimerStop] = useState("")
     useEffect(() => {
         socket.on("end_screen", (data) => {
             setRedirectComponent(<Redirect to={`/end/${data.gameCode}`} />)
@@ -143,8 +143,8 @@ function PlayGame(props) {
             case 4:
                 name = "einzelhändler"
           }
-
-        alert("Countdown wurde von " + name + " pausiert")
+          setGrundTimerStop("Countdown wurde von " + name + " pausiert")
+        
       }
 
       function stopCountdown() {
@@ -223,6 +223,7 @@ function PlayGame(props) {
         })
         setOrderValue("");
         setIsCountdownRunning(false);
+        setGrundTimerStop("Warte auf nächste Runde")
 
     }
 
@@ -312,7 +313,7 @@ function PlayGame(props) {
                         {isCountdownRunning ? (
                          <div>Timer: {countdown}</div>
                              ) : (
-                          <div>Timer Pausiert</div>
+                          <div>{timerpausiertgrund}</div>
                         )}
                             <p>Runde: {currentRound}</p>
                         </div>
