@@ -47,13 +47,6 @@ function NewGame(props) {
             console.log(data)
             setSelectRoleMenu(true)
 
-
-
-
-
-
-
-
             let tempArray = []
             if(data.producer === "NA")
                 tempArray.push(false)
@@ -88,7 +81,7 @@ function NewGame(props) {
     function onJoinGameClick() {
         if(checkIfStringIsValid(gameCode)) {
             if(selectedRole === 0) {
-                console.log("Socket submit")
+                console.log("Socket submit1")
                 socket.emit("join_game", {
                     gameCode,
                     selectedRole
@@ -96,7 +89,7 @@ function NewGame(props) {
                 setSpielcodeChangeable(true);
             }
             else {
-                console.log("Socket submit")
+                console.log("Socket submit2")
                 socket.emit("join_game", {
                     gameCode,
                     selectedRole
@@ -107,7 +100,6 @@ function NewGame(props) {
             alert("Nicht korrekt ")
             setInputError(true)
         }
-        //console.log(gameCode)
     }
     function checkSelected(key) {
         if (key === selectedRole){
@@ -116,57 +108,7 @@ function NewGame(props) {
             setSelectedRole(key)
         }
     }
-/*
-    function createGame() {
-        if(!checkIfStringIsValid(gameCode)) {
-            alert("Spielcode nicht korrekt!")
-            setInputError(true)
-        }
-        else if(!rounds) {
-            alert("Wählen Sie die Anzahl der Runden aus!")
-            setInputError(true)
-        }
-        else if(!checkIfStringIsValid(startStock, "numeric")) {
-            alert("Der Anfangsbestand muss ein numerischer Wert sein!")
-        }
-        else if(!checkIfStringIsValid(startValue, "numeric")) {
-            alert("Die Nachfragemenge muss ein numerischer Wert sein!")
-        }
-        else if(!checkIfStringIsValid(raisedValue, "numeric")) {
-            alert("Die erhöhte Nachfragemenge muss ein numerischer Wert sein!")
-        }
-        else if(!checkIfStringIsValid(roundOfRaise, "numeric") || roundOfRaise > rounds || roundOfRaise < 1) {
-            alert("Die Runde, in der die Nachfragemenge erhöht wird, muss ein numerischer Wert sein und darf nicht kleiner als 1 sowie größer als die Anzahl der Runden sein!")
-        }
-        else {
-            // Überprüfen, ob alle erforderlichen Felder ausgefüllt sind
-            /*if(!checkIfStringIsValid(startStock, "numeric") || 
-                !checkIfStringIsValid(startValue, "numeric") ||
-                !checkIfStringIsValid(raisedValue, "numeric")) {
-                alert("Bitte füllen Sie alle erforderlichen Felder aus und stellen Sie sicher, dass sie gültige numerische Werte enthalten!");
-                setInputError(true);
-            } else {
-                socket.emit("game_create", {
-                    gameCode,
-                    gameCreated: new Date(),
-                    gameSettings: {
-                        rounds,
-                        startStock,
-                        startValue,
-                        raisedValue,
-                        roundOfRaise
-                    },
-                    roundData: {
-                        currentRound: 0,
-                        producer: [],
-                        distributor: [],
-                        wholesaler: [],
-                        retailer: []
-                    }
-                })
-           // }
-        }
-    }*/
+
 
     function createGame() {
         let errorMessage = null;
@@ -187,31 +129,9 @@ function NewGame(props) {
             case !checkIfStringIsValid(raisedValue, "numeric", !0):
                 errorMessage = "Die erhöhte Nachfragemenge muss ein numerischer Wert sein!";
                 break;
-            //case !checkIfStringIsValid(roundOfRaise, "numeric", !0) || roundOfRaise > rounds || roundOfRaise < 1:
-                //errorMessage = "Die Runde, in der die Nachfragemenge erhöht wird, muss ein numerischer Wert sein und darf nicht kleiner als 1 sowie größer als die Anzahl der Runden sein!";
-                //break;
             case !gameCode || !rounds || !startStock || !startValue || !raisedValue || !roundOfRaise:
                 errorMessage = "Bitte füllen Sie alle Felder aus!";
-                break;
-            /*default:
-                socket.emit("game_create", {
-                    gameCode,
-                    gameCreated: new Date(),
-                    gameSettings: {
-                        rounds,
-                        startStock,
-                        startValue,
-                        raisedValue,
-                        roundOfRaise
-                    },
-                    roundData: {
-                        currentRound: 0,
-                        producer: [],
-                        distributor: [],
-                        wholesaler: [],
-                        retailer: []
-                    }
-                }) */     
+                break;   
         }
     
         if (errorMessage !== null) {
@@ -238,8 +158,13 @@ function NewGame(props) {
             })
         }
     }
-    
-    
+
+    function deleteGameCode(){
+        console.log("X Clicked")
+        setSelectedGameMode(0)
+        setSpielcodeChangeable(false)
+        setSelectRoleMenu(false)
+    }    
 
     function getSelectedRounds(e) {
         setRounds(e.target.value)
@@ -249,7 +174,10 @@ function NewGame(props) {
     if(selectedGameMode === 1) {
         options = (
             <div className={"options_wrapper"}>
+                <div>
                 <span>Geben Sie den Spielcode ein:</span>
+                <span className={"span_X"} onClick={deleteGameCode}>X</span>
+                </div>
                 <InputField
                     name={"Spielcode"}
                     getValue={setGameCode}
@@ -305,7 +233,10 @@ function NewGame(props) {
     else if(selectedGameMode === 2){
         options = (
             <div className={"options_wrapper"}>
+                <div>
                 <span>Geben Sie den Spielcode ein:</span>
+                <span className={"span_X"} onClick={deleteGameCode}>X</span>
+                </div>
                 <InputField
                     id={"spielcodeID"}
                     name={"Spielcode"}
@@ -368,8 +299,7 @@ function NewGame(props) {
                     </Button>
                     :
                     <Button
-                        onClick={onJoinGameClick}
-                        
+                        onClick={onJoinGameClick}                        
                     >
                         Spielrolle wählen
                     </Button>
@@ -395,16 +325,17 @@ function NewGame(props) {
                     currentSelected={selectedGameMode}
                 >
                     Neues Spiel erstellen
-                </Tile>
-                <Tile
-                    imgSrc={"/icons/people.svg"}
-                    imgAlt={"Spiel beitreten"}
-                    idKey={2}
-                    getValue={setSelectedGameMode}
-                    currentSelected={selectedGameMode}
-                >
+                </Tile>          
+                    <Tile
+                        imgSrc={"/icons/people.svg"}
+                        imgAlt={"Spiel beitreten"}
+                        idKey={2}
+                        getValue={setSelectedGameMode}
+                        currentSelected={selectedGameMode}  
+                    >
                     Bestehendem Spiel beitreten
-                </Tile>
+                    </Tile>
+
             </div>
             { options }
         </div>

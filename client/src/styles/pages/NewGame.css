@@ -3,7 +3,19 @@ div.game_select {
   height: 100%;
 }
 
-div.game_select div.tile_wrapper {
+.span_X{
+  float: right;
+  padding-left: 5px;
+  padding-right: 5px;
+  justify-content: center;
+}
+.span_X:hover{
+  cursor: pointer;
+  background-color: #bdc3c7;
+}
+
+
+div.game_select div.tile_wrapper  {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -12,6 +24,7 @@ div.game_select div.tile_wrapper {
       -ms-flex-pack: center;
           justify-content: center;
   margin-bottom: 20px;
+
 }
 
 div.game_select div.select_rounds {
@@ -43,8 +56,9 @@ div.game_select div.select_rounds input[type=radio] {
 }
 
 div.game_select div.options_wrapper {
-  width: 75%;
-  margin-left: 12.5%;
+  width: fit-content;
+  min-width: 75%;
+  margin-left: 12.5%; 
   margin-right: 12.5%;
   background-color: #ecf0f1;
   border: 1px solid #bdc3c7;
@@ -54,6 +68,7 @@ div.game_select div.options_wrapper {
   display: grid;
   grid-gap: 15px;
 }
+
 
 div.game_select div.options_wrapper span {
   font-weight: bold;
@@ -88,4 +103,19 @@ div.game_select div.options_wrapper.half {
 div.game_select fieldset {
   border: none;
 }
+
+div.select_role{
+  overflow: auto  ;
+  /*min-width: min-content!important;*/
+  width: 100%;
+}
+
+div.Leave_Button{
+  min-width: fit-content;
+  float: right;
+  height: 5px;
+  padding: 5px;
+}
+
+
 /*# sourceMappingURL=NewGame.css.map */

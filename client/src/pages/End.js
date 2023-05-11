@@ -1,14 +1,5 @@
-import { Socket } from "socket.io-client";
 import "../styles/pages/End.css"
-
 import React, {useEffect, useState} from "react";
-
-
-import InputField from "../components/form/InputField"
-import Button from "../components/form/Button";
-import Countdown from '../lib/Countdown';
-import { Redirect } from "react-router-dom"
-
 
 function End(props) {
 
@@ -19,8 +10,6 @@ function End(props) {
     const [gameKPIsdistributor, setGameKPIsdistributor] = useState([])
     const [gameKPIswholesaler, setGameKPIswholesaler] = useState([])
     const [gameKPIsretailer, setGameKPIsretailer] = useState([])
-    
-    const aufgerufen = false;
 
     useEffect(() => {
         console.log(gameCode);

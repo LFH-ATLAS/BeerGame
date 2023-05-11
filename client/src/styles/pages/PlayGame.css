@@ -88,7 +88,7 @@ div.grid_play2 {
 }
 div.grid_play2 div.playground2 {
   grid-row-start: 2;
-  width: 75%;
+  width: fit-content;
   margin-left: 12.5%;
   margin-right: 12.5%;
   background-color: #ecf0f1;
