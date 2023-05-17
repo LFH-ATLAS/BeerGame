@@ -16,14 +16,26 @@ function App() {
   //const socket = io.connect("https://api-beergame.usb-sys.de")
   var socket  // Lokale Verbindung zum Backend muss vom Client aufgelöst werden können
 
-  // Wenn die Umgebungsvariable BACKEND_URL gesetzt ist, wird diese verwendet, ansonsten wird die Standard-URL verwendet
-  if(window._env_.BACKEND_URL != null){
-    socket = io.connect(window._env_.BACKEND_URL)
-    console.log("Custom: Backend-URL: " + window._env_.BACKEND_URL)
-  }else{
-    // Eigentlich redundant, da die Standard-URL auch im default.env festgelegt ist
+  try{
+    // Versuche, die Backend-URL aus der Umgebungsvariable zu lesen.
+    // Wenn diese nicht gesetzt ist, wird der Default-Wert verwendet.
+
+    // Unter Windows kann die Umgebungsvariable mit dem Befehl "set BACKEND_URL=http://localhost:3001" gesetzt werden.
+    // Unter Linux kann die Umgebungsvariable mit dem Befehl "export BACKEND_URL=http://localhost:3001" gesetzt werden.
+    if(window._env_.BACKEND_URL !== undefined){
+      socket = io.connect(window._env_.BACKEND_URL)
+      console.log("Custom: Backend-URL: " + window._env_.BACKEND_URL)
+    }
+  } catch (e) /* ToDo Eigene Exception erstellen, die eine nicht definierte BACKEND_URL abfängt*/{
+    // Wenn die Umgebungsvariable nicht gesetzt ist, wird der Default-Wert verwendet.
+
+    // Fehlermeldung unter Windows:
+    // TypeError: Cannot read property 'BACKEND_URL' of undefined (reading 'BACKEND_URL')
+
+    console.log("Fehler beim Abrufen von BACKEND_URL: " + e)
+    console.log("Dieser Fehler kann ignoriert werden, wenn die App lokal ausgeführt wird über npm start.")
+    console.log("Setze Default Wert: Backend-URL=http://localhost:3001")
     socket = io.connect("http://localhost:3001")
-    console.log("Default: Backend-URL: http://localhost:3001")
   }
 
   useEffect(() => {
