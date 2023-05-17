@@ -25,6 +25,7 @@ function PlayGame(props) {
     const [supplyChainOrder, setSupplyChainOrder] = useState(0)
     const [redirectComponent, setRedirectComponent] = useState(<></>)
     
+    const [bestellungfertig, setBestellungFertig] = useState(false)
     const [spielvonmirpausiert, setPausierer] = useState(false)
     const [countdown, setCountdown] = useState(60); // Startwert für den Countdown
     const [isCountdownRunning, setIsCountdownRunning] = useState(false);    
@@ -116,10 +117,14 @@ function PlayGame(props) {
       }
 
       function resumeallcountdowns(data) {
-
-        setInputActive(true)
-        setIsCountdownRunning(true);
-        
+        if(bestellungfertig)
+        {
+            setGrundTimerStop("Warte auf nächste Runde")
+        }
+        else{
+            setInputActive(true)
+            setIsCountdownRunning(true);
+        }
       }
 
       function alertstopcountdown(data) {
@@ -172,6 +177,7 @@ function PlayGame(props) {
     function updatePlayerData(data){
         setOrderValue("");
         startCountdown()
+        setBestellungFertig(false)
         console.log(data)
         setCurrentRound(data.roundData.currentRound)
         setInputActive(true)
@@ -222,6 +228,7 @@ function PlayGame(props) {
         })
 
         setIsCountdownRunning(false);
+        setBestellungFertig(true);
         setGrundTimerStop("Warte auf nächste Runde")
 
     }
