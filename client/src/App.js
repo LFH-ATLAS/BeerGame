@@ -17,7 +17,7 @@ function App() {
   var socket  // Lokale Verbindung zum Backend muss vom Client aufgelöst werden können
 
   // Wenn die Umgebungsvariable BACKEND_URL gesetzt ist, wird diese verwendet, ansonsten wird die Standard-URL verwendet
-  if(window._env_.BACKEND_URL != null){
+  if(window._env_.BACKEND_URL !== undefined){
     socket = io.connect(window._env_.BACKEND_URL)
     console.log("Custom: Backend-URL: " + window._env_.BACKEND_URL)
   }else{

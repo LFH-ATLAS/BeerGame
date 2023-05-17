@@ -1,12 +1,12 @@
 {
-  "name": "BeerGame",
+  "name": "beergame-all",
   "version": "1.0.0",
   "scripts": {
     "install:frontend": "cd client && npm install",
     "install:backend": "cd server && npm install",
-    "start:frontend": "cd client && npm run start:frontend",
+    "start:frontend": "cd client && npm run start",
     "start:backend": "cd server && npm run start",
-    "build:frontend": "cd client && npm run build:frontend"
+    "build:frontend": "cd client && npm run build"
   },
   "dependencies": {
   }

@@ -15,10 +15,9 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "chmod +x ./env.sh && ./env.sh && cp env-config.js ./public/ && react-scripts start",
-    "start:frontend": "react-scripts start",
-    "install:frontend": "npm install",
-    "build:frontend": "react-scripts build"
+    "start-with-env": "chmod +x ./env.sh && ./env.sh && cp env-config.js ./public/ && react-scripts start",
+    "start": "react-scripts start",
+    "build": "react-scripts build"
   },
   "eslintConfig": {
     "extends": [
