@@ -300,6 +300,7 @@ export default function UpdateGame(io, socket, intData) {
             }
             else{
                 console.log("Schicke Daten der nächsten Runde. gameCode: "+ data.gameCode)
+                console.log(data)
             io.to(room).emit("update_player_data", data)
 
             }
