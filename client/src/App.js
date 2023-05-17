@@ -28,6 +28,10 @@ function App() {
     }
   } catch (e) /* ToDo Eigene Exception erstellen, die eine nicht definierte BACKEND_URL abfängt*/{
     // Wenn die Umgebungsvariable nicht gesetzt ist, wird der Default-Wert verwendet.
+
+    // Fehlermeldung unter Windows:
+    // TypeError: Cannot read property 'BACKEND_URL' of undefined (reading 'BACKEND_URL')
+
     console.log("Fehler beim Abrufen von BACKEND_URL: " + e)
     console.log("Dieser Fehler kann ignoriert werden, wenn die App lokal ausgeführt wird über npm start.")
     console.log("Setze Default Wert: Backend-URL=http://localhost:3001")
