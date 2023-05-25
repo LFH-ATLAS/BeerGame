@@ -22,9 +22,6 @@ class InputField extends React.Component {
         let defaultRestriciton = /[^A-Z0-9]/gi;
         let numericalRestriction = /[^0-9]/gi;
         let temp = event.target.value;
-        console.log("temp:")
-        console.log(temp)
-        console.log(Number(temp))
         if(this.props.restriction === "numerical")
         {
            
