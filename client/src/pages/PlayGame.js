@@ -219,18 +219,22 @@ function PlayGame(props) {
     }
 
     function submitOrder() {
-        setInputActive(false)
+        if(orderValue > 9999 && orderValue > -1){
+            alert("Der Bestellwert muss zwischen 0 und 9999 sein")
+        }
+        else{
+            setInputActive(false)
 
-        socket.emit("game_update", {
-            gameCode,
-            selectedRole,
-            orderValue
-        })
-
-        setIsCountdownRunning(false);
-        setBestellungFertig(true);
-        setGrundTimerStop("Warte auf nächste Runde")
-
+            socket.emit("game_update", {
+                gameCode,
+                selectedRole,
+                orderValue
+            })
+    
+            setIsCountdownRunning(false);
+            setBestellungFertig(true);
+            setGrundTimerStop("Warte auf nächste Runde")
+        }
     }
 
     if(currentRoomSize < 4) {
