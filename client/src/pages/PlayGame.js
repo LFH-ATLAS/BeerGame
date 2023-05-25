@@ -30,6 +30,7 @@ function PlayGame(props) {
     const [countdown, setCountdown] = useState(60); // Startwert für den Countdown
     const [isCountdownRunning, setIsCountdownRunning] = useState(false);    
     const [timerpausiertgrund, setGrundTimerStop] = useState("")
+    
     useEffect(() => {
         socket.on("end_screen", (data) => {
             setRedirectComponent(<Redirect to={`/end/${data.gameCode}`} />)
@@ -219,10 +220,6 @@ function PlayGame(props) {
     }
 
     function submitOrder() {
-        if(orderValue > 9999 && orderValue > -1){
-            alert("Der Bestellwert muss zwischen 0 und 9999 sein")
-        }
-        else{
             setInputActive(false)
 
             socket.emit("game_update", {
@@ -234,7 +231,6 @@ function PlayGame(props) {
             setIsCountdownRunning(false);
             setBestellungFertig(true);
             setGrundTimerStop("Warte auf nächste Runde")
-        }
     }
 
     if(currentRoomSize < 4) {
@@ -266,8 +262,8 @@ function PlayGame(props) {
                         name={"Bestellmenge"}
                         getValue={setOrderValue}
                         setValue={orderValue}
-                        description={"Zulässige Zeichen: 0-9"}
-                        restriction = {"numerical"}
+                        description={"Zulässige Zeichen: 0-9, Maximale Bestellmenge: 9999"}
+                        restriction = {"9999"}
                     />
                     <Button onClick={submitOrder}>Bestellen</Button>                    
                 </>
@@ -280,9 +276,9 @@ function PlayGame(props) {
                         name={"Bestellmenge"}
                         getValue={setOrderValue}
                         setValue={orderValue}
-                        description={"Zulässige Zeichen: 0-9"}
+                        description={"Zulässige Zeichen: 0-9, Maximale Bestellmenge: 9999"}
                         disabled={true}
-                        restriction = {"numerical"}
+                        restriction = {"9999"}
                     />
                     <Button onClick={submitOrder} disabled={true}>Bestellen</Button>
                 </>
@@ -311,6 +307,7 @@ function PlayGame(props) {
 
         return (
             <div>
+                
                 { redirectComponent }
                 <div className={"grid_play"}>
                     <div className={"playground"}>
@@ -355,6 +352,7 @@ function PlayGame(props) {
                         </div>
                     </div>
                 </div>
+           
 
                 <div>&nbsp;</div>
 
