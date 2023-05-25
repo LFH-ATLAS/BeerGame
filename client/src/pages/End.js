@@ -1,15 +1,19 @@
 import "../styles/pages/End.css"
 import React, {useEffect, useState} from "react";
+import {useLocation} from 'react-router-dom';
 
 function End(props) {
 
-    const gameCode = JSON.parse(localStorage.getItem("room"))
     const socket = props.socketId
     
     const [gameKPIsproducer, setGameKPIsproducer] = useState([])
     const [gameKPIsdistributor, setGameKPIsdistributor] = useState([])
     const [gameKPIswholesaler, setGameKPIswholesaler] = useState([])
     const [gameKPIsretailer, setGameKPIsretailer] = useState([])
+
+    const location = useLocation();
+    const urlParts = location.pathname.split('/');
+    const gameCode = urlParts[urlParts.length - 1];
 
     useEffect(() => {
         console.log(gameCode);
