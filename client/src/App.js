@@ -15,7 +15,7 @@ function App() {
   //const socket = io.connect("http://beergame.usb.systems:3001")
   //const socket = io.connect("https://api-beergame.usb-sys.de")
   var socket  // Lokale Verbindung zum Backend muss vom Client aufgelöst werden können
-
+  console.log("Frontend ist gestartet")
   try{
     // Versuche, die Backend-URL aus der Umgebungsvariable zu lesen.
     // Wenn diese nicht gesetzt ist, wird der Default-Wert verwendet.
