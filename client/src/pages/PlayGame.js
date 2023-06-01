@@ -145,7 +145,7 @@ function PlayGame(props) {
                 name = "Großhändler"
               break
             case 4:
-                name = "einzelhändler"
+                name = "Einzelhändler"
           }
           setGrundTimerStop("Countdown wurde von " + name + " pausiert")
         
