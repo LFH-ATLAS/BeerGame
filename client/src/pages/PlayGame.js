@@ -263,7 +263,7 @@ function PlayGame(props) {
                         getValue={setOrderValue}
                         setValue={orderValue}
                         description={"Zulässige Zeichen: 0-9, Maximale Bestellmenge: 9999"}
-                        restriction = {"9999"}
+                        restriction = {"neunneunneunneun"}
                     />
                     <Button onClick={submitOrder}>Bestellen</Button>                    
                 </>
@@ -278,7 +278,7 @@ function PlayGame(props) {
                         setValue={orderValue}
                         description={"Zulässige Zeichen: 0-9, Maximale Bestellmenge: 9999"}
                         disabled={true}
-                        restriction = {"9999"}
+                        restriction = {"neunneunneunneun"}
                     />
                     <Button onClick={submitOrder} disabled={true}>Bestellen</Button>
                 </>

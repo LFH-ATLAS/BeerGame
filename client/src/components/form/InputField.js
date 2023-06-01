@@ -22,6 +22,15 @@ class InputField extends React.Component {
         let defaultRestriciton = /[^A-Z0-9]/gi;
         let numericalRestriction = /[^0-9]/gi;
         let temp = event.target.value;
+        const maxRestriction = (value) => {
+            const maxValue = 9999;
+            if (parseInt(value) > maxValue) {
+              return maxValue.toString();
+            }
+            return value;
+          };
+
+
         if(this.props.restriction === "numerical")
         {
            
@@ -30,7 +39,15 @@ class InputField extends React.Component {
             this.props.getValue(event.target.value)
 
         }
-        else if(this.props.restriction === "9999"){
+        else if (this.props.restriction === "neunneunneunneun"){
+
+            temp = temp.replace(numericalRestriction,"");
+            temp = maxRestriction(temp);
+            event.target.value = temp;
+            this.props.getValue(event.target.value)
+
+        }
+        /*else if(this.props.restriction === "9999"){
             temp = temp.replace(numericalRestriction,"");
             if(Number(temp) > 9999){
                 temp = "9999"
@@ -38,6 +55,7 @@ class InputField extends React.Component {
             event.target.value = temp
             this.props.getValue(event.target.Value)
         }
+        */
         else{
             temp = temp.replace(defaultRestriciton ,"");
             event.target.value = temp;
@@ -45,6 +63,7 @@ class InputField extends React.Component {
 
         }
     }
+    
 
     componentWillUnmount() {
         this.props.getValue("")
