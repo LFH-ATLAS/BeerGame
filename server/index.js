@@ -20,6 +20,7 @@ const io = new Server({
   }
 });
 
+mongoose.set('strictQuery', true);
 mongoose.connect(process.env.MONGOOSE_CONNECTIONSTRING)
   .then(() => {
     io.on("connection", (socket) => {
