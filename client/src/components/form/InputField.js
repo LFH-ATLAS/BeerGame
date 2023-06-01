@@ -17,26 +17,26 @@ class InputField extends React.Component {
     }
 
 
-    onChangeHandler(event, category) {
+    onChangeHandler(event) {
 
         let defaultRestriciton = /[^A-Z0-9]/gi;
         let numericalRestriction = /[^0-9]/gi;
         let temp = event.target.value;
         if(this.props.restriction === "numerical")
-        {
-           
+        { 
             temp = temp.replace(numericalRestriction,"");
             event.target.value = temp;
+            console.log(event.target.value)
             this.props.getValue(event.target.value)
-
         }
-        else if(this.props.restriction === "9999"){
+        else if(this.props.restriction === "underTenThousand"){
             temp = temp.replace(numericalRestriction,"");
-            if(Number(temp) > 9999){
-                temp = "9999"
-            }
             event.target.value = temp
-            this.props.getValue(event.target.Value)
+            if(parseInt(event.target.value) > 9999){
+                event.target.value = "9999"
+            }
+            console.log(event.target.value)
+            this.props.getValue(event.target.value)
         }
         else{
             temp = temp.replace(defaultRestriciton ,"");
