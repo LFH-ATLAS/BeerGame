@@ -90,10 +90,10 @@ function SetData(data){
               <YAxis />
               <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
               <Legend/>
-              <Line type="monotone" dataKey="Produzent" stroke="#FF4500" />
-              <Line type="monotone" dataKey="Verteiler" stroke="#FF8C00" />
-              <Line type="monotone" dataKey="Großhändler" stroke="#FFA500" />
-              <Line type="monotone" dataKey="Einzelhändler" stroke="#FFFF00" />
+              <Line type="monotone" dataKey="Produzent" stroke="#FACA2B" strokeWidth={3}/>
+              <Line type="monotone" dataKey="Verteiler" stroke="#FAA72B" strokeWidth={3}/>
+              <Line type="monotone" dataKey="Großhändler" stroke="#FA8C2B" strokeWidth={3}/>
+              <Line type="monotone" dataKey="Einzelhändler" stroke="#FA4E2B" strokeWidth={3}/>
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -108,10 +108,10 @@ function SetData(data){
               <YAxis />
               <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
               <Legend/>
-              <Line type="monotone" dataKey="Produzent" stroke="#FF4500" />
-              <Line type="monotone" dataKey="Verteiler" stroke="#FF8C00" />
-              <Line type="monotone" dataKey="Großhändler" stroke="#FFA500" />
-              <Line type="monotone" dataKey="Einzelhändler" stroke="#FFFF00" />
+              <Line type="monotone" dataKey="Produzent" stroke="#FACA2B" strokeWidth={3}/>
+              <Line type="monotone" dataKey="Verteiler" stroke="#FAA72B" strokeWidth={3}/>
+              <Line type="monotone" dataKey="Großhändler" stroke="#FA8C2B" strokeWidth={3}/>
+              <Line type="monotone" dataKey="Einzelhändler" stroke="#FA4E2B" strokeWidth={3}/>
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -126,10 +126,10 @@ function SetData(data){
               <YAxis />
               <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
               <Legend/>
-              <Line type="monotone" dataKey="Produzent" stroke="#FF4500" />
-              <Line type="monotone" dataKey="Verteiler" stroke="#FF8C00" />
-              <Line type="monotone" dataKey="Großhändler" stroke="#FFA500" />
-              <Line type="monotone" dataKey="Einzelhändler" stroke="#FFFF00" />
+              <Line type="monotone" dataKey="Produzent" stroke="#FACA2B" strokeWidth={3}/>
+              <Line type="monotone" dataKey="Verteiler" stroke="#FAA72B" strokeWidth={3}/>
+              <Line type="monotone" dataKey="Großhändler" stroke="#FA8C2B" strokeWidth={3}/>
+              <Line type="monotone" dataKey="Einzelhändler" stroke="#FA4E2B" strokeWidth={3}/>
             </LineChart>
           </ResponsiveContainer>
         </div>
