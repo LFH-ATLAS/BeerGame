@@ -90,10 +90,10 @@ function SetData(data){
               <YAxis />
               <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
               <Legend/>
-              <Line type="monotone" dataKey="Produzent" stroke="#FACA2B" strokeWidth={3}/>
-              <Line type="monotone" dataKey="Verteiler" stroke="#FAA72B" strokeWidth={3}/>
-              <Line type="monotone" dataKey="Großhändler" stroke="#FA8C2B" strokeWidth={3}/>
-              <Line type="monotone" dataKey="Einzelhändler" stroke="#FA4E2B" strokeWidth={3}/>
+              <Line type="monotone" dataKey="Produzent" stroke="#FF4500" />
+              <Line type="monotone" dataKey="Verteiler" stroke="#FF8C00" />
+              <Line type="monotone" dataKey="Großhändler" stroke="#FFA500" />
+              <Line type="monotone" dataKey="Einzelhändler" stroke="#FFFF00" />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -108,10 +108,10 @@ function SetData(data){
               <YAxis />
               <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
               <Legend/>
-              <Line type="monotone" dataKey="Produzent" stroke="#FACA2B" strokeWidth={3}/>
-              <Line type="monotone" dataKey="Verteiler" stroke="#FAA72B" strokeWidth={3}/>
-              <Line type="monotone" dataKey="Großhändler" stroke="#FA8C2B" strokeWidth={3}/>
-              <Line type="monotone" dataKey="Einzelhändler" stroke="#FA4E2B" strokeWidth={3}/>
+              <Line type="monotone" dataKey="Produzent" stroke="#FF4500" />
+              <Line type="monotone" dataKey="Verteiler" stroke="#FF8C00" />
+              <Line type="monotone" dataKey="Großhändler" stroke="#FFA500" />
+              <Line type="monotone" dataKey="Einzelhändler" stroke="#FFFF00" />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -120,16 +120,16 @@ function SetData(data){
       <div className="section col-md-4 border">
         <h4 className="section-title">Differenz zwischen Lager und Nachfrage:</h4>
         <div className="section-content">
-          <ResponsiveContainer width="100%" height={300}> 
+          <ResponsiveContainer width="100%" height={300}>
             <LineChart data={differenzperround} margin={{ top: 10, right: 0, bottom: 15, left: 0 }}>
               <XAxis dataKey="label" />
               <YAxis />
-              <CartesianGrid stroke="#ccc" strokeDasharray="5 5"  />
+              <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
               <Legend/>
-              <Line type="monotone" dataKey="Produzent" stroke="#FACA2B" strokeWidth={3}/>
-              <Line type="monotone" dataKey="Verteiler" stroke="#FAA72B" strokeWidth={3}/>
-              <Line type="monotone" dataKey="Großhändler" stroke="#FA8C2B" strokeWidth={3}/>
-              <Line type="monotone" dataKey="Einzelhändler" stroke="#FA4E2B" strokeWidth={3}/>
+              <Line type="monotone" dataKey="Produzent" stroke="#FF4500" />
+              <Line type="monotone" dataKey="Verteiler" stroke="#FF8C00" />
+              <Line type="monotone" dataKey="Großhändler" stroke="#FFA500" />
+              <Line type="monotone" dataKey="Einzelhändler" stroke="#FFFF00" />
             </LineChart>
           </ResponsiveContainer>
         </div>
