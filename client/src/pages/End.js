@@ -65,9 +65,9 @@ function SetData(data){
 
       const newGraph3 = Array.from({ length: data.roundData.producer.length -1}, (_, index) => ({
         label: (index ).toString(),
-        Produzent: data.roundData.producer[index].stock - data.roundData.distributor[index].order,
-        Verteiler: data.roundData.distributor[index].stock - data.roundData.retailer[index].order,
-        Großhändler: data.roundData.retailer[index].stock - data.roundData.wholesaler[index].order,
+        Produzent: data.roundData.producer[index].order - data.roundData.distributor[index].stock,
+        Verteiler: data.roundData.distributor[index].order - data.roundData.retailer[index].stock,
+        Großhändler: data.roundData.retailer[index].order - data.roundData.wholesaler[index].stock,
         Einzelhändler: data.roundData.wholesaler[index].stock
       }));
   
@@ -90,10 +90,10 @@ function SetData(data){
               <YAxis />
               <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
               <Legend/>
-              <Line type="monotone" dataKey="Produzent" stroke="#0000FF" />
-              <Line type="monotone" dataKey="Verteiler" stroke="#00FF00" />
-              <Line type="monotone" dataKey="Großhändler" stroke="#00FFFF" />
-              <Line type="monotone" dataKey="Einzelhändler" stroke="#FF00FF" />
+              <Line type="monotone" dataKey="Produzent" stroke="#FF4500" />
+              <Line type="monotone" dataKey="Verteiler" stroke="#FF8C00" />
+              <Line type="monotone" dataKey="Großhändler" stroke="#FFA500" />
+              <Line type="monotone" dataKey="Einzelhändler" stroke="#FFFF00" />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -108,10 +108,10 @@ function SetData(data){
               <YAxis />
               <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
               <Legend/>
-              <Line type="monotone" dataKey="Produzent" stroke="#0000FF" />
-              <Line type="monotone" dataKey="Verteiler" stroke="#00FF00" />
-              <Line type="monotone" dataKey="Großhändler" stroke="#00FFFF" />
-              <Line type="monotone" dataKey="Einzelhändler" stroke="#FF00FF" />
+              <Line type="monotone" dataKey="Produzent" stroke="#FF4500" />
+              <Line type="monotone" dataKey="Verteiler" stroke="#FF8C00" />
+              <Line type="monotone" dataKey="Großhändler" stroke="#FFA500" />
+              <Line type="monotone" dataKey="Einzelhändler" stroke="#FFFF00" />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -126,10 +126,10 @@ function SetData(data){
               <YAxis />
               <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
               <Legend/>
-              <Line type="monotone" dataKey="Produzent" stroke="#0000FF" />
-              <Line type="monotone" dataKey="Verteiler" stroke="#00FF00" />
-              <Line type="monotone" dataKey="Großhändler" stroke="#00FFFF" />
-              <Line type="monotone" dataKey="Einzelhändler" stroke="#FF00FF" />
+              <Line type="monotone" dataKey="Produzent" stroke="#FF4500" />
+              <Line type="monotone" dataKey="Verteiler" stroke="#FF8C00" />
+              <Line type="monotone" dataKey="Großhändler" stroke="#FFA500" />
+              <Line type="monotone" dataKey="Einzelhändler" stroke="#FFFF00" />
             </LineChart>
           </ResponsiveContainer>
         </div>
