@@ -251,7 +251,9 @@ function NewGame(props) {
                     <>
                         <span>Wählen Sie eine Rolle:</span>
                         <div className={"select_role"}>
-                            <Tile
+                            <div data-toggle="tooltip"  data-placement="top" title=" Der Produzent ist für die Herstellung des Produkts verantwortlich. Seine Aufgabe besteht darin, 
+                            die Bestellungen des Großhändlers zu erfüllen und das Produkt rechtzeitig zu liefern.">
+                                <Tile 
                                 imgSrc={"/icons/factory.svg"}
                                 imgAlt={"Neues Spiel"}
                                 idKey={1}
@@ -259,6 +261,10 @@ function NewGame(props) {
                                 currentSelected={selectedRole}
                                 disabled={disabledRoles[0]}                                
                             >Produzent</Tile>
+                            </div>
+                            <div data-toggle="tooltip"  data-placement="top" title="  Der Verteiler ist für die Lieferung des Produkts vom Hersteller an den 
+                            Großhändler verantwortlich. Seine Aufgabe ist es, die Bestellungen des 
+                            Großhändlers auszuführen und den Einzelhändler zu informieren.">
                             <Tile
                                 imgSrc={"/icons/box.svg"}
                                 imgAlt={"Neues Spiel"}
@@ -267,6 +273,10 @@ function NewGame(props) {
                                 currentSelected={selectedRole}
                                 disabled={disabledRoles[1]}
                             >Verteiler</Tile>
+                                                        </div>
+                            <div data-toggle="tooltip"  data-placement="top" title="Der Großhändler nimmt die Bestellungen des Einzelhändlers 
+                            entgegen und bestellt das Produkt beim Verteiler. Seine Aufgabe ist es, den 
+                            Einzelhändler zu beliefern und die Lagerbestände zu verwalten.">
                             <Tile
                                 imgSrc={"/icons/wholesale.svg"}
                                 imgAlt={"Neues Spiel"}
@@ -275,6 +285,10 @@ function NewGame(props) {
                                 currentSelected={selectedRole}
                                 disabled={disabledRoles[2]}
                             >Großhändler</Tile>
+                                                        </div>
+                            <div data-toggle="tooltip"  data-placement="top" title="Der Einzelhändler nimmt Kundenbestellungen entgegen und bestellt 
+                            das Produkt beim Großhändler. Seine Aufgabe besteht darin, die Kundennachfrage 
+                            zu befriedigen und den Lagerbestand zu überwachen.">
                             <Tile
                                 imgSrc={"/icons/shop.svg"}
                                 imgAlt={"Neues Spiel"}
@@ -283,6 +297,7 @@ function NewGame(props) {
                                 currentSelected={selectedRole}
                                 disabled={disabledRoles[3]}
                             >Einzelhändler</Tile>
+                            </div>
                         </div>
                         
                     </>
