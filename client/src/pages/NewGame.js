@@ -136,7 +136,7 @@ function NewGame(props) {
                 errorMessage = "Bitte füllen Sie alle Felder aus!";
                 break;   
         }
-    
+        
         if (errorMessage !== null) {
             alert(errorMessage);
             setInputError(true);
