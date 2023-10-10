@@ -146,7 +146,7 @@ class Home extends React.Component {
 </div> */}
 
 
-<div class="container-fluid bg-dark mt-5">
+<footer class="container-fluid bg-dark mt-5">
 <div class="col-12 text-center mt-2 text-white">
       @ 2023 Beer-Game. Created by dWi2021
     </div>
@@ -158,7 +158,7 @@ class Home extends React.Component {
       <a href="https://atlasproject.de/index.php/beergame/" target="_blank" class="text-white">Besuche unsere Webseite</a>
     </div>
   </div>
-</div>
+</footer>
 
 
       </div>

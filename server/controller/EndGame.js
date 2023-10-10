@@ -9,10 +9,8 @@ export default function Senddata(io, socket, intData) {
     //GameData.findOne({ gameCode: room }, (err, data) => {
     GameData.findOne({ gameCode: room }, (err, data) => {
 
-
-        console.log("Hi")
         io.emit("update_end_Screen", data)
-            console.log("Hi2")
+            console.log("Daten an Frontend übertragen")
         }
     )
 }
