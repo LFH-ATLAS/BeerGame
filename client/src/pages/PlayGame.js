@@ -348,7 +348,7 @@ function PlayGame(props) {
                         </>
                         <div className={"line"} />
                         <div className={"delivery"}>
-                            <span>Lieferanfrage: {supplyChainOrder}</span>
+                            <span data-toggle="tooltip" data-placement="top" title="Die Abnahmemenge, welche dir nächste Runde abgezogen wird." >Lieferanfrage: {supplyChainOrder}</span>
                         </div>
                     </div>
                 </div>
