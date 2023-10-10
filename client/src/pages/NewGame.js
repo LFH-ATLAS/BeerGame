@@ -251,7 +251,7 @@ function NewGame(props) {
                     <>
                         <span>Wählen Sie eine Rolle:</span>
                         <div className={"select_role"}>
-                            <div data-toggle="tooltip"  data-placement="top" title=" Der Produzent ist für die Herstellung des Produkts verantwortlich. Seine Aufgabe besteht darin, 
+                            <div data-toggle="tooltip"  data-placement="top" title="Der Produzent ist für die Herstellung des Produkts verantwortlich. Seine Aufgabe besteht darin,
                             die Bestellungen des Großhändlers zu erfüllen und das Produkt rechtzeitig zu liefern.">
                                 <Tile 
                                 imgSrc={"/icons/factory.svg"}
@@ -262,7 +262,7 @@ function NewGame(props) {
                                 disabled={disabledRoles[0]}                                
                             >Produzent</Tile>
                             </div>
-                            <div data-toggle="tooltip"  data-placement="top" title="  Der Verteiler ist für die Lieferung des Produkts vom Hersteller an den 
+                            <div data-toggle="tooltip"  data-placement="top" title="Der Verteiler ist für die Lieferung des Produkts vom Hersteller an den
                             Großhändler verantwortlich. Seine Aufgabe ist es, die Bestellungen des 
                             Großhändlers auszuführen und den Einzelhändler zu informieren.">
                             <Tile
@@ -274,7 +274,7 @@ function NewGame(props) {
                                 disabled={disabledRoles[1]}
                             >Verteiler</Tile>
                                                         </div>
-                            <div data-toggle="tooltip"  data-placement="top" title="Der Großhändler nimmt die Bestellungen des Einzelhändlers 
+                            <div data-toggle="tooltip"  data-placement="top" title="Der Großhändler nimmt die Bestellungen des Einzelhändlers
                             entgegen und bestellt das Produkt beim Verteiler. Seine Aufgabe ist es, den 
                             Einzelhändler zu beliefern und die Lagerbestände zu verwalten.">
                             <Tile
