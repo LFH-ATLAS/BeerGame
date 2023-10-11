@@ -65,10 +65,10 @@ function SetData(data){
 
       const newGraph3 = Array.from({ length: data.roundData.producer.length -1}, (_, index) => ({
         label: (index ).toString(),
-        Produzent: data.roundData.producer[index].order - data.roundData.distributor[index].stock,
-        Verteiler: data.roundData.distributor[index].order - data.roundData.retailer[index].stock,
-        Großhändler: data.roundData.retailer[index].order - data.roundData.wholesaler[index].stock,
-        Einzelhändler: data.roundData.wholesaler[index].stock
+        Produzent: data.roundData.producer[index].stock -data.roundData.producer[index].delay,
+        Verteiler: data.roundData.distributor[index].stock - data.roundData.distributor[index].delay,
+        Großhändler: data.roundData.retailer[index].stock - data.roundData.retailer[index].delay,
+        Einzelhändler: data.roundData.wholesaler[index].stock - data.roundData.wholesaler[index].delay
       }));
   
       setGraphdiff(newGraph3); // Den Zustand für graph aktualisieren
