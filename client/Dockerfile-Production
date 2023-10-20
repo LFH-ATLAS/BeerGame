@@ -24,6 +24,11 @@ WORKDIR /usr/share/nginx/html
 COPY ./env.sh .
 COPY default.env .
 
+# Run as non-root user (nginx)
+RUN touch /var/run/nginx.pid
+RUN chown -R nginx:nginx /var/run/nginx.pid /usr/share/nginx/html /var/cache/nginx /var/log/nginx /etc/nginx/conf.d
+USER nginx
+
 # Make our shell script executable
 RUN chmod +x env.sh
 
