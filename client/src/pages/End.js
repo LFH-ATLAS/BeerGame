@@ -160,9 +160,10 @@ function SetData(data){
       </div>
 
       <div className="section col-md-4 border">
-        <div className="section-content">
-
-        </div>
+      <p className="section-content text-center ">
+        <br />
+            Der Graph <strong>Differenz zwischen Lager und Nachfrage</strong> zeigt, wie viel aktuell im Lager ist, bzw. wenn dieser Negativ ist, wie viel Rückstand vorliegt.
+        </p>
       </div>
     </div>
     </div>
