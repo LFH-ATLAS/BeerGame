@@ -246,7 +246,7 @@ export default function UpdateGame(io, socket, intData) {
         let rounds = [producer.length, distributor.length, wholesaler.length, retailer.length]
         let checkIfDataCanBeCommitted = true
         rounds.map(element => {
-            if(element !== data.roundData.currentRound+1 || element === []) checkIfDataCanBeCommitted = false
+            if(element !== data.roundData.currentRound+1 || element == []) checkIfDataCanBeCommitted = false
         })
         //Daten können verteilt werden, sobald alle Spieler die Bestellung für die aktuelle Runde abgegeben haben
         if(checkIfDataCanBeCommitted) {
@@ -313,6 +313,7 @@ export default function UpdateGame(io, socket, intData) {
             data.roundData.wholesaler = wholesaler
             data.roundData.retailer = retailer
             data.save()
+            io.to(room).emit("someone_ordered",role)
         }
     })
 }
