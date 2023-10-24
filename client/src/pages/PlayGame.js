@@ -104,22 +104,7 @@ function PlayGame(props) {
     }, [countdown]);
 
     function startCountdown() {
-        // Zum testen in der Hochschule
-        /*if(selectedRole === 1) {
 
-            setCountdown(60)
-        }
-        else if(selectedRole === 2) {
-
-            setCountdown(61)
-        }
-        else if(selectedRole === 3) {
-            setCountdown(62)
-        }
-        else {
-            setCountdown(63)
-        }*/
-        // Für Zuhause
         setCountdown(60);
 
         setIsCountdownRunning(true);
@@ -186,7 +171,7 @@ function PlayGame(props) {
     function updateWhoOrdered(role){
         let tmp = whoOrdered;
         tmp[role-1] = true;
-        setWhoOrdered(tmp);
+        setWhoOrdered([...tmp]);
         console.log('who ordrerd');
         console.log(whoOrdered);
     }
@@ -305,7 +290,6 @@ function PlayGame(props) {
         otherPlayers.forEach(item =>{
             switch(item) {
                 case 1:
-                    console.log('case1')
                     if(whoOrdered[0]===true){
                         playerSymbols.push(
                             <div style={otherPlayersDivStyle} key={item}>
@@ -325,7 +309,6 @@ function PlayGame(props) {
 
                     break;
                 case 2:
-                    console.log('case2')
                     if(whoOrdered[1]===true){
                         playerSymbols.push(
                         <div style={otherPlayersDivStyle} key={item}>
@@ -342,7 +325,6 @@ function PlayGame(props) {
                     
                     break;
                 case 3:
-                    console.log('case3')
                     if(whoOrdered[2]===true){
                         playerSymbols.push(
                         <div style={otherPlayersDivStyle} key={item}>
@@ -359,7 +341,6 @@ function PlayGame(props) {
                         }
                     break;
                 case 4:
-                    console.log('case4')
                     if(whoOrdered[3]===true){
                         playerSymbols.push(
                         <div style={otherPlayersDivStyle} key={item}>
