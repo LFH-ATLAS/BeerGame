@@ -1,5 +1,5 @@
 # This is a basic workflow to help you get started with Actions
-name: CI-CD - Frontend - Prod
+name: CI-CD - Frontend - Dev
 
 # Controls when the action will run. 
 on:
@@ -46,4 +46,4 @@ jobs:
             context: ./client/
             file: ./client/Dockerfile
             push: true
-            tags: ${{ secrets.DOCKERHUB_USERNAME }}/beergame-frontend:latest,  ${{ secrets.DOCKERHUB_USERNAME }}/beergame-frontend:1.${{ github.run_number }}
+            tags: ${{ secrets.DOCKERHUB_USERNAME }}/beergame-frontend:dev-latest,  ${{ secrets.DOCKERHUB_USERNAME }}/beergame-frontend:1.${{ github.run_number }}-dev
