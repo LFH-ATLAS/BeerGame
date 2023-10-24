@@ -9,7 +9,7 @@ services:
       - REACT_APP_BACKEND_URL=${BE_URL:-http://localhost:3001}
     build:
       context: ../client
-      dockerfile: Dockerfile-Production
+      dockerfile: Dockerfile
     ports:
       - 80:80
 
