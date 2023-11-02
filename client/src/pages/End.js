@@ -18,6 +18,10 @@ function End(props) {
     const location = useLocation();
     const urlParts = location.pathname.split('/');
     const gameCode = urlParts[urlParts.length - 1];
+    const [sumStorageCostsProducer, SetsumProducer] = useState([]);
+    const [sumStorageCostsDistributor, SetsumDistributor] = useState([]);
+    const [sumStorageCostsWholesaler, SetsumWholesaler] = useState([]);
+    const [sumStorageCostsRetailer, SetsumRetailer] = useState([]);
 
     useEffect(() => {
         console.log(gameCode);
@@ -42,6 +46,11 @@ function SetData(data){
     setGameKPIsdistributor(data.roundData.distributor[data.roundData.currentRound-1].kpis)
     setGameKPIswholesaler(data.roundData.wholesaler[data.roundData.currentRound-1].kpis)
     setGameKPIsretailer(data.roundData.retailer[data.roundData.currentRound-1].kpis)
+
+    SetsumProducer(gameKPIsproducer.reduce((total, item) => total + item.storageCostsWeekly, 0))
+    SetsumDistributor(gameKPIsdistributor.reduce((total, item) => total + item.storageCostsWeekly, 0))
+    SetsumWholesaler(gameKPIswholesaler.reduce((total, item) => total + item.storageCostsWeekly, 0))
+    SetsumRetailer(gameKPIsretailer.reduce((total, item) => total + item.storageCostsWeekly, 0))
 
     const newGraph = Array.from({ length: data.roundData.producer.length -1}, (_, index) => ({
         label: (index ).toString(),
@@ -72,6 +81,7 @@ function SetData(data){
       }));
   
       setGraphdiff(newGraph3); // Den Zustand für graph aktualisieren
+
 }
 
     return (
@@ -150,11 +160,12 @@ function SetData(data){
 
       <div className="section col-md-4 border">
         <div className="section-content">
-        <p className="section-content text-center ">
-            Produzent:  <br />
-            Verteiler:  <br />
-            Großhändler:  <br />
-            Einzelhändler:  
+        <p className="section-content text-center" >
+        <strong data-toggle="tooltip"  data-placement="top" title="Niedriger ist besser" >Gesamtkosten:</strong> <br />
+            Produzent: {sumStorageCostsProducer}<br />
+            Verteiler: {sumStorageCostsDistributor}<br />
+            Großhändler: {sumStorageCostsWholesaler} <br />
+            Einzelhändler: {sumStorageCostsRetailer}  
         </p>
         </div>
       </div>
@@ -169,8 +180,8 @@ function SetData(data){
     </div>
 <h3 class="mt-5 text-center">Produzent:</h3>
 <div className={"grid_play2"}>
-                    <div className={"playground2"}>
-                        <div className={"KPItable"}>
+      <div className={"playground2"}>
+      <div className={"KPItable"}>
     <table>
         <thead>
             <tr>
