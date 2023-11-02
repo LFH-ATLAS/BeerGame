@@ -18,10 +18,10 @@ function End(props) {
     const location = useLocation();
     const urlParts = location.pathname.split('/');
     const gameCode = urlParts[urlParts.length - 1];
-    const [sumStorageCostsProducer, SetsumProducer] = useState([]);
-    const [sumStorageCostsDistributor, SetsumDistributor] = useState([]);
-    const [sumStorageCostsWholesaler, SetsumWholesaler] = useState([]);
-    const [sumStorageCostsRetailer, SetsumRetailer] = useState([]);
+    const sumStorageCostsProducer = gameKPIsproducer.reduce((total, item) => total + item.storageCostsWeekly, 0);
+    const sumStorageCostsDistributor = gameKPIsdistributor.reduce((total, item) => total + item.storageCostsWeekly, 0);
+    const sumStorageCostsWholesaler = gameKPIswholesaler.reduce((total, item) => total + item.storageCostsWeekly, 0);
+    const sumStorageCostsRetailer = gameKPIsretailer.reduce((total, item) => total + item.storageCostsWeekly, 0);
 
     useEffect(() => {
         console.log(gameCode);
@@ -46,11 +46,6 @@ function SetData(data){
     setGameKPIsdistributor(data.roundData.distributor[data.roundData.currentRound-1].kpis)
     setGameKPIswholesaler(data.roundData.wholesaler[data.roundData.currentRound-1].kpis)
     setGameKPIsretailer(data.roundData.retailer[data.roundData.currentRound-1].kpis)
-
-    SetsumProducer(gameKPIsproducer.reduce((total, item) => total + item.storageCostsWeekly, 0))
-    SetsumDistributor(gameKPIsdistributor.reduce((total, item) => total + item.storageCostsWeekly, 0))
-    SetsumWholesaler(gameKPIswholesaler.reduce((total, item) => total + item.storageCostsWeekly, 0))
-    SetsumRetailer(gameKPIsretailer.reduce((total, item) => total + item.storageCostsWeekly, 0))
 
     const newGraph = Array.from({ length: data.roundData.producer.length -1}, (_, index) => ({
         label: (index ).toString(),
