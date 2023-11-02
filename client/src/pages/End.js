@@ -175,11 +175,20 @@ function SetData(data){
         <thead>
             <tr>
                <th>Runde</th>
-               <th>Kosten pro Woche</th>
-                 <th>Lagergesamtkosten</th>
-                 <th>Perfekte Auftragsrate</th>
-                <th>Durchschnittlicher Lagerbestand</th>
-                <th>Wochen mit Lieferrückstand</th>
+               <th data-toggle="tooltip"  data-placement="top" title="Diese Angabe repräsentiert die Gesamtkosten pro Woche.">Kosten pro Woche</th>
+                 <th data-toggle="tooltip"  data-placement="top" title=" Hier werden die kumulierten Lagerkosten während des Spiels 
+                aufgeführt. Diese Kosten beziehen sich auf die Lagerhaltung und die damit 
+                verbundenen finanziellen Auswirkungen.">Lagergesamtkosten</th>
+                 <th data-toggle="tooltip"  data-placement="top" title=" Diese Metrik gibt an, wie erfolgreich die Spieler bei der 
+                Erfüllung der Kundenaufträge in jeder Runde waren. Sie misst die Genauigkeit der 
+                Lieferungen im Verhältnis zu den Bestellungen.">Perfekte Auftragsrate</th>
+                <th data-toggle="tooltip"  data-placement="top" title="Diese Information gibt den Durchschnittswert des 
+                Lagerbestands über alle Runden an. Er spiegelt wider, wie effizient die Spieler ihre 
+                Lagerbestände im Spiel verwalten.">Durchschnittlicher Lagerbestand</th>
+                <th data-toggle="tooltip"  data-placement="top" title="Hier wird angegeben, inwieweit es während des 
+                Spiels zu Lieferverzögerungen oder Engpässen in der Lieferkette gekommen ist. 
+                Dies ist ein wichtiger Indikator für die Leistungsfähigkeit und Anpassungsfähigkeit 
+                der Spieler."> Wochen mit Lieferrückstand</th>
             </tr>
         </thead>
         <tbody>
