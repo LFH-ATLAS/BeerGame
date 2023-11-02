@@ -18,10 +18,10 @@ function End(props) {
     const location = useLocation();
     const urlParts = location.pathname.split('/');
     const gameCode = urlParts[urlParts.length - 1];
-    const [sumStorageCostsProducer, SetsumProducer] = useState([]);
-    const [sumStorageCostsDistributor, SetsumDistributor] = useState([]);
-    const [sumStorageCostsWholesaler, SetsumWholesaler] = useState([]);
-    const [sumStorageCostsRetailer, SetsumRetailer] = useState([]);
+    const [sumStorageCostsProducer, SetsumProducer] = useState(0);
+    const [sumStorageCostsDistributor, SetsumDistributor] = useState(0);
+    const [sumStorageCostsWholesaler, SetsumWholesaler] = useState(0);
+    const [sumStorageCostsRetailer, SetsumRetailer] = useState(0);
 
     useEffect(() => {
         console.log(gameCode);
