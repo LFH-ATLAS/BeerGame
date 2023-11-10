@@ -22,10 +22,10 @@ function End(props) {
     const sumStorageCostsDistributor = gameKPIsdistributor.reduce((total, item) => total + item.storageCostsWeekly, 0);
     const sumStorageCostsWholesaler = gameKPIswholesaler.reduce((total, item) => total + item.storageCostsWeekly, 0);
     const sumStorageCostsRetailer = gameKPIsretailer.reduce((total, item) => total + item.storageCostsWeekly, 0);
-    const [messageProducer, setmessageProducer] = useState();
-    const [messageDistributor, setmessageDistributor] = useState();
-    const [messageWholesaler, setmessageWholesaler] = useState();
-    const [messageRetailer, setmessageRetailer] = useState();
+    const [messageProducer, setmessageProducer] = useState('');
+    const [messageDistributor, setmessageDistributor] = useState('');
+    const [messageWholesaler, setmessageWholesaler] = useState('');
+    const [messageRetailer, setmessageRetailer] = useState('');
 
 
 
@@ -108,31 +108,30 @@ function SetData(data){
   
     setGraphdiff(newGraph3); // Den Zustand für graph aktualisieren
     
-    let messageProducerlet;
-    messageProducerlet += checkCriteria(data.roundData.producer[data.roundData.producer.length -1].backorderWeeksPct, "backorderWeeks");
-    messageProducerlet += checkCriteria((data.roundData.producer[data.roundData.producer.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue) / 2)), "averageInventory");
-    messageProducerlet += checkCriteria(data.roundData.producer[data.roundData.producer.length -1].perfectOrderRatePct, "perfectOrderRate");
-    
-    console.log(messageProducerlet);
+    let messageProducerlet = "";
+    messageProducerlet += checkCriteria(data.roundData.producer[data.roundData.producer.length -1].kpis[data.roundData.producer.length -1].backorderWeeksPct, "backorderWeeks");
+    messageProducerlet += checkCriteria((data.roundData.producer[data.roundData.producer.length -1].kpis[data.roundData.producer.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue) / 2)), "averageInventory");
+    messageProducerlet += checkCriteria(data.roundData.producer[data.roundData.producer.length -1].kpis[data.roundData.producer.length -1].perfectOrderRatePct, "perfectOrderRate");
     setmessageProducer(messageProducerlet);
 
-    let messageDistributorlet;
-    messageDistributorlet += checkCriteria(data.roundData.distributor[data.roundData.distributor.length -1].backorderWeeksPct, "backorderWeeks");
-    messageDistributorlet += checkCriteria((data.roundData.distributor[data.roundData.distributor.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue) / 2)), "averageInventory");
-    messageDistributorlet += checkCriteria(data.roundData.distributor[data.roundData.distributor.length -1].perfectOrderRatePct, "perfectOrderRate");
+    let messageDistributorlet= "";
+    messageDistributorlet += checkCriteria(data.roundData.distributor[data.roundData.distributor.length -1].kpis[data.roundData.distributor.length -1].backorderWeeksPct, "backorderWeeks");
+    messageDistributorlet += checkCriteria((data.roundData.distributor[data.roundData.distributor.length -1].kpis[data.roundData.distributor.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue) / 2)), "averageInventory");
+    messageDistributorlet += checkCriteria(data.roundData.distributor[data.roundData.distributor.length -1].kpis[data.roundData.distributor.length -1].perfectOrderRatePct, "perfectOrderRate");
     setmessageDistributor(messageDistributorlet);
 
-    let messageWholesalerlet;
-    messageWholesalerlet += checkCriteria(data.roundData.wholesaler[data.roundData.wholesaler.length -1].backorderWeeksPct, "backorderWeeks");
-    messageWholesalerlet += checkCriteria((data.roundData.wholesaler[data.roundData.wholesaler.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue) / 2)), "averageInventory");
-    messageWholesalerlet += checkCriteria(data.roundData.wholesaler[data.roundData.wholesaler.length -1].perfectOrderRatePct, "perfectOrderRate");
+    let messageWholesalerlet= "";
+    messageWholesalerlet += checkCriteria(data.roundData.wholesaler[data.roundData.wholesaler.length -1].kpis[data.roundData.wholesaler.length -1].backorderWeeksPct, "backorderWeeks");
+    messageWholesalerlet += checkCriteria((data.roundData.wholesaler[data.roundData.wholesaler.length -1].kpis[data.roundData.wholesaler.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue) / 2)), "averageInventory");
+    messageWholesalerlet += checkCriteria(data.roundData.wholesaler[data.roundData.wholesaler.length -1].kpis[data.roundData.wholesaler.length -1].perfectOrderRatePct, "perfectOrderRate");
     setmessageWholesaler(messageWholesalerlet);
 
-    let messageRetailerlet;
-    messageRetailerlet += checkCriteria(data.roundData.retailer[data.roundData.retailer.length -1].backorderWeeksPct, "backorderWeeks");
-    messageRetailerlet += checkCriteria((data.roundData.retailer[data.roundData.retailer.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue) / 2)), "averageInventory");
-    messageRetailerlet += checkCriteria(data.roundData.retailer[data.roundData.retailer.length -1].perfectOrderRatePct, "perfectOrderRate");
-    setmessageRetailer(messageRetailer);
+    let messageRetailerlet= "";
+    messageRetailerlet += checkCriteria(data.roundData.retailer[data.roundData.retailer.length -1].kpis[data.roundData.retailer.length -1].backorderWeeksPct, "backorderWeeks");
+    messageRetailerlet += checkCriteria((data.roundData.retailer[data.roundData.retailer.length -1].kpis[data.roundData.retailer.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue) / 2)), "averageInventory");
+    messageRetailerlet += checkCriteria(data.roundData.retailer[data.roundData.retailer.length -1].kpis[data.roundData.retailer.length -1].perfectOrderRatePct, "perfectOrderRate");
+    
+    setmessageRetailer(messageRetailerlet);
 
 }
 
@@ -225,10 +224,10 @@ function SetData(data){
       <div className="section col-md-4 border">
       <p className="section-content text-center ">
         <br />
-          Produzent: {messageProducer}<br />
-          Verteiler: {messageDistributor}<br />
-          Großhändler: {messageWholesaler} <br />
-          Einzelhändler: {messageRetailer}  
+          <strong>Produzent:</strong> {messageProducer}<br />
+          <strong>Verteiler:</strong> {messageDistributor}<br />
+          <strong>Großhändler:</strong> {messageWholesaler} <br />
+          <strong>Einzelhändler:</strong> {messageRetailer}  
         </p>
       </div>
     </div>
