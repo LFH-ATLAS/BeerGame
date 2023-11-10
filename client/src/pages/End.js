@@ -108,6 +108,23 @@ function SetData(data){
   
     setGraphdiff(newGraph3); // Den Zustand für graph aktualisieren
 
+    messageProducer += checkCriteria(data.roundData.producer[data.roundData.producer.length -1].backorderWeeksPct, "backorderWeeks");
+    messageProducer += checkCriteria((data.roundData.producer[data.roundData.producer.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue) / 2)), "averageInventory");
+    messageProducer += checkCriteria(data.roundData.producer[data.roundData.producer.length -1].perfectOrderRatePct, "perfectOrderRate");
+
+    messageDistributor += checkCriteria(data.roundData.distributor[data.roundData.distributor.length -1].backorderWeeksPct, "backorderWeeks");
+    messageDistributor += checkCriteria((data.roundData.distributor[data.roundData.distributor.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue) / 2)), "averageInventory");
+    messageDistributor += checkCriteria(data.roundData.distributor[data.roundData.distributor.length -1].perfectOrderRatePct, "perfectOrderRate");
+
+    messageWholesaler += checkCriteria(data.roundData.wholesaler[data.roundData.wholesaler.length -1].backorderWeeksPct, "backorderWeeks");
+    messageWholesaler += checkCriteria((data.roundData.wholesaler[data.roundData.wholesaler.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue) / 2)), "averageInventory");
+    messageWholesaler += checkCriteria(data.roundData.wholesaler[data.roundData.wholesaler.length -1].perfectOrderRatePct, "perfectOrderRate");
+
+    messageRetailer += checkCriteria(data.roundData.retailer[data.roundData.retailer.length -1].backorderWeeksPct, "backorderWeeks");
+    messageRetailer += checkCriteria((data.roundData.retailer[data.roundData.retailer.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue) / 2)), "averageInventory");
+    messageRetailer += checkCriteria(data.roundData.retailer[data.roundData.retailer.length -1].perfectOrderRatePct, "perfectOrderRate");
+
+
 }
 
     return (
