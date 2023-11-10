@@ -17,7 +17,7 @@ COPY conf /etc/nginx
 COPY --from=builder /usr/src/app/build /usr/share/nginx/html/
 
 # Default port exposure
-EXPOSE 80
+EXPOSE 8080
 
 # Copy .env file and shell script to container
 WORKDIR /usr/share/nginx/html

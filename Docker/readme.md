@@ -10,25 +10,21 @@ Für die lokale kompilierung der Images müssen die local-* Dateien verwendet we
 
 ### Lokale Installation
 
-Zum Starten vom Development Setup muss folgendes eingegeben werden:
+Hinweis: Die Images werden lokal gebaut und können daher einige Minuten dauern.
+
+Um die Images lokal zu bauen muss folgendes eingegeben werden:
 ```
-    docker compose -f local-development.yml up -d
+    docker compose -f docker-compose-local.yml build
 ```
 
-
-Zum Starten vom Produktiven Setup muss folgendes eingegeben werden:
+Zum Starten des Stacks über die lokalen Images muss folgendes eingegeben werden:
 ```
-    docker compose -f local-production.yml up -d
-```
-
-### Remote Installation
-
-Zum Starten vom Development Setup muss folgendes eingegeben werden:
-```
-    docker compose -f remote-development.yml up -d
+    docker compose -f docker-compose-local.yml up -d
 ```
 
-Zum Starten vom Produktiven Setup muss folgendes eingegeben werden:
+### Öffentliche Installation
+
+Zum Starten des Stacks über die öffenlichen Images von Docker Hub muss folgendes eingegeben werden:
 ```
-    docker compose -f remote-production.yml up -d
+    docker compose -f docker-compose-remote.yml up -d
 ```

@@ -1,16 +1,18 @@
 version: "3"
 services:
   frontend:
-    container_name: frontend-dev
-    image: beergame/frontend:latest-dev
+    container_name: frontend-prod
+    image: beergame/frontend:latest-prod
     environment:
+      # Not working now, environment variables not passed to React
       # default is "http://localhost:3001"
-      - REACT_APP_BACKEND_URL=${BE_URL:-http://localhost:3001}
+      # - REACT_APP_BACKEND_URL=${BE_URL:-http://localhost:3001}
+      - BACKEND_URL=${BE_URL:-http://localhost:3001}
     build:
       context: ../client
       dockerfile: Dockerfile
     ports:
-      - 3000:3000
+      - 80:8080
 
   backend:
     container_name: backend
@@ -33,8 +35,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${DB_USER:-admin}
       MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD:-example}
-#    ports:
-#      - 27017:27017
+    #    ports:
+    #      - 27017:27017
     volumes:
       - mongodb-data-dev:/data/db
 
