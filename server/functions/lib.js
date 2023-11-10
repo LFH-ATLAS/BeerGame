@@ -19,7 +19,7 @@ export function calcPerfectOrderRatePct(perfectOrders, allOrders) {
     return ((perfectOrders / allOrders)*100)
   }
   else{
-    return ((perfectOrders / allOrders)*100).toFixed(3)
+    return ((perfectOrders / allOrders)*100).toFixed(1)
   } 
 }
 
@@ -44,7 +44,7 @@ export function calcAverageStock(sumStock, gameWeeks){
     return (sumStock / (gameWeeks + 1))
   }
   else{
-    return (sumStock / (gameWeeks + 1)).toFixed(3)
+    return (sumStock / (gameWeeks + 1)).toFixed(1)
   }
     
 }
@@ -55,7 +55,7 @@ export function calcBackorderWeeksPct(weeksWithBackorders, gameWeeks){
     return ((weeksWithBackorders / gameWeeks)*100)
   }
   else{
-    return ((weeksWithBackorders / gameWeeks)*100).toFixed(3)
+    return ((weeksWithBackorders / gameWeeks)*100).toFixed(1)
   }
     
 }
