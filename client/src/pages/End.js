@@ -22,10 +22,10 @@ function End(props) {
     const sumStorageCostsDistributor = gameKPIsdistributor.reduce((total, item) => total + item.storageCostsWeekly, 0);
     const sumStorageCostsWholesaler = gameKPIswholesaler.reduce((total, item) => total + item.storageCostsWeekly, 0);
     const sumStorageCostsRetailer = gameKPIsretailer.reduce((total, item) => total + item.storageCostsWeekly, 0);
-    let messageProducer;
-    let messageDistributor;
-    let messageWholesaler;
-    let messageRetailer;
+    const [messageProducer, setmessageProducer] = useState();
+    const [messageDistributor, setmessageDistributor] = useState();
+    const [messageWholesaler, setmessageWholesaler] = useState();
+    const [messageRetailer, setmessageRetailer] = useState();
 
 
 
@@ -107,23 +107,32 @@ function SetData(data){
       }));
   
     setGraphdiff(newGraph3); // Den Zustand für graph aktualisieren
+    
+    let messageProducerlet;
+    messageProducerlet += checkCriteria(data.roundData.producer[data.roundData.producer.length -1].backorderWeeksPct, "backorderWeeks");
+    messageProducerlet += checkCriteria((data.roundData.producer[data.roundData.producer.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue) / 2)), "averageInventory");
+    messageProducerlet += checkCriteria(data.roundData.producer[data.roundData.producer.length -1].perfectOrderRatePct, "perfectOrderRate");
+    
+    console.log(messageProducerlet);
+    setmessageProducer(messageProducerlet);
 
-    messageProducer += checkCriteria(data.roundData.producer[data.roundData.producer.length -1].backorderWeeksPct, "backorderWeeks");
-    messageProducer += checkCriteria((data.roundData.producer[data.roundData.producer.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue) / 2)), "averageInventory");
-    messageProducer += checkCriteria(data.roundData.producer[data.roundData.producer.length -1].perfectOrderRatePct, "perfectOrderRate");
+    let messageDistributorlet;
+    messageDistributorlet += checkCriteria(data.roundData.distributor[data.roundData.distributor.length -1].backorderWeeksPct, "backorderWeeks");
+    messageDistributorlet += checkCriteria((data.roundData.distributor[data.roundData.distributor.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue) / 2)), "averageInventory");
+    messageDistributorlet += checkCriteria(data.roundData.distributor[data.roundData.distributor.length -1].perfectOrderRatePct, "perfectOrderRate");
+    setmessageDistributor(messageDistributorlet);
 
-    messageDistributor += checkCriteria(data.roundData.distributor[data.roundData.distributor.length -1].backorderWeeksPct, "backorderWeeks");
-    messageDistributor += checkCriteria((data.roundData.distributor[data.roundData.distributor.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue) / 2)), "averageInventory");
-    messageDistributor += checkCriteria(data.roundData.distributor[data.roundData.distributor.length -1].perfectOrderRatePct, "perfectOrderRate");
+    let messageWholesalerlet;
+    messageWholesalerlet += checkCriteria(data.roundData.wholesaler[data.roundData.wholesaler.length -1].backorderWeeksPct, "backorderWeeks");
+    messageWholesalerlet += checkCriteria((data.roundData.wholesaler[data.roundData.wholesaler.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue) / 2)), "averageInventory");
+    messageWholesalerlet += checkCriteria(data.roundData.wholesaler[data.roundData.wholesaler.length -1].perfectOrderRatePct, "perfectOrderRate");
+    setmessageWholesaler(messageWholesalerlet);
 
-    messageWholesaler += checkCriteria(data.roundData.wholesaler[data.roundData.wholesaler.length -1].backorderWeeksPct, "backorderWeeks");
-    messageWholesaler += checkCriteria((data.roundData.wholesaler[data.roundData.wholesaler.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue) / 2)), "averageInventory");
-    messageWholesaler += checkCriteria(data.roundData.wholesaler[data.roundData.wholesaler.length -1].perfectOrderRatePct, "perfectOrderRate");
-
-    messageRetailer += checkCriteria(data.roundData.retailer[data.roundData.retailer.length -1].backorderWeeksPct, "backorderWeeks");
-    messageRetailer += checkCriteria((data.roundData.retailer[data.roundData.retailer.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue) / 2)), "averageInventory");
-    messageRetailer += checkCriteria(data.roundData.retailer[data.roundData.retailer.length -1].perfectOrderRatePct, "perfectOrderRate");
-
+    let messageRetailerlet;
+    messageRetailerlet += checkCriteria(data.roundData.retailer[data.roundData.retailer.length -1].backorderWeeksPct, "backorderWeeks");
+    messageRetailerlet += checkCriteria((data.roundData.retailer[data.roundData.retailer.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue) / 2)), "averageInventory");
+    messageRetailerlet += checkCriteria(data.roundData.retailer[data.roundData.retailer.length -1].perfectOrderRatePct, "perfectOrderRate");
+    setmessageRetailer(messageRetailer);
 
 }
 
