@@ -122,7 +122,7 @@ function SetData(data){
         </div>
       </div>
 
-      <div className="section col-md-4 border">
+      <div className="section col-md-4 border" data-toggle="tooltip"  data-placement="top" title="Der Graph zeigt, wie viel aktuell im Lager ist, bzw. wenn dieser Negativ ist, wie viel Rückstand vorliegt." >
         <h4 className="section-title">Differenz zwischen Lager und Nachfrage:</h4>
         <div className="section-content">
           <ResponsiveContainer width="100%" height={300}>
@@ -137,6 +137,7 @@ function SetData(data){
               <Line type="monotone" dataKey="Einzelhändler" stroke="#FA4E2B" strokeWidth={3}/>
             </LineChart>
           </ResponsiveContainer>
+          
         </div>
       </div>
     </div>
@@ -168,7 +169,7 @@ function SetData(data){
       <div className="section col-md-4 border">
       <p className="section-content text-center ">
         <br />
-            Der Graph <strong>Differenz zwischen Lager und Nachfrage</strong> zeigt, wie viel aktuell im Lager ist, bzw. wenn dieser Negativ ist, wie viel Rückstand vorliegt.
+            
         </p>
       </div>
     </div>
