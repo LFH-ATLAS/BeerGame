@@ -131,7 +131,7 @@ function SetData(data){
     messageRetailerlet += checkCriteria((data.roundData.retailer[data.roundData.retailer.length -1].kpis[data.roundData.retailer.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue) / 2)), "averageInventory");
     messageRetailerlet += checkCriteria(data.roundData.retailer[data.roundData.retailer.length -1].kpis[data.roundData.retailer.length -1].perfectOrderRatePct, "perfectOrderRate");
     
-    setmessageRetailer(messageRetailer);
+    setmessageRetailer(messageRetailerlet);
 
 }
 
