@@ -30,6 +30,9 @@ function PlayGame(props) {
     const [countdown, setCountdown] = useState(60); // Startwert für den Countdown
     const [isCountdownRunning, setIsCountdownRunning] = useState(false);    
     const [timerpausiertgrund, setGrundTimerStop] = useState("")
+
+    const [otherPlayers, setOtherPlayers] = useState([1,2,3,4])
+    const [whoOrdered, setWhoOrdered] = useState([false,false,false,false])
     
     useEffect(() => {
         socket.on("end_screen", (data) => {
@@ -46,20 +49,26 @@ function PlayGame(props) {
 
         socket.on("update_room_size", updateRoomSize)
 
+        socket.on("someone_ordered", updateWhoOrdered)
+
         return () => {
             socket.off("resume_all_games", resumeallcountdowns);
             socket.off('update_player_data', updatePlayerData);
             socket.off('pause_all_countdowns', alertstopcountdown);
             socket.off('initial_data', initialData);
             socket.off('update_room_size', updateRoomSize);
+            socket.off('someone_ordered',updateWhoOrdered);
           };
     })
+
 
     function initialData(data){
         console.log("initial data")
         console.log(data)
+        setOtherPlayers(otherPlayers.filter(item => item !== selectedRole))
+        console.log("other Players")
+        console.log(otherPlayers)
         setStock(data.gameSettings.startStock)
-
     }
 
     function updateRoomSize(data){
@@ -95,22 +104,7 @@ function PlayGame(props) {
     }, [countdown]);
 
     function startCountdown() {
-        // Zum testen in der Hochschule
-        /*if(selectedRole === 1) {
 
-            setCountdown(60)
-        }
-        else if(selectedRole === 2) {
-
-            setCountdown(61)
-        }
-        else if(selectedRole === 3) {
-            setCountdown(62)
-        }
-        else {
-            setCountdown(63)
-        }*/
-        // Für Zuhause
         setCountdown(60);
 
         setIsCountdownRunning(true);
@@ -174,6 +168,14 @@ function PlayGame(props) {
         setPausierer(false)
       }
 
+    function updateWhoOrdered(role){
+        let tmp = whoOrdered;
+        tmp[role-1] = true;
+        setWhoOrdered([...tmp]);
+        console.log('who ordrerd');
+        console.log(whoOrdered);
+    }
+
 
     function updatePlayerData(data){
         setOrderValue("");
@@ -182,6 +184,7 @@ function PlayGame(props) {
         console.log(data)
         setCurrentRound(data.roundData.currentRound)
         setInputActive(true)
+        setWhoOrdered([false,false,false,false])
         if(selectedRole === 1) {
             setStock(data.roundData.producer[data.roundData.currentRound-1].stock)
             setDelay(data.roundData.producer[data.roundData.currentRound-1].delay)
@@ -251,6 +254,114 @@ function PlayGame(props) {
     }
     else {
 
+        let playerSymbols = []
+
+        const otherPlayersImgStyle = {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '15px',
+            height: '100px',
+            margin: '10px',
+            marginTop: '20px',
+            paddingTop: '10px'
+          };
+        const otherPlayersDivStyle = {
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingBottom: '20px'
+          };
+        const otherPlayersSpanStyleOrdered = {
+                justifyContent:'center',
+                color: 'green', 
+                display:'flex', 
+                marginBottom:'17px', 
+                marginTop:'5px'
+            };
+
+        const otherPlayersSpanStyle = {
+
+                justifyContent:'center', 
+                display:'flex', 
+                marginBottom:'17px', 
+                marginTop:'5px'
+            };
+          
+        otherPlayers.forEach(item =>{
+            switch(item) {
+                case 1:
+                    if(whoOrdered[0]===true){
+                        playerSymbols.push(
+                            <div style={otherPlayersDivStyle} key={item}>
+                                <img style={otherPlayersImgStyle} src={"/icons/factory.svg"} alt={"Icon"} />
+                                <span style={otherPlayersSpanStyleOrdered}>Hersteller</span>
+                            </div>
+                        );
+                    }
+                    else{
+                        playerSymbols.push(
+                            <div style={{...otherPlayersDivStyle,...{opacity:0.15}}} key={item}>
+                                <img style={otherPlayersImgStyle} src={"/icons/factory.svg"} alt={"Icon"} />
+                                <span style={otherPlayersSpanStyle}>Hersteller</span>
+                            </div>
+                        );
+                    }
+
+                    break;
+                case 2:
+                    if(whoOrdered[1]===true){
+                        playerSymbols.push(
+                        <div style={otherPlayersDivStyle} key={item}>
+                            <img style={otherPlayersImgStyle} src={"/icons/box.svg"} alt={"Icon"} />
+                            <span style={otherPlayersSpanStyleOrdered}>Verteiler</span>
+                        </div>
+                    );}
+                    else{playerSymbols.push(
+                        <div style={{...otherPlayersDivStyle,...{opacity:0.15}}} key={item}>
+                            <img style={otherPlayersImgStyle} src={"/icons/box.svg"} alt={"Icon"} />
+                            <span style={otherPlayersSpanStyle}>Verteiler</span>
+                        </div>
+                    );}
+                    
+                    break;
+                case 3:
+                    if(whoOrdered[2]===true){
+                        playerSymbols.push(
+                        <div style={otherPlayersDivStyle} key={item}>
+                            <img style={otherPlayersImgStyle} src={"/icons/wholesale.svg"} alt={"Icon"} />
+                            <span style={otherPlayersSpanStyleOrdered}>Großhändler</span>
+                        </div>);
+                        }
+                    else{
+                        playerSymbols.push(
+                        <div style={{...otherPlayersDivStyle,...{opacity:0.15}}} key={item}>
+                            <img style={otherPlayersImgStyle} src={"/icons/wholesale.svg"} alt={"Icon"} />
+                            <span style={otherPlayersSpanStyle}>Großhändler</span>
+                        </div>);
+                        }
+                    break;
+                case 4:
+                    if(whoOrdered[3]===true){
+                        playerSymbols.push(
+                        <div style={otherPlayersDivStyle} key={item}>
+                          <img style={otherPlayersImgStyle} src={"/icons/shop.svg"} alt={"Icon"} />
+                          <span style={otherPlayersSpanStyleOrdered}>Einzelhändler</span>
+                        </div>
+                      );
+                    }
+                    else{
+                        playerSymbols.push(
+                        <div style={{...otherPlayersDivStyle,...{opacity:0.15}}} key={item}>
+                          <img style={otherPlayersImgStyle} src={"/icons/shop.svg"} alt={"Icon"} />
+                          <span style={otherPlayersSpanStyle}>Einzelhändler</span>
+                        </div>
+                      );
+                    }
+                        
+            }
+
+        });
+
         <button onClick={stopCountdown}>Countdown Toggeln</button>
 
         let inputAndButton = <></>
@@ -305,6 +416,8 @@ function PlayGame(props) {
             roleName = "Einzelhändler"
         }
 
+
+
         return (
             <div>
                 
@@ -349,6 +462,10 @@ function PlayGame(props) {
                         <div className={"line"} />
                         <div className={"delivery"}>
                             <span data-toggle="tooltip" data-placement="top" title="Die Abnahmemenge, welche dir nächste Runde abgezogen wird." >Lieferanfrage: {supplyChainOrder}</span>
+                        </div>
+                        <div className={"line"} />
+                        <div style={otherPlayersImgStyle}>
+                            {playerSymbols}
                         </div>
                     </div>
                 </div>

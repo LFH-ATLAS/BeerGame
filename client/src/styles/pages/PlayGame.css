@@ -107,5 +107,11 @@ div.grid_play2 div.playground2 th, div.grid_play2 div.playground2 td {
   padding: 5px;
   border-bottom: 1px solid #b3b1b1;
 }
+div.otherPlayers {
+  display: 'flex';
+  justify-content: 'center';
+  height: 100px;
+  gap: '10px';
+}
 
 /*# sourceMappingURL=PlayGame.css.map */

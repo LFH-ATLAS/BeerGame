@@ -18,6 +18,10 @@ function End(props) {
     const location = useLocation();
     const urlParts = location.pathname.split('/');
     const gameCode = urlParts[urlParts.length - 1];
+    const sumStorageCostsProducer = gameKPIsproducer.reduce((total, item) => total + item.storageCostsWeekly, 0);
+    const sumStorageCostsDistributor = gameKPIsdistributor.reduce((total, item) => total + item.storageCostsWeekly, 0);
+    const sumStorageCostsWholesaler = gameKPIswholesaler.reduce((total, item) => total + item.storageCostsWeekly, 0);
+    const sumStorageCostsRetailer = gameKPIsretailer.reduce((total, item) => total + item.storageCostsWeekly, 0);
 
     useEffect(() => {
         console.log(gameCode);
@@ -72,6 +76,7 @@ function SetData(data){
       }));
   
       setGraphdiff(newGraph3); // Den Zustand für graph aktualisieren
+
 }
 
     return (
@@ -117,7 +122,7 @@ function SetData(data){
         </div>
       </div>
 
-      <div className="section col-md-4 border">
+      <div className="section col-md-4 border" data-toggle="tooltip"  data-placement="top" title="Der Graph zeigt, wie viel aktuell im Lager ist, bzw. wenn dieser Negativ ist, wie viel Rückstand vorliegt." >
         <h4 className="section-title">Differenz zwischen Lager und Nachfrage:</h4>
         <div className="section-content">
           <ResponsiveContainer width="100%" height={300}>
@@ -132,6 +137,7 @@ function SetData(data){
               <Line type="monotone" dataKey="Einzelhändler" stroke="#FA4E2B" strokeWidth={3}/>
             </LineChart>
           </ResponsiveContainer>
+          
         </div>
       </div>
     </div>
@@ -150,11 +156,12 @@ function SetData(data){
 
       <div className="section col-md-4 border">
         <div className="section-content">
-        <p className="section-content text-center ">
-            Produzent:  <br />
-            Verteiler:  <br />
-            Großhändler:  <br />
-            Einzelhändler:  
+        <p className="section-content text-center" >
+        <strong data-toggle="tooltip"  data-placement="top" title="Niedriger ist besser" >Gesamtkosten:</strong> <br />
+            Produzent: {sumStorageCostsProducer}<br />
+            Verteiler: {sumStorageCostsDistributor}<br />
+            Großhändler: {sumStorageCostsWholesaler} <br />
+            Einzelhändler: {sumStorageCostsRetailer}  
         </p>
         </div>
       </div>
@@ -162,24 +169,33 @@ function SetData(data){
       <div className="section col-md-4 border">
       <p className="section-content text-center ">
         <br />
-            Der Graph <strong>Differenz zwischen Lager und Nachfrage</strong> zeigt, wie viel aktuell im Lager ist, bzw. wenn dieser Negativ ist, wie viel Rückstand vorliegt.
+            
         </p>
       </div>
     </div>
     </div>
 <h3 class="mt-5 text-center">Produzent:</h3>
 <div className={"grid_play2"}>
-                    <div className={"playground2"}>
-                        <div className={"KPItable"}>
+      <div className={"playground2"}>
+      <div className={"KPItable"}>
     <table>
         <thead>
             <tr>
                <th>Runde</th>
-               <th>Kosten pro Woche</th>
-                 <th>Lagergesamtkosten</th>
-                 <th>Perfekte Auftragsrate</th>
-                <th>Durchschnittlicher Lagerbestand</th>
-                <th>Wochen mit Lieferrückstand</th>
+               <th data-toggle="tooltip"  data-placement="top" title="Diese Angabe repräsentiert die Gesamtkosten pro Woche.">Kosten pro Woche</th>
+                 <th data-toggle="tooltip"  data-placement="top" title=" Hier werden die kumulierten Lagerkosten während des Spiels 
+                aufgeführt. Diese Kosten beziehen sich auf die Lagerhaltung und die damit 
+                verbundenen finanziellen Auswirkungen.">Lagergesamtkosten</th>
+                 <th data-toggle="tooltip"  data-placement="top" title=" Diese Metrik gibt an, wie erfolgreich die Spieler bei der 
+                Erfüllung der Kundenaufträge in jeder Runde waren. Sie misst die Genauigkeit der 
+                Lieferungen im Verhältnis zu den Bestellungen.">Perfekte Auftragsrate</th>
+                <th data-toggle="tooltip"  data-placement="top" title="Diese Information gibt den Durchschnittswert des 
+                Lagerbestands über alle Runden an. Er spiegelt wider, wie effizient die Spieler ihre 
+                Lagerbestände im Spiel verwalten.">Durchschnittlicher Lagerbestand</th>
+                <th data-toggle="tooltip"  data-placement="top" title="Hier wird angegeben, inwieweit es während des 
+                Spiels zu Lieferverzögerungen oder Engpässen in der Lieferkette gekommen ist. 
+                Dies ist ein wichtiger Indikator für die Leistungsfähigkeit und Anpassungsfähigkeit 
+                der Spieler."> Wochen mit Lieferrückstand</th>
             </tr>
         </thead>
         <tbody>
