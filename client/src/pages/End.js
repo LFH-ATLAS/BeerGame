@@ -22,6 +22,12 @@ function End(props) {
     const sumStorageCostsDistributor = gameKPIsdistributor.reduce((total, item) => total + item.storageCostsWeekly, 0);
     const sumStorageCostsWholesaler = gameKPIswholesaler.reduce((total, item) => total + item.storageCostsWeekly, 0);
     const sumStorageCostsRetailer = gameKPIsretailer.reduce((total, item) => total + item.storageCostsWeekly, 0);
+    let messageProducer;
+    let messageDistributor;
+    let messageWholesaler;
+    let messageRetailer;
+
+
 
     useEffect(() => {
         console.log(gameCode);
@@ -39,6 +45,31 @@ function End(props) {
    
 )
 
+function checkCriteria(value, criterea) {
+    switch (criterea){
+        case "backorderWeeks":
+            if (value <= 20){
+                return "Achte darauf deine Bestellungen so zu planen das du weniger in einen Rückstand gerätst, plane auch frühzeitig die eventuelle Erhöhung ein. ";
+            }else{
+                return "";
+            }
+        case "averageInventory":
+            if (value <= 10){
+                return "Achte darauf dein Lager nicht zu überfüllen da dies viele unnötige Kosten verursacht, wenn du merkst das dien Lager zu voll wird verringere deine Bestellmenge. ";
+            }else {
+                return "";
+            }
+        case "perfectOrderRate":
+            if (value <= 5){
+                return "Versuche nach Aufbauen eines Puffers möglichst deine Bestellungen genau dem Bedarf anzupassen. ";
+            }else{
+                return "";
+            }
+        default:
+            return "";
+    }
+}
+
 function SetData(data){
     console.log("UpdatePlayer aufgerufen")
     console.log(data)
@@ -55,7 +86,7 @@ function SetData(data){
         Einzelhändler: data.roundData.wholesaler[index].order
       }));
   
-      setGraphorder(newGraph); // Den Zustand für graph aktualisieren
+    setGraphorder(newGraph); // Den Zustand für graph aktualisieren
 
     const newGraph2 = Array.from({ length: data.roundData.producer.length -1}, (_, index) => ({
         label: (index ).toString(),
@@ -65,9 +96,9 @@ function SetData(data){
         Einzelhändler: data.roundData.wholesaler[index].stock
       }));
   
-      setGraphstock(newGraph2); // Den Zustand für graph aktualisieren
+    setGraphstock(newGraph2); // Den Zustand für graph aktualisieren
 
-      const newGraph3 = Array.from({ length: data.roundData.producer.length -1}, (_, index) => ({
+    const newGraph3 = Array.from({ length: data.roundData.producer.length -1}, (_, index) => ({
         label: (index ).toString(),
         Produzent: data.roundData.producer[index].stock -data.roundData.producer[index].delay,
         Verteiler: data.roundData.distributor[index].stock - data.roundData.distributor[index].delay,
@@ -75,8 +106,23 @@ function SetData(data){
         Einzelhändler: data.roundData.wholesaler[index].stock - data.roundData.wholesaler[index].delay
       }));
   
-      setGraphdiff(newGraph3); // Den Zustand für graph aktualisieren
+    setGraphdiff(newGraph3); // Den Zustand für graph aktualisieren
 
+    messageProducer += checkCriteria(data.roundData.producer[data.roundData.producer.length -1].backorderWeeksPct,backorderWeeks)
+    messageProducer += checkCriteria(data.roundData.producer[data.roundData.producer.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue)/2) ,averageInventory)
+    messageProducer += checkCriteria(data.roundData.producer[data.roundData.producer.length -1].perfectOrderRatePct,perfectOrderRate)
+
+    messageDistributor += checkCriteria(data.roundData.distributor[data.roundData.distributor.length -1].backorderWeeksPct,backorderWeeks)
+    messageDistributor += checkCriteria(data.roundData.distributor[data.roundData.distributor.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue)/2) ,averageInventory)
+    messageDistributor += checkCriteria(data.roundData.distributor[data.roundData.distributor.length -1].perfectOrderRatePct,perfectOrderRate)
+
+    messageRetailer += checkCriteria(data.roundData.retailer[data.roundData.retailer.length -1].backorderWeeksPct,backorderWeeks)
+    messageRetailer += checkCriteria(data.roundData.retailer[data.roundData.retailer.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue)/2) ,averageInventory)
+    messageRetailer += checkCriteria(data.roundData.retailer[data.roundData.retailer.length -1].perfectOrderRatePct,perfectOrderRate)
+
+    messageWholesaler += checkCriteria(data.roundData.wholesaler[data.roundData.wholesaler.length -1].backorderWeeksPct,backorderWeeks)
+    messageWholesaler += checkCriteria(data.roundData.wholesaler[data.roundData.wholesaler.length -1].averageStock / ((data.gameSettings.startValue + data.gameSettings.raisedValue)/2) ,averageInventory)
+    messageWholesaler += checkCriteria(data.roundData.wholesaler[data.roundData.wholesaler.length -1].perfectOrderRatePct,perfectOrderRate)
 }
 
     return (
@@ -122,7 +168,7 @@ function SetData(data){
         </div>
       </div>
 
-      <div className="section col-md-4 border" data-toggle="tooltip"  data-placement="top" title="Der Graph zeigt, wie viel aktuell im Lager ist, bzw. wenn dieser Negativ ist, wie viel Rückstand vorliegt." >
+      <div className="section col-md-4 border">
         <h4 className="section-title">Differenz zwischen Lager und Nachfrage:</h4>
         <div className="section-content">
           <ResponsiveContainer width="100%" height={300}>
@@ -137,7 +183,6 @@ function SetData(data){
               <Line type="monotone" dataKey="Einzelhändler" stroke="#FA4E2B" strokeWidth={3}/>
             </LineChart>
           </ResponsiveContainer>
-          
         </div>
       </div>
     </div>
